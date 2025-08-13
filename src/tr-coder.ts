@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "path";
 import { initializeConfigDirectory } from "./initializeConfigDirectory.js";
 import { error } from "./prettyString.js";
-import initializeLocalDatabase from "@token-ring/sqlite-storage/db/intializeLocalDatabase";
+import initializeLocalDatabase from "@token-ring/sqlite-storage/db/initializeLocalDatabase";
 import defaultPersonas from "./defaults/personas.js";
 
 import * as HistoryPackage from "@token-ring/history";
@@ -62,6 +62,20 @@ import * as FileIndexPackage from "@token-ring/file-index";
 
 import * as models from "@token-ring/ai-client/models";
 import chalk from "chalk";
+import {CoderConfig} from "./config.types.js";
+
+// Interface definitions
+interface CommandOptions {
+	source: string;
+	config?: string;
+	initialize?: boolean;
+}
+
+interface ResourceConfig {
+	type: string;
+	items: any[];
+	[key: string]: any;
+}
 
 // Create a new Commander program
 const program = new Command();
@@ -85,7 +99,7 @@ Examples:
   tr-coder --source ./my-app --config ./custom-config.js
 `,
 	)
-	.action(async (options) => {
+	.action(async (options: CommandOptions) => {
 		try {
 			await runCoder(options);
 		} catch (err) {
@@ -96,7 +110,7 @@ Examples:
 
 program.parse();
 
-async function runCoder({ source, config: configFile, initialize }) {
+async function runCoder({ source, config: configFile, initialize }: CommandOptions): Promise<void> {
 	// noinspection JSCheckFunctionSignatures
 	const resolvedSource = path.resolve(source);
 
@@ -130,9 +144,9 @@ async function runCoder({ source, config: configFile, initialize }) {
 		);
 	}
 
-	const { default: config } = await import(
-		/* webpackIgnore: true */ configFile
-	);
+
+    const configImport = await import(configFile);
+    const config = configImport.default as CoderConfig;
 
 	const registry = new Registry();
 	await registry.start();
@@ -160,10 +174,7 @@ async function runCoder({ source, config: configFile, initialize }) {
 		QueuePackage,
 		RegistryPackage,
 		RepoMapPackage,
-		SQLiteChatCheckpointStorage,
-		SQLiteChatHistoryStorage,
-		SQLiteChatMessageStorage,
-		SQLiteChatStoragePackage,
+        SQLiteChatStoragePackage,
 		TestingPackage,
 		WorkflowPackage,
 	);
@@ -250,9 +261,7 @@ async function runCoder({ source, config: configFile, initialize }) {
 
 	if (config.watchedFiles) {
 		await registry.services.addServices(
-			new CodeWatchService({
-				items: config.watchedFiles,
-			}),
+			new CodeWatchService(),
 		);
 	}
 
@@ -262,12 +271,12 @@ async function runCoder({ source, config: configFile, initialize }) {
  }*/
 
 	for (const resourceName in config.resources ?? {}) {
-		let resources = config.resources[resourceName];
+		let resources = config.resources?.[resourceName];
 		if (!Array.isArray(resources)) resources = [resources];
 
 		await registry.resources.addResource(
 			resourceName,
-			...resources.map((resource) => {
+			...resources.map((resource: ResourceConfig) => {
 				switch (resource.type) {
 					case "fileTree":
 						return new FileTreeResource({
@@ -290,9 +299,7 @@ async function runCoder({ source, config: configFile, initialize }) {
 		);
 	}
 
-	await registry.resources.enableResources(defaults.resources);
-
-	//console.log(info(`TokenRing Coder initialized and ready with ${registry.services.getServices().length} resources and ${resourceRegistry.getAvailableResourceNames().length} resources`));
+	await registry.resources.enableResources(defaults.resources ?? []);
 }
 
 const banner = `

@@ -1,9 +1,14 @@
 import path from "path";
 import fs from "fs";
 import { error, success } from "./prettyString.js";
-import exampleConfig from "./examples/coder-config.js";
+import exampleConfig from "./examples/coder-config.js" with { type: "text" };
 
-export function initializeConfigDirectory(configDir) {
+/**
+ * Initializes the configuration directory for the application
+ * @param configDir - Path to the configuration directory
+ * @returns The path to the created configuration file
+ */
+export function initializeConfigDirectory(configDir: string): string {
 	try {
 		if (!fs.existsSync(configDir)) {
 			fs.mkdirSync(configDir);
@@ -17,7 +22,7 @@ export function initializeConfigDirectory(configDir) {
 		const gitignoreFile = path.join(configDir, ".gitignore");
 
 		console.log(success(`Copying example config to ${configFile}`));
-		fs.writeFileSync(configFile, exampleConfig);
+		fs.writeFileSync(configFile, exampleConfig.toString());
 
 		console.log(success(`Creating .gitignore file`));
 		fs.writeFileSync(gitignoreFile, "# Ignore database files\n*.db\n*.sqlite");

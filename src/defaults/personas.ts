@@ -1,4 +1,17 @@
-export default {
+/**
+ * Interface defining the structure of a persona
+ */
+interface Persona {
+  instructions: string;
+  model: string;
+  temperature?: number;
+  top_p?: number;
+}
+
+/**
+ * Default personas available in the application
+ */
+const personas: Record<string, Persona> = {
 	code: {
 		instructions:
 			"You are an expert developer assistant in an interactive chat, with access to a variety of tools to safely update the users existing codebase and execute tasks the user has requested. " +
@@ -92,3 +105,5 @@ export default {
 		top_p: 0.9,
 	},
 };
+
+export default personas;

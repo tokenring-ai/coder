@@ -5,7 +5,7 @@ import chalk from "chalk";
  * @param {...*} msg - Messages to be logged
  * @returns {string} Formatted info message
  */
-export function info(...msg) {
+export function info(...msg: any[]): string {
 	return [chalk.blue("[INFO]"), ...msg].join(" ");
 }
 
@@ -14,7 +14,7 @@ export function info(...msg) {
  * @param {...*} msg - Messages to be logged
  * @returns {string} Formatted error message
  */
-export function error(...msg) {
+export function error(...msg: any[]): string {
 	return [chalk.red("[ERR]"), ...msg].join(" ");
 }
 
@@ -23,6 +23,6 @@ export function error(...msg) {
  * @param {...*} msg - Messages to be logged
  * @returns {string} Formatted success message
  */
-export function success(...msg) {
+export function success(...msg: any[]): string {
 	return [chalk.green("[OK]"), ...msg].join(" ");
 }
