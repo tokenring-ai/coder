@@ -118,3 +118,7 @@
 	path = pkg/inquirer-command-prompt
 	url = git@github.com:tokenring-ai/inquirer-command-prompt.git
 	branch = main
+[submodule "pkg/agent"]
+	path = pkg/agent
+	url = git@github.com:tokenring-ai/agent.git
+	branch = main
