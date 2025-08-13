@@ -34,7 +34,7 @@
 		"@token-ring/workflow": "0.1.0"
 	},
  "devDependencies": {
-  "vitest": "^2.1.9",
+  "vitest": "^3.2.4",
   "husky": "^9.1.7",
   "trufflehog": "^0.0.5",
   "ts": "^0.2.2",
