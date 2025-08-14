@@ -44,6 +44,9 @@ export default {
 			baseURL: "http://0.0.0.0:18000/v1",
 			apiKey: "sk-ABCD1234567890",
 			provider: "vllm",
+			/**
+			 * @param {any} modelInfo
+			 */
 			generateModelSpec(modelInfo) {
 				let { id: model } = modelInfo;
 				model = model.replace(/:latest$/, "");
@@ -70,6 +73,9 @@ export default {
 		OpenRouter: {
 			apiKey: process.env.OPENROUTER_API_KEY,
 			provider: "openrouter",
+			/**
+			 * @param {any} model
+			 */
 			modelFilter: (model) => {
 				if (!model.supported_parameters?.includes("tools")) {
 					return false;
@@ -94,6 +100,9 @@ export default {
 		Ollama: {
 			baseURL: process.env.OLLAMA_URL,
 			provider: "ollama",
+			/**
+			 * @param {any} modelInfo
+			 */
 			generateModelSpec(modelInfo) {
 				let { name, model, details } = modelInfo;
 				name = name.replace(/:latest$/, "");

@@ -27,6 +27,8 @@
         "@token-ring/queue": "0.1.0",
         "@token-ring/registry": "0.1.0",
         "@token-ring/repo-map": "0.1.0",
+        "@token-ring/scraperapi": "0.1.0",
+        "@token-ring/serper": "0.1.0",
         "@token-ring/sqlite-storage": "0.1.0",
         "@token-ring/testing": "0.1.0",
         "@token-ring/workflow": "0.1.0",
@@ -440,6 +442,33 @@
       },
       "devDependencies": {
         "typescript": "^5.6.3",
+        "vitest": "^3.2.4",
+      },
+    },
+    "pkg/scraperapi": {
+      "name": "@token-ring/scraperapi",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/ai-client": "0.1.0",
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+      },
+      "devDependencies": {
+        "@vitest/coverage-v8": "^3.2.4",
+        "vitest": "^3.2.4",
+      },
+    },
+    "pkg/serper": {
+      "name": "@token-ring/serper",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/ai-client": "0.1.0",
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+        "zod": "^3.23.8",
+      },
+      "devDependencies": {
+        "@vitest/coverage-v8": "^3.2.4",
         "vitest": "^3.2.4",
       },
     },
@@ -1177,6 +1206,10 @@
     "@token-ring/repo-map": ["@token-ring/repo-map@workspace:pkg/repo-map"],
 
     "@token-ring/runnable": ["@token-ring/runnable@workspace:pkg/runnable"],
+
+    "@token-ring/scraperapi": ["@token-ring/scraperapi@workspace:pkg/scraperapi"],
+
+    "@token-ring/serper": ["@token-ring/serper@workspace:pkg/serper"],
 
     "@token-ring/sqlite-storage": ["@token-ring/sqlite-storage@workspace:pkg/sqlite-storage"],
 

@@ -29,6 +29,8 @@
 		"@token-ring/queue": "0.1.0",
 		"@token-ring/registry": "0.1.0",
 		"@token-ring/repo-map": "0.1.0",
+  "@token-ring/scraperapi": "0.1.0",
+  "@token-ring/serper": "0.1.0",
 		"@token-ring/sqlite-storage": "0.1.0",
 		"@token-ring/testing": "0.1.0",
 		"@token-ring/workflow": "0.1.0"

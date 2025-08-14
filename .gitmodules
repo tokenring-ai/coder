@@ -122,3 +122,9 @@
 	path = pkg/agent
 	url = git@github.com:tokenring-ai/agent.git
 	branch = main
+[submodule "pkg/serper"]
+	path = pkg/serper
+	url = git@github.com:tokenring-ai/serper.git
+[submodule "pkg/scraperapi"]
+	path = pkg/scraperapi
+	url = git@github.com:tokenring-ai/scraperapi.git

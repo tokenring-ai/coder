@@ -17,8 +17,6 @@
  },
  "include": [
   "src/**/*",
-  "pkg/**/*.ts",
-  "pkg/**/*.js",
   "types/**/*.d.ts"
  ],
  "exclude": [
@@ -28,6 +26,9 @@
   "**/*.test.*",
   "pkg/**/test/**",
   "pkg/**/__tests__/**",
+  "pkg/**/examples/**",
+  "src/examples/**",
+  "pkg/**/hooks/**",
   "pkg/inquirer-command-prompt/examples/**",
   "pkg/inquirer-tree-selector/rollup.config.js",
   "**/vitest.config.*"

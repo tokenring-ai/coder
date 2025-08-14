@@ -19,6 +19,22 @@ export interface CoderConfig {
         include: RegExp;
     }>;
     resources: Record<string, ResourceConfig>;
+    scraperapi?: {
+        apiKey: string;
+        countryCode?: string;
+        tld?: string;
+        outputFormat?: 'json' | 'csv';
+        render?: boolean;
+        deviceType?: 'desktop' | 'mobile';
+    };
+    serper?: {
+        apiKey: string;
+        gl?: string;
+        hl?: string;
+        location?: string;
+        num?: number;
+        page?: number;
+    };
 }
 
 

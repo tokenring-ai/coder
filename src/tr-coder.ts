@@ -59,10 +59,14 @@ import * as FeedbackPackage from "@token-ring/feedback";
 import * as ChromePackage from "@token-ring/chrome";
 import * as DatabasePackage from "@token-ring/database";
 import * as FileIndexPackage from "@token-ring/file-index";
+import * as ScraperAPIPackage from "@token-ring/scraperapi";
+import { ScraperAPIService } from "@token-ring/scraperapi";
+import * as SerperPackage from "@token-ring/serper";
+import { SerperService } from "@token-ring/serper";
 
 import * as models from "@token-ring/ai-client/models";
 import chalk from "chalk";
-import {CoderConfig} from "./config.types.js";
+import {CoderConfig, ResourceConfig as CfgResourceConfig} from "./config.types.js";
 
 // Interface definitions
 interface CommandOptions {
@@ -71,11 +75,6 @@ interface CommandOptions {
 	initialize?: boolean;
 }
 
-interface ResourceConfig {
-	type: string;
-	items: any[];
-	[key: string]: any;
-}
 
 // Create a new Commander program
 const program = new Command();
@@ -174,6 +173,8 @@ async function runCoder({ source, config: configFile, initialize }: CommandOptio
 		QueuePackage,
 		RegistryPackage,
 		RepoMapPackage,
+        ScraperAPIPackage,
+        SerperPackage,
         SQLiteChatStoragePackage,
 		TestingPackage,
 		WorkflowPackage,
@@ -190,6 +191,9 @@ async function runCoder({ source, config: configFile, initialize }: CommandOptio
 		...FilesystemPackage.tools,
 		...MemoryPackage.tools,
 		//...RepoMapPackage.tools,
+
+        ...(config.serper ? (SerperPackage).tools : {}),
+        ...(config.scraperapi ? (ScraperAPIPackage).tools : {}),
 	});
 
 	await registry.tools.enableTools(defaults.tools ?? defaultTools);
@@ -204,9 +208,6 @@ async function runCoder({ source, config: configFile, initialize }: CommandOptio
 	const modelRegistry = new ModelRegistry();
 	await modelRegistry.initializeModels(models, config.models);
 
-	if (config.additionalModels) {
-		//modelRegistry.registerAllModelSpecs(config.additionalModels);
-	}
 
 	await registry.services.addServices(
 		chatService,
@@ -271,27 +272,28 @@ async function runCoder({ source, config: configFile, initialize }: CommandOptio
  }*/
 
 	for (const resourceName in config.resources ?? {}) {
-		let resources = config.resources?.[resourceName];
-		if (!Array.isArray(resources)) resources = [resources];
+		const raw = config.resources?.[resourceName];
+		const resourcesArray: CfgResourceConfig[] = Array.isArray(raw) ? raw : [raw].filter((r): r is CfgResourceConfig => !!r);
 
 		await registry.resources.addResource(
 			resourceName,
-			...resources.map((resource: ResourceConfig) => {
+			...resourcesArray.map((resource: CfgResourceConfig) => {
 				switch (resource.type) {
 					case "fileTree":
 						return new FileTreeResource({
-							items: resource.items,
+							items: resource.items ?? [],
 						});
 					case "repoMap":
 						return new RepoMapResource({
-							items: resource.items,
+							baseDirectory,
+							items: resource.items ?? [],
 						});
 					case "wholeFile":
 						return new WholeFileResource({
-							items: resource.items,
+							items: resource.items ?? [],
 						});
 					case "shell-testing":
-						return new ShellCommandTestingResource(resource);
+						return new ShellCommandTestingResource(resource as any);
 					default:
 						throw new Error(`Unknown resource type ${resource.type}`);
 				}
@@ -300,6 +302,21 @@ async function runCoder({ source, config: configFile, initialize }: CommandOptio
 	}
 
 	await registry.resources.enableResources(defaults.resources ?? []);
+
+
+    const scraperConfig = config.scraperapi;
+    if (scraperConfig && scraperConfig.apiKey) {
+        await registry.services.addServices(new ScraperAPIService(scraperConfig));
+    } else if (scraperConfig) {
+        console.warn("ScraperAPI configuration detected but missing apiKey. Skipping ScraperAPIService initialization.");
+    }
+
+    const serperConfig = config.serper;
+    if (serperConfig && serperConfig.apiKey) {
+        await registry.services.addServices(new SerperService(serperConfig));
+    } else if (serperConfig) {
+        console.warn("Serper configuration detected but missing apiKey. Skipping SerperService initialization.");
+    }
 }
 
 const banner = `
