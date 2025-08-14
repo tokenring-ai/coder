@@ -106,32 +106,6 @@ export default {
 		persona: "code",
 	},
 	models: {
-		UIGen: {
-			provider: "vllm",
-			baseURL: "http://0.0.0.0:18000/v1",
-			generateModelSpec(modelInfo) {
-				let { id: model } = modelInfo;
-				model = model.replace(/:latest$/, "");
-				model = model.replace(/^hf.co\/([^\/]*)\//, "");
-				let type = "chat";
-				let capabilities = {};
-				if (model.match(/embed/i)) {
-					type = "embedding";
-					capabilities.alwaysHot = 1;
-				} else if (model.match(/qwen[23]/i)) {
-					Object.assign(capabilities, {
-						reasoning: 2,
-						tools: 2,
-						intelligence: 2,
-						speed: 2,
-						contextLength: 128000,
-						costPerMillionInputTokens: 0,
-						costPerMillionOutputTokens: 0,
-					});
-				}
-				return { type, capabilities };
-			},
-		},
 		Anthropic: {
 			apiKey: process.env.ANTHROPIC_API_KEY,
 			provider: "anthropic",
@@ -160,10 +134,10 @@ export default {
 			apiKey: process.env.OPENAI_API_KEY,
 			provider: "openai",
 		},
-		RunPod: {
-			baseURL: "http://0.0.0.0:18000/v1",
+		LlamaCPP: {
+			baseURL: "http://192.168.15.20:11434",
 			apiKey: "sk-ABCD1234567890",
-			provider: "vllm",
+			provider: "openaiCompatible",
 			generateModelSpec(modelInfo) {
 				let { id: model } = modelInfo;
 				model = model.replace(/:latest$/, "");
