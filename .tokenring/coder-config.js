@@ -105,6 +105,12 @@ export default {
 		selectedFiles: ["AGENTS.md"],
 		persona: "code",
 	},
+ serper: {
+  apiKey: process.env.SERPER_API_KEY,
+ },
+ scraperapi: {
+  apiKey: process.env.SCRAPERAPI_API_KEY,
+ },
 	models: {
 		Anthropic: {
 			apiKey: process.env.ANTHROPIC_API_KEY,
