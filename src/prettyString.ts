@@ -6,7 +6,7 @@ import chalk from "chalk";
  * @returns {string} Formatted info message
  */
 export function info(...msg: any[]): string {
-	return [chalk.blue("[INFO]"), ...msg].join(" ");
+  return [chalk.blue("[INFO]"), ...msg].join(" ");
 }
 
 /**
@@ -15,7 +15,7 @@ export function info(...msg: any[]): string {
  * @returns {string} Formatted error message
  */
 export function error(...msg: any[]): string {
-	return [chalk.red("[ERR]"), ...msg].join(" ");
+  return [chalk.red("[ERR]"), ...msg].join(" ");
 }
 
 /**
@@ -24,5 +24,5 @@ export function error(...msg: any[]): string {
  * @returns {string} Formatted success message
  */
 export function success(...msg: any[]): string {
-	return [chalk.green("[OK]"), ...msg].join(" ");
+  return [chalk.green("[OK]"), ...msg].join(" ");
 }
