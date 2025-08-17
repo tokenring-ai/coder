@@ -11,7 +11,10 @@
   "checkJs": true,
   "noEmit": true,
   "allowImportingTsExtensions": true,
-  "types": ["node", "vitest"],
+  "types": [
+   "node",
+   "vitest"
+  ],
   "outDir": "dist-ts",
   "rootDir": "."
  },

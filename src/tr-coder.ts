@@ -125,7 +125,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   }
 
   if (!configFile && initialize) {
-    configFile = await initializeConfigDirectory(configDirectory);
+    configFile = initializeConfigDirectory(configDirectory);
   }
 
   if (!configFile) {
@@ -180,14 +180,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
 
   const {defaults} = config;
 
-  const defaultTools = Object.keys({
-    ...FilesystemPackage.tools,
-    ...MemoryPackage.tools,
-    //...RepoMapPackage.tools,
-
-    ...(config.serper ? (SerperPackage).tools : {}),
-    ...(config.scraperapi ? (ScraperAPIPackage).tools : {}),
-  });
+  const defaultTools = ['file/search', 'file/modify', 'file/patch'];
 
   await registry.tools.enableTools(defaults.tools ?? defaultTools);
   console.log(chalk.greenBright(banner));
@@ -226,32 +219,32 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     new WorkflowService(),
   );
 
-  /*
-if (false && config.indexedFiles) {
-const databaseURL = process.env.DATABASE_URL;
-if (false && databaseURL) {
- console.log(info(`Using MySQL for Vector + Full Text Search`));
 
- await registry.services.addServices(
-  new MySQLFileIndexService({
-   databaseUrl: process.env.DATABASE_URL,
-   baseDirectory,
-   modelRegistry,
-   items: config.indexedFiles
-  })
- );
-} else {
- console.log(info(`MySQL not available, using in-memory Full Text Search database`));
+  if (config.indexedFiles) {
+    const databaseURL = process.env.DATABASE_URL;
+    /*if (false && databaseURL) {
+     console.log(info(`Using MySQL for Vector + Full Text Search`));
 
+     await registry.services.addServices(
+      new MySQLFileIndexService({
+       databaseUrl: process.env.DATABASE_URL,
+       baseDirectory,
+       modelRegistry,
+       items: config.indexedFiles
+      })
+     );
+    } else {
+     console.log(info(`MySQL not available, using in-memory Full Text Search database`));
+    *//*
  await registry.services.addServices(
   new StringSearchFileIndexService({
    baseDirectory,
    modelRegistry,
    items: config.indexedFiles
   })
- );
-}
-}*/
+ );*/
+  }
+
 
   if (config.watchedFiles) {
     await registry.services.addServices(
@@ -274,19 +267,18 @@ await registry.services.addServices(new ZohoService(config.zoho));
         switch (resource.type) {
           case "fileTree":
             return new FileTreeResource({
-              items: resource.items ?? [],
+              items: resource.items,
             });
           case "repoMap":
             return new RepoMapResource({
-              baseDirectory,
-              items: resource.items ?? [],
+              items: resource.items,
             });
           case "wholeFile":
             return new WholeFileResource({
-              items: resource.items ?? [],
+              items: resource.items,
             });
           case "shell-testing":
-            return new ShellCommandTestingResource(resource as any);
+            return new ShellCommandTestingResource(resource);
           default:
             throw new Error(`Unknown resource type ${resource.type}`);
         }

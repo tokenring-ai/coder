@@ -5,7 +5,7 @@ interface Persona {
   instructions: string;
   model: string;
   temperature?: number;
-  top_p?: number;
+  topP?: number;
 }
 
 /**
@@ -18,9 +18,9 @@ const personas: Record<string, Persona> = {
       "When the user tells you to do something, you should assume that the user is asking you to use the available tools to update their codebase. " +
       "You should prefer using tools to implement code changes, even large code changes. " +
       "When making code changes, give short and concise responses summarizing the code changes",
-    model: "kimi-k2-instruct",
+    model: "gpt-5",
     temperature: 0.2,
-    top_p: 0.1,
+    topP: 0.1,
   },
   "deep-rag": {
     instructions:
@@ -34,7 +34,7 @@ const personas: Record<string, Persona> = {
     //model: "auto:speed>=4,intelligence>=3",
     model: "deepseek-chat",
     temperature: 0.2,
-    top_p: 0.1,
+    topP: 0.1,
   },
   repair: {
     instructions:
@@ -45,7 +45,7 @@ const personas: Record<string, Persona> = {
     //model: "auto:speed>=4,intelligence>=3",
     model: "Qwen/Qwen3-235B-A22B-GPTQ-Int4",
     temperature: 0.7,
-    top_p: 0.8,
+    topP: 0.8,
   },
   "deep-interface-refactorer": {
     instructions:
@@ -60,7 +60,7 @@ const personas: Record<string, Persona> = {
     //model: "auto:speed>=4,intelligence>=3",
     model: "deepseek-chat",
     temperature: 0.2,
-    top_p: 0.1,
+    topP: 0.1,
   },
   "deep-thinker": {
     instructions:
@@ -72,7 +72,7 @@ const personas: Record<string, Persona> = {
       "needed, to satisfy the users request.",
     model: "auto:speed>=4,intelligence>=3",
     temperature: 0.2,
-    top_p: 0.1,
+    topP: 0.1,
   },
   "code-planner": {
     instructions:
@@ -82,7 +82,7 @@ const personas: Record<string, Persona> = {
       "End your thoughts with </think> before presenting your plan to the user.",
     model: "auto:reasoning>=5,intelligence>=5",
     temperature: 0.2,
-    top_p: 0.7,
+    topP: 0.7,
   },
   architect: {
     instructions:
@@ -92,7 +92,7 @@ const personas: Record<string, Persona> = {
       "your architectural recommendations. End your thoughts with </think> before sharing your design.",
     model: "auto:reasoning>=5,intelligence>=5",
     temperature: 0.3,
-    top_p: 0.8,
+    topP: 0.8,
   },
   "code-reviewer": {
     instructions:
@@ -102,7 +102,7 @@ const personas: Record<string, Persona> = {
       "End your thoughts with </think> before sharing your review findings.",
     model: "auto:reasoning>=5,intelligence>=5",
     temperature: 0.4,
-    top_p: 0.9,
+    topP: 0.9,
   },
 };
 

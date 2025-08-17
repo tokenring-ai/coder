@@ -5,8 +5,6 @@ import {error, success} from "./prettyString.js";
 
 /**
  * Initializes the configuration directory for the application
- * @param configDir - Path to the configuration directory
- * @returns The path to the created configuration file
  */
 export function initializeConfigDirectory(configDir: string): string {
   try {

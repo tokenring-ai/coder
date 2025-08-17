@@ -2,7 +2,6 @@
 
 set -e
 
-
 apt update
 apt install -y git python3 build-essential
 

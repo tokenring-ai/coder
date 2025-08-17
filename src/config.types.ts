@@ -42,7 +42,7 @@ export interface ResourceConfig {
   type: 'fileTree' | 'repoMap' | 'wholeFile' | 'shell-testing';
   name?: string;
   description: string;
-  items?: Array<{
+  items: Array<{
     path: string;
     include?: RegExp;
     exclude?: RegExp;

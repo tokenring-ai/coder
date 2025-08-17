@@ -2,13 +2,16 @@
 
 ## Overview
 
-The Coder app is an interactive developer assistant tool designed to help you work with your codebase in a conversational manner. It provides a chat interface where you can ask questions, issue commands, and interact with your source code, leveraging AI to assist with code edits, refactors, testing, and more.
+The Coder app is an interactive developer assistant tool designed to help you work with your codebase in a
+conversational manner. It provides a chat interface where you can ask questions, issue commands, and interact with your
+source code, leveraging AI to assist with code edits, refactors, testing, and more.
 
 ## Features
 
 - **Interactive chat interface**: Talk to the assistant in a conversational REPL.
 - **Persistent chat history**: Sessions and message threads are saved in a SQLite database.
-- **Command system**: Issue commands prefixed with `/` to manage contexts, plugins, queues, checkpoints, commits, rollbacks, and more.
+- **Command system**: Issue commands prefixed with `/` to manage contexts, plugins, queues, checkpoints, commits,
+  rollbacks, and more.
 - **Codebase integration**: Works directly with your source directory; can initialize with a TokenRing config.
 - **Plugin support**: Extend functionality with plugins.
 - **Multi-line input mode**: Supports multi-line text entry for complex queries or commands.
@@ -25,7 +28,8 @@ The Coder app is an interactive developer assistant tool designed to help you wo
 
 ### Installation (local)
 
-1. **Sync git submodules**: This project uses git submodules that need to be initialized and updated before installation:
+1. **Sync git submodules**: This project uses git submodules that need to be initialized and updated before
+   installation:
    ```bash
    git submodule update --init --recursive
    ```
@@ -36,22 +40,25 @@ The Coder app is an interactive developer assistant tool designed to help you wo
    ```
 
 3. **Run the application**: Use Bun to start the application:
+
   ```bash
   bun src/tr-coder.js --source ./path-to-your-codebase
   ```
+
 ### Installation (As local docker container)
 
-1. **Sync git submodules**: This project uses git submodules that need to be initialized and updated before installation:
+1. **Sync git submodules**: This project uses git submodules that need to be initialized and updated before
+   installation:
    ```bash
    git submodule update --init --recursive
    ```
 
-2. **Build the docker container**: 
+2. **Build the docker container**:
    ```bash
    # This command must be run in the root directory of the repo
    docker build -t token-ring/coder:latest -f docker/Dockerfile .
    ```
-   
+
 3. **Run the docker container**:
    ```bash
    docker run -ti --net host $(env | grep '_KEY' | sed 's/^/-e /') -v ./:/repo:rw token-ring/coder:latest
@@ -59,11 +66,9 @@ The Coder app is an interactive developer assistant tool designed to help you wo
 
 #### Container Registry
 
-
 TODO: This is not implemented yet
-The Docker image is automatically built and published to GitHub Container Registry on each push to the main branch. You can pull the latest image with:
-
-
+The Docker image is automatically built and published to GitHub Container Registry on each push to the main branch. You
+can pull the latest image with:
 
 ```bash
 docker pull ghcr.io/[owner]/tokenring-coder:latest
@@ -73,8 +78,10 @@ Replace `[owner]` with the GitHub repository owner.
 
 ### Initialization
 
-To initialize your source directory with the necessary TokenRing configuration file, pass the --initialize flag after your source directory. 
-This will initialize a new .tokenring directory in your project, which stores a coder-config.js config file for your project that you can customize, as well as a sqlite database which stores your chat history.
+To initialize your source directory with the necessary TokenRing configuration file, pass the --initialize flag after
+your source directory.
+This will initialize a new .tokenring directory in your project, which stores a coder-config.js config file for your
+project that you can customize, as well as a sqlite database which stores your chat history.
 
 ```
 tr-coder --source ./path-to-your-codebase --initialize
@@ -130,4 +137,5 @@ This project is MIT licensed
 
 ---
 
-This README provides a high-level overview of the Coder App functionality and usage. For detailed command usage, use `/help` inside the chat REPL.
+This README provides a high-level overview of the Coder App functionality and usage. For detailed command usage, use
+`/help` inside the chat REPL.

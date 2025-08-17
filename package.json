@@ -1,65 +1,66 @@
 {
-	"name": "@token-ring/coder",
-	"description": "TokenRing Coder Application",
-	"version": "0.1.0",
-	"bin": {
-		"tr-coder": "dist/tr-coder.js"
-	},
-	"dependencies": {
-		"@inquirer/prompts": "^7.5.3",
-		"@token-ring/ai-client": "0.1.0",
-		"@token-ring/aws": "0.1.0",
-		"@token-ring/chat": "0.1.0",
-		"@token-ring/chrome": "0.1.0",
-		"@token-ring/cli": "0.1.0",
-		"@token-ring/code-watch": "0.1.0",
-		"@token-ring/codebase": "0.1.0",
-		"@token-ring/database": "0.1.0",
-		"@token-ring/docker": "0.1.0",
-		"@token-ring/feedback": "0.1.0",
-		"@token-ring/file-index": "0.1.0",
-		"@token-ring/filesystem": "0.1.0",
-		"@token-ring/git": "0.1.0",
-		"@token-ring/history": "0.1.0",
-		"@token-ring/javascript": "0.1.0",
-		"@token-ring/kubernetes": "0.1.0",
-		"@token-ring/local-filesystem": "0.1.0",
-		"@token-ring/memory": "0.1.0",
-		"@token-ring/planner": "0.1.0",
-		"@token-ring/queue": "0.1.0",
-		"@token-ring/registry": "0.1.0",
-		"@token-ring/repo-map": "0.1.0",
+ "name": "@token-ring/coder",
+ "description": "TokenRing Coder Application",
+ "version": "0.1.0",
+ "bin": {
+  "tr-coder": "dist/tr-coder.js"
+ },
+ "dependencies": {
+  "@inquirer/prompts": "^7.8.3",
+  "@token-ring/ai-client": "0.1.0",
+  "@token-ring/aws": "0.1.0",
+  "@token-ring/chat": "0.1.0",
+  "@token-ring/chrome": "0.1.0",
+  "@token-ring/cli": "0.1.0",
+  "@token-ring/code-watch": "0.1.0",
+  "@token-ring/codebase": "0.1.0",
+  "@token-ring/database": "0.1.0",
+  "@token-ring/docker": "0.1.0",
+  "@token-ring/feedback": "0.1.0",
+  "@token-ring/file-index": "0.1.0",
+  "@token-ring/filesystem": "0.1.0",
+  "@token-ring/git": "0.1.0",
+  "@token-ring/history": "0.1.0",
+  "@token-ring/javascript": "0.1.0",
+  "@token-ring/kubernetes": "0.1.0",
+  "@token-ring/local-filesystem": "0.1.0",
+  "@token-ring/memory": "0.1.0",
+  "@token-ring/planner": "0.1.0",
+  "@token-ring/queue": "0.1.0",
+  "@token-ring/registry": "0.1.0",
+  "@token-ring/repo-map": "0.1.0",
   "@token-ring/scraperapi": "0.1.0",
   "@token-ring/serper": "0.1.0",
-		"@token-ring/sqlite-storage": "0.1.0",
-		"@token-ring/testing": "0.1.0",
-		"@token-ring/workflow": "0.1.0"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "^2.1.4",
-		"husky": "^9.1.7",
-		"jsdom": "^26.0.0",
-		"node-gyp": "^11.3.0",
-		"trufflehog": "^0.0.5",
-		"ts": "^0.2.2",
-		"vitest": "^3.2.4"
-	},
-	"license": "MIT",
-	"scripts": {
-		"xpreinstall": "test -f pkg/ai-client/package.json || echo 'Updating git submodules...' && git submodule update --init --recursive",
-		"build-container": "docker build -t token-ring/coder:latest -f docker/Dockerfile .",
-		"coder-container": "docker run -ti --net host -v ./:/repo:rw token-ring/coder:latest",
-		"build": "tsc",
-		"code-debug": "bun --inspect src/tr-coder.js --source ./",
-		"coder": "bun src/tr-coder.js --source ./",
-		"typecheck": "tsc -p tsconfig.tson --noEmit",
-		"build:ts": "tsc -p tsconfig.tson",
-		"test": "vitest run",
-		"prepare": "husky",
-		"biome": "biome format --fix"
-	},
-	"type": "module",
-	"workspaces": [
-		"pkg/*"
-	]
+  "@token-ring/sqlite-storage": "0.1.0",
+  "@token-ring/testing": "0.1.0",
+  "@token-ring/workflow": "0.1.0"
+ },
+ "devDependencies": {
+  "@biomejs/biome": "^2.2.0",
+  "husky": "^9.1.7",
+  "jsdom": "^26.1.0",
+  "node-gyp": "^11.3.0",
+  "trufflehog": "^0.0.5",
+  "ts": "^0.2.2",
+  "vitest": "^3.2.4"
+ },
+ "license": "MIT",
+ "scripts": {
+  "xpreinstall": "test -f pkg/ai-client/package.json || echo 'Updating git submodules...' && git submodule update --init --recursive",
+  "build-container": "docker build -t token-ring/coder:latest -f docker/Dockerfile .",
+  "coder-container": "docker run -ti --net host -v ./:/repo:rw token-ring/coder:latest",
+  "build": "tsc",
+  "code-debug": "bun --inspect src/tr-coder.js --source ./",
+  "coder": "bun src/tr-coder.js --source ./",
+  "typecheck": "tsc -p tsconfig.tson --noEmit",
+  "build:ts": "tsc -p tsconfig.tson",
+  "test": "vitest run",
+  "prepare": "husky",
+  "biome": "biome format --fix",
+  "update-all-dependencies-latest": "git submodule foreach npx npm-check-updates -u"
+ },
+ "type": "module",
+ "workspaces": [
+  "pkg/*"
+ ]
 }
