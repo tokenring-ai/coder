@@ -180,7 +180,9 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
 
   const {defaults} = config;
 
-  const defaultTools = ['file/search', 'file/modify', 'file/patch'];
+  const defaultTools : string[] = [
+    ...Object.values(FilesystemPackage.tools).map((tool) => tool.name),
+  ];
 
   await registry.tools.enableTools(defaults.tools ?? defaultTools);
   console.log(chalk.greenBright(banner));
