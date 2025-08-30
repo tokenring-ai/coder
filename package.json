@@ -25,14 +25,18 @@
   "@token-ring/kubernetes": "0.1.0",
   "@token-ring/local-filesystem": "0.1.0",
   "@token-ring/memory": "0.1.0",
+  "@token-ring/mysql": "0.1.0",
   "@token-ring/planner": "0.1.0",
   "@token-ring/queue": "0.1.0",
   "@token-ring/registry": "0.1.0",
   "@token-ring/repo-map": "0.1.0",
+  "@token-ring/s3": "0.1.0",
+  "@token-ring/sandbox": "0.1.0",
   "@token-ring/scraperapi": "0.1.0",
   "@token-ring/serper": "0.1.0",
   "@token-ring/sqlite-storage": "0.1.0",
   "@token-ring/testing": "0.1.0",
+  "@token-ring/websearch": "0.1.0",
   "@token-ring/workflow": "0.1.0"
  },
  "devDependencies": {

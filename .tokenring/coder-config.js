@@ -88,77 +88,71 @@ function makeTestingEntry(pkgRoot, dir, resources) {
 }
 
 const packageRoots = ["pkg"];
-let dynamicResources = {};
+let dynamicCodebaseResources = {};
+let dynamicRepoMapResources = {};
+let dynamicTestingResources = {};
+
 for (const pkgRoot of packageRoots) {
  const dirs = getSubdirectories(pkgRoot);
  for (const dir of dirs) {
-  makeFileTreeEntry(pkgRoot, dir, dynamicResources);
-  makeRepoMapEntry(pkgRoot, dir, dynamicResources);
-  makeWholeFileEntry(pkgRoot, dir, dynamicResources);
-  makeTestingEntry(pkgRoot, dir, dynamicResources);
+  makeFileTreeEntry(pkgRoot, dir, dynamicCodebaseResources);
+  makeRepoMapEntry(pkgRoot, dir, dynamicRepoMapResources);
+  makeWholeFileEntry(pkgRoot, dir, dynamicCodebaseResources);
+  makeTestingEntry(pkgRoot, dir, dynamicTestingResources);
  }
 }
 
+/**
+ * @type {import("../src/config.types.js").CoderConfig}
+ */
 export default {
  defaults: {
-  model: "gpt-5", //gpt-4.1",
-  resources: ["testing*"], //["fileTree*", "testing*"],
-  selectedFiles: ["AGENTS.md"],
   persona: "code",
  },
- serper: {
-  apiKey: process.env.SERPER_API_KEY,
+ personas: {
+  code: {
+   // Add your persona configuration here if needed
+  }
  },
- scraperapi: {
-  apiKey: process.env.SCRAPERAPI_API_KEY,
- },
- // ... existing code ...
  models: {
-  anthropic: {
-   displayName: "Anthropic",
+  Anthropic: {
+   provider: "anthropic",
    apiKey: process.env.ANTHROPIC_API_KEY,
-
   },
-  azure: {
-   displayName: "Azure",
+  Azure: {
+   provider: "azure",
    apiKey: process.env.AZURE_API_KEY,
    baseURL: process.env.AZURE_API_ENDPOINT,
   },
-  cerebras: {
-   displayName: "Cerebras",
+  Cerebras: {
+   provider: "cerebras",
    apiKey: process.env.CEREBRAS_API_KEY,
-
   },
-  deepseek: {
-   displayName: "DeepSeek",
+  DeepSeek: {
+   provider: "deepseek",
    apiKey: process.env.DEEPSEEK_API_KEY,
-
   },
-  google: {
-   displayName: "Google",
+  Google: {
+   provider: "google",
    apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-
   },
-  groq: {
-   displayName: "Groq",
+  Groq: {
+   provider: "groq",
    apiKey: process.env.GROQ_API_KEY,
-
   },
+  /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint
   llama: {
-   displayName: "llama",
+   provider: "llama",
    apiKey: process.env.LLAMA_API_KEY,
-
-  },
-  openai: {
-   displayName: "OpenAI",
+  },*/
+  OpenAI: {
+   provider: "openai",
    apiKey: process.env.OPENAI_API_KEY,
-
   },
-  openaiCompatible: {
-   displayName: "LlamaCPP",
+  LlamaCPP: {
+   provider: "openaiCompatible",
    baseURL: "http://192.168.15.20:11434",
    apiKey: "sk-ABCD1234567890",
-
    generateModelSpec(modelInfo) {
     let {id: model} = modelInfo;
     model = model.replace(/:latest$/, "");
@@ -182,10 +176,9 @@ export default {
     return {type, capabilities};
    },
   },
-  openrouter: {
-   displayName: "OpenRouter",
+  OpenRouter: {
+   provider: "openrouter",
    apiKey: process.env.OPENROUTER_API_KEY,
-
    modelFilter: (model) => {
     if (!model.supported_parameters?.includes("tools")) {
      return false;
@@ -195,163 +188,81 @@ export default {
     return true;
    },
   },
-  perplexity: {
-   displayName: "Perplexity",
+  Perplexity: {
+   provider: "perplexity",
    apiKey: process.env.PERPLEXITY_API_KEY,
   },
   /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint
 		qwen: {
-			displayName: "Qwen",
+			provider: "qwen",
 			apiKey: process.env.DASHSCOPE_API_KEY,
-
 		},*/
-  xai: {
-   displayName: "xAi",
+  xAi: {
+   provider: "xai",
    apiKey: process.env.XAI_API_KEY,
-
   },
-  ollama: [
-   {
-    displayName: "OllamaCloud",
-    baseURL: process.env.OLLAMA_CLOUD_URL,
-
-    generateModelSpec(modelInfo) {
-     let {name, model, details} = modelInfo;
-     name = name.replace(/:latest$/, "");
-     name = name.replace(/^hf.co\/([^\/]*)\//, "");
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (
-      model.match(/qwen[23]/i) ||
-      details?.family?.match?.(/qwen3/i)
-     ) {
-      Object.assign(capabilities, {
-       reasoning: 2,
-       tools: 2,
-       intelligence: 2,
-       speed: 2,
-       contextLength: 128000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
-   },
-   {
-    displayName: "OllamaLan",
-    baseURL: process.env.OLLAMA_LAN_URL,
-
-    generateModelSpec(modelInfo) {
-     let {name, model, details} = modelInfo;
-     name = name.replace(/:latest$/, "");
-     name = name.replace(/^hf.co\/([^\/]*)\//, "");
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (
-      model.match(/qwen[23]/i) ||
-      details?.family?.match?.(/qwen3/i)
-     ) {
-      Object.assign(capabilities, {
-       reasoning: 1,
-       tools: 1,
-       intelligence: 1,
-       speed: 1,
-       contextLength: 128000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
-   },
-   {
-    displayName: "OllamaRunPod",
-    baseURL: "https://jw6zy2bs9u3spw-11434.proxy.runpod.net/api",
-
-    generateModelSpec(modelInfo) {
-     let {name, model, details} = modelInfo;
-     name = name.replace(/:latest$/, "");
-     name = name.replace(/^hf.co\/([^\/]*)\//, "");
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (
-      model.match(/qwen[23]/i) ||
-      details?.family?.match?.(/qwen3/i)
-     ) {
-      Object.assign(capabilities, {
-       tools: 1,
-       contextLength: 16000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
-   },
-   {
-    displayName: "OllamaLocal",
-    baseURL: process.env.OLLAMA_LOCAL_URL,
-
-    generateModelSpec(modelInfo) {
-     let {name, model, details} = modelInfo;
-     name = name.replace(/:latest$/, "");
-     name = name.replace(/^hf.co\/([^\/]*)\//, "");
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (
-      model.match(/qwen[23]/i) ||
-      details?.family?.match?.(/qwen3/i)
-     ) {
-      Object.assign(capabilities, {
-       tools: 1,
-       contextLength: 16000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
-   },
-  ],
  },
- indexedFiles: [{path: "./"}],
- watchedFiles: [{path: "./", include: /.(js|md|jsx|sql|txt)$/}],
- resources: {
-  ...dynamicResources,
-  "fileTree/tr-coder": {
-   type: "fileTree",
-   description: `Coder App File Tree`,
-   items: [
-    {path: `./`, include: /\.(txt|js|jsx|md|json)$/, exclude: /\/pkg\//},
-   ],
+ websearch: {
+  serper: {
+   type: "serper",
+   apiKey: process.env.SERPER_API_KEY,
   },
-  "testing/all/biome": {
-   type: "shell-testing",
-   name: "testing/all/biome",
-   description: `Runs biome on the repository`,
-   command: "npx @biomejs/biome format --write\n",
-   workingDirectory: "./",
+  scraperapi: {
+   type: "scraperapi",
+   apiKey: process.env.SCRAPERAPI_API_KEY,
   },
-  "testing/all/tsc": {
-   type: "shell-testing",
-   name: "testing/all/tsc",
-   description: `Runs tsc on the repository`,
-   command:
-    "npx tsc --noEmit --allowJs -t esnext -m nodenext --checkJs src/tr-coder.js",
-   workingDirectory: "./",
+ },
+ filesystem: {
+  default: {
+   selectedFiles: ["AGENTS.md"],
+  },
+  providers: {
+   local: {
+    type: "local",
+    baseDirectory: path.resolve(import.meta.dirname,"../"),
+    indexedFiles: [{path: "./"}],
+    watchedFiles: [{path: "./", include: /.(js|md|jsx|sql|txt)$/}],
+   }
+  }
+ },
+ codebase: {
+  resources: {
+   ...dynamicCodebaseResources,
+   "fileTree/tr-coder": {
+    type: "fileTree",
+    description: `Coder App File Tree`,
+    items: [
+     {path: `./`, include: /\.(txt|js|jsx|md|json)$/, exclude: /\/pkg\//},
+    ],
+   },
+  },
+ },
+ repoMap: {
+  resources: {
+   ...dynamicRepoMapResources,
+  },
+ },
+ testing: {
+  default: {
+   resources: ["testing*"],
+  },
+  resources: {
+   ...dynamicTestingResources,
+   "testing/all/biome": {
+    type: "shell-testing",
+    name: "testing/all/biome",
+    description: `Runs biome on the repository`,
+    command: "npx @biomejs/biome format --write\n",
+    workingDirectory: "./",
+   },
+   "testing/all/tsc": {
+    type: "shell-testing",
+    name: "testing/all/tsc",
+    description: `Runs tsc on the repository`,
+    command:
+     "npx tsc --noEmit --allowJs -t esnext -m nodenext --checkJs src/tr-coder.js",
+    workingDirectory: "./",
+   },
   },
  },
 };

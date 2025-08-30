@@ -23,14 +23,18 @@
         "@token-ring/kubernetes": "0.1.0",
         "@token-ring/local-filesystem": "0.1.0",
         "@token-ring/memory": "0.1.0",
+        "@token-ring/mysql": "0.1.0",
         "@token-ring/planner": "0.1.0",
         "@token-ring/queue": "0.1.0",
         "@token-ring/registry": "0.1.0",
         "@token-ring/repo-map": "0.1.0",
+        "@token-ring/s3": "0.1.0",
+        "@token-ring/sandbox": "0.1.0",
         "@token-ring/scraperapi": "0.1.0",
         "@token-ring/serper": "0.1.0",
         "@token-ring/sqlite-storage": "0.1.0",
         "@token-ring/testing": "0.1.0",
+        "@token-ring/websearch": "0.1.0",
         "@token-ring/workflow": "0.1.0",
       },
       "devDependencies": {
@@ -65,6 +69,7 @@
         "@ai-sdk/azure": "^2.0.15",
         "@ai-sdk/cerebras": "^1.0.7",
         "@ai-sdk/deepseek": "^1.0.7",
+        "@ai-sdk/fal": "^1.0.8",
         "@ai-sdk/google": "^2.0.6",
         "@ai-sdk/groq": "^2.0.10",
         "@ai-sdk/openai": "^2.0.15",
@@ -105,6 +110,14 @@
         "zod": "^4.0.17",
       },
     },
+    "pkg/cdn": {
+      "name": "@token-ring/cdn",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+      },
+    },
     "pkg/chat": {
       "name": "@token-ring/chat",
       "version": "0.1.0",
@@ -125,6 +138,7 @@
       "dependencies": {
         "@token-ring/chat": "0.1.0",
         "@token-ring/registry": "0.1.0",
+        "@token-ring/websearch": "0.1.0",
         "puppeteer": "^24.16.2",
       },
       "devDependencies": {
@@ -196,6 +210,7 @@
         "@token-ring/chat": "0.1.0",
         "@token-ring/filesystem": "0.1.0",
         "@token-ring/registry": "0.1.0",
+        "@token-ring/sandbox": "0.1.0",
         "@token-ring/utility": "0.1.0",
         "execa": "^9.6.0",
         "glob-gitignore": "^1.0.15",
@@ -390,6 +405,15 @@
         "@token-ring/utility": "0.1.0",
       },
     },
+    "pkg/mysql": {
+      "name": "@token-ring/mysql",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/database": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+        "mysql2": "^3.14.1",
+      },
+    },
     "pkg/planner": {
       "name": "@token-ring/planner",
       "version": "0.1.0",
@@ -446,6 +470,25 @@
         "vitest": "^3.2.4",
       },
     },
+    "pkg/s3": {
+      "name": "@token-ring/s3",
+      "version": "0.1.0",
+      "dependencies": {
+        "@aws-sdk/client-s3": "^3.0.0",
+        "@token-ring/cdn": "0.1.0",
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+      },
+    },
+    "pkg/sandbox": {
+      "name": "@token-ring/sandbox",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+        "zod": "^4.0.17",
+      },
+    },
     "pkg/scraperapi": {
       "name": "@token-ring/scraperapi",
       "version": "0.1.0",
@@ -453,6 +496,7 @@
         "@token-ring/ai-client": "0.1.0",
         "@token-ring/chat": "0.1.0",
         "@token-ring/registry": "0.1.0",
+        "@token-ring/websearch": "0.1.0",
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^3.2.4",
@@ -466,6 +510,7 @@
         "@token-ring/ai-client": "0.1.0",
         "@token-ring/chat": "0.1.0",
         "@token-ring/registry": "0.1.0",
+        "@token-ring/websearch": "0.1.0",
         "zod": "^4.0.17",
       },
       "devDependencies": {
@@ -503,6 +548,29 @@
         "@token-ring/registry": "0.1.0",
       },
     },
+    "pkg/websearch": {
+      "name": "@token-ring/websearch",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+        "zod": "^4.0.17",
+      },
+    },
+    "pkg/wikipedia": {
+      "name": "@token-ring/wikipedia",
+      "version": "0.1.0",
+      "dependencies": {
+        "@token-ring/ai-client": "0.1.0",
+        "@token-ring/chat": "0.1.0",
+        "@token-ring/registry": "0.1.0",
+        "zod": "^4.0.17",
+      },
+      "devDependencies": {
+        "@vitest/coverage-v8": "^3.2.4",
+        "vitest": "^3.2.4",
+      },
+    },
     "pkg/workflow": {
       "name": "@token-ring/workflow",
       "version": "0.1.0",
@@ -529,6 +597,8 @@
     "@ai-sdk/cerebras": ["@ai-sdk/cerebras@1.0.8", "", { "dependencies": { "@ai-sdk/openai-compatible": "1.0.8", "@ai-sdk/provider": "2.0.0", "@ai-sdk/provider-utils": "3.0.3" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-UGB5uRuCg1D7p43cD73I/ZBYknlKTj9wbjTHvdtAUrcAGMFk4jm6VB6uIgjUeDOcR2gv7jFnk3iLvMj87MLviA=="],
 
     "@ai-sdk/deepseek": ["@ai-sdk/deepseek@1.0.8", "", { "dependencies": { "@ai-sdk/openai-compatible": "1.0.8", "@ai-sdk/provider": "2.0.0", "@ai-sdk/provider-utils": "3.0.3" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-Lu6g34ca1noAabj3E+uuaoAECc9JuQ8aQwyQjJ+pF92r5knucPHy219RCmFquAhpH4ae+M74jLNdxhpPTjBRHg=="],
+
+    "@ai-sdk/fal": ["@ai-sdk/fal@1.0.11", "", { "dependencies": { "@ai-sdk/provider": "2.0.0", "@ai-sdk/provider-utils": "3.0.7" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-WK0abPDC0/ALovRv2G7EjwP2iMSo4lNWJqzSuoCIde2sq051tuxerSASd5FgerK1LbfsAGHZTkX+s/aPiycCEg=="],
 
     "@ai-sdk/gateway": ["@ai-sdk/gateway@1.0.7", "", { "dependencies": { "@ai-sdk/provider": "2.0.0", "@ai-sdk/provider-utils": "3.0.3" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-Athrq7OARuNc0iHZJP6InhSQ53tImCc990vMWyR1UHaZgPZJbXjKhIMiOj54F0I0Nlemx48V4fHYUTfLkJotnQ=="],
 
@@ -1166,6 +1236,8 @@
 
     "@token-ring/aws": ["@token-ring/aws@workspace:pkg/aws"],
 
+    "@token-ring/cdn": ["@token-ring/cdn@workspace:pkg/cdn"],
+
     "@token-ring/chat": ["@token-ring/chat@workspace:pkg/chat"],
 
     "@token-ring/chrome": ["@token-ring/chrome@workspace:pkg/chrome"],
@@ -1202,6 +1274,8 @@
 
     "@token-ring/memory": ["@token-ring/memory@workspace:pkg/memory"],
 
+    "@token-ring/mysql": ["@token-ring/mysql@workspace:pkg/mysql"],
+
     "@token-ring/planner": ["@token-ring/planner@workspace:pkg/planner"],
 
     "@token-ring/queue": ["@token-ring/queue@workspace:pkg/queue"],
@@ -1212,6 +1286,10 @@
 
     "@token-ring/runnable": ["@token-ring/runnable@workspace:pkg/runnable"],
 
+    "@token-ring/s3": ["@token-ring/s3@workspace:pkg/s3"],
+
+    "@token-ring/sandbox": ["@token-ring/sandbox@workspace:pkg/sandbox"],
+
     "@token-ring/scraperapi": ["@token-ring/scraperapi@workspace:pkg/scraperapi"],
 
     "@token-ring/serper": ["@token-ring/serper@workspace:pkg/serper"],
@@ -1221,6 +1299,10 @@
     "@token-ring/testing": ["@token-ring/testing@workspace:pkg/testing"],
 
     "@token-ring/utility": ["@token-ring/utility@workspace:pkg/utility"],
+
+    "@token-ring/websearch": ["@token-ring/websearch@workspace:pkg/websearch"],
+
+    "@token-ring/wikipedia": ["@token-ring/wikipedia@workspace:pkg/wikipedia"],
 
     "@token-ring/workflow": ["@token-ring/workflow@workspace:pkg/workflow"],
 
@@ -2611,6 +2693,8 @@
     "zod": ["zod@4.0.17", "", {}, "sha512-1PHjlYRevNxxdy2JZ8JcNAw7rX8V9P1AKkP+x/xZfxB0K5FYfuV+Ug6P/6NVSR2jHQ+FzDDoDHS04nYUsOIyLQ=="],
 
     "zod-to-json-schema": ["zod-to-json-schema@3.24.6", "", { "peerDependencies": { "zod": "^3.24.1" } }, "sha512-h/z3PKvcTcTetyjl1fkj79MHNEjm+HpD6NXheWjzOekY7kV+lwDYnHw+ivHkijnCSMz1yJaWBD9vu/Fcmk+vEg=="],
+
+    "@ai-sdk/fal/@ai-sdk/provider-utils": ["@ai-sdk/provider-utils@3.0.7", "", { "dependencies": { "@ai-sdk/provider": "2.0.0", "@standard-schema/spec": "^1.0.0", "eventsource-parser": "^3.0.5" }, "peerDependencies": { "zod": "^3.25.76 || ^4" } }, "sha512-o3BS5/t8KnBL3ubP8k3w77AByOypLm+pkIL/DCw0qKkhDbvhCy+L3hRTGPikpdb8WHcylAeKsjgwOxhj4cqTUA=="],
 
     "@asamuzakjp/css-color/lru-cache": ["lru-cache@10.4.3", "", {}, "sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ=="],
 
