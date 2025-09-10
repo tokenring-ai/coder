@@ -1,74 +1,48 @@
 #!/usr/bin/env node
-import * as ChatRouterPackage from "@token-ring/ai-client";
-import {ModelRegistry} from "@token-ring/ai-client";
-import {registerModels} from "@token-ring/ai-client/models";
+import {AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
+import {ModelRegistry, packageInfo as ChatRouterPackage} from "@tokenring-ai/ai-client";
+import AIService from "@tokenring-ai/ai-client/AIService";
+import {registerModels} from "@tokenring-ai/ai-client/models";
+import {AWSService} from "@tokenring-ai/aws";
+import {ChromeWebSearchResource, packageInfo as ChromePackage} from "@tokenring-ai/chrome";
+import {packageInfo as CLIPackage, REPLService} from "@tokenring-ai/cli";
+import {CodeWatchService} from "@tokenring-ai/code-watch";
+import {CodeBaseService, FileTreeResource, WholeFileResource} from "@tokenring-ai/codebase";
+import DatabaseService from "@tokenring-ai/database/DatabaseService";
+import {DockerSandboxResource, DockerService} from "@tokenring-ai/docker";
+import {packageInfo as FeedbackPackage} from "@tokenring-ai/feedback";
+import {EphemeralFileIndexProvider, FileIndexService, packageInfo as FileIndexPackage} from "@tokenring-ai/file-index";
+import {FileSystemService, packageInfo as FilesystemPackage} from "@tokenring-ai/filesystem";
+import {GitService, packageInfo as GitPackage} from "@tokenring-ai/git";
 
-import * as models from "@token-ring/ai-client/models";
-
-import * as AWSPackage from "@token-ring/aws";
-import {AWSService} from "@token-ring/aws";
-import * as ChatPackage from "@token-ring/chat";
-import {ChatService} from "@token-ring/chat";
-import {ChromeWebSearchResource} from "@token-ring/chrome";
-import * as ChromePackage from "@token-ring/chrome";
-import * as CLIPackage from "@token-ring/cli";
-import {ReplHumanInterfaceService, REPLService} from "@token-ring/cli";
-import * as CodeWatchPackage from "@token-ring/code-watch";
-import {CodeWatchService} from "@token-ring/code-watch";
-import * as CodebasePackage from "@token-ring/codebase";
-import {CodeBaseService, FileTreeResource, WholeFileResource} from "@token-ring/codebase";
-import * as DatabasePackage from "@token-ring/database";
-import DatabaseService from "@token-ring/database/DatabaseService.js";
-import * as DockerPackage from "@token-ring/docker";
-import {DockerService, DockerSandboxResource} from "@token-ring/docker";
-import {S3FileSystemProvider} from "@token-ring/s3";
-import * as SandboxPackage from "@token-ring/sandbox";
-import SandboxService from "@token-ring/sandbox/SandboxService.js";
-import * as FeedbackPackage from "@token-ring/feedback";
-import * as FileIndexPackage from "@token-ring/file-index";
-import {FileSystemService} from "@token-ring/filesystem";
-import * as FilesystemPackage from "@token-ring/filesystem";
-import * as GitPackage from "@token-ring/git";
-import {GitService} from "@token-ring/git";
-
-import * as HistoryPackage from "@token-ring/history";
-import * as JavascriptPackage from "@token-ring/javascript";
-import * as KubernetesPackage from "@token-ring/kubernetes";
-import * as LocalFileSystemPackage from "@token-ring/local-filesystem";
-import {LocalFileSystemService} from "@token-ring/local-filesystem";
-import * as MemoryPackage from "@token-ring/memory";
-import {EphemeralMemoryService} from "@token-ring/memory";
-import {MySQLService} from "@token-ring/mysql";
-import * as PlannerPackage from "@token-ring/planner";
-import * as QueuePackage from "@token-ring/queue";
-import {WorkQueueService} from "@token-ring/queue";
-import * as RegistryPackage from "@token-ring/registry";
-import {Registry} from "@token-ring/registry";
-import * as RepoMapPackage from "@token-ring/repo-map";
-import {RepoMapResource, RepoMapService} from "@token-ring/repo-map";
-import * as ScraperAPIPackage from "@token-ring/scraperapi";
-import {ScraperAPIWebSearchResource} from "@token-ring/scraperapi";
-import * as SerperPackage from "@token-ring/serper";
-import {SerperWebSearchResource} from "@token-ring/serper";
-import * as SQLiteChatStoragePackage from "@token-ring/sqlite-storage";
+import {packageInfo as HistoryPackage} from "@tokenring-ai/history";
+import {packageInfo as JavascriptPackage} from "@tokenring-ai/javascript";
+import {packageInfo as KubernetesPackage} from "@tokenring-ai/kubernetes";
+import {LocalFileSystemService, packageInfo as LocalFileSystemPackage} from "@tokenring-ai/local-filesystem";
+import {EphemeralMemoryService, packageInfo as MemoryPackage} from "@tokenring-ai/memory";
+import {MySQLService} from "@tokenring-ai/mysql";
+import {packageInfo as QueuePackage, WorkQueueService} from "@tokenring-ai/queue";
+import {RepoMapResource, RepoMapService} from "@tokenring-ai/repo-map";
+import {S3FileSystemProvider} from "@tokenring-ai/s3";
+import {packageInfo as SandboxPackage} from "@tokenring-ai/sandbox";
+import SandboxService from "@tokenring-ai/sandbox/SandboxService";
+import {ScraperAPIWebSearchResource} from "@tokenring-ai/scraperapi";
+import {SerperWebSearchResource} from "@tokenring-ai/serper";
 import {
+  packageInfo as SQLiteChatStoragePackage,
   SQLiteChatCheckpointStorage,
   SQLiteChatHistoryStorage,
   SQLiteChatMessageStorage
-} from "@token-ring/sqlite-storage";
-import initializeLocalDatabase from "@token-ring/sqlite-storage/db/initializeLocalDatabase";
-import * as TestingPackage from "@token-ring/testing";
-import {ShellCommandTestingResource, TestingService} from "@token-ring/testing";
-import {WebSearchService} from "@token-ring/websearch";
-import * as WebSearchPackage from "@token-ring/websearch";
-import * as WorkflowPackage from "@token-ring/workflow";
-import {WorkflowService} from "@token-ring/workflow";
+} from "@tokenring-ai/sqlite-storage";
+import initializeLocalDatabase from "@tokenring-ai/sqlite-storage/db/initializeLocalDatabase";
+import {packageInfo as TestingPackage, ShellCommandTestingResource, TestingService} from "@tokenring-ai/testing";
+import {WebSearchService} from "@tokenring-ai/websearch";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "node:fs";
 import path from "path";
+import agents from "./agents.ts";
 import {CoderConfig} from "./config.types.js";
-import defaultPersonas from "./defaults/personas.js";
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
 import {error} from "./prettyString.js";
 
@@ -147,15 +121,24 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     );
   }
 
-
   const configImport = await import(configFile);
   const config = configImport.default as CoderConfig;
 
-  const registry = new Registry();
-  await registry.start();
+  const baseDirectory = resolvedSource;
+  const db = initializeLocalDatabase(
+    path.resolve(configDirectory, "./coder-database.sqlite"),
+  );
 
-  await registry.addPackages(
-    ChatPackage,
+  const agentTeam = new AgentTeam();
+  agentTeam.events.on("serviceOutput", message => {
+    console.log(chalk.yellow(`🔧 ${message}`));
+  })
+  agentTeam.events.on("serviceError", message => {
+    console.log(chalk.red(`🔧 ❌ ${message}`));
+  })
+
+  await agentTeam.addPackages([
+    AgentPackage,
     ChatRouterPackage,
     ChromePackage,
     CLIPackage,
@@ -168,44 +151,21 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     KubernetesPackage,
     LocalFileSystemPackage,
     MemoryPackage,
-    PlannerPackage,
     QueuePackage,
-    RegistryPackage,
     SandboxPackage,
     SQLiteChatStoragePackage,
     TestingPackage,
-    WorkflowPackage,
-  );
-
-  const baseDirectory = resolvedSource;
-  const db = initializeLocalDatabase(
-    path.resolve(configDirectory, "./coder-database.sqlite"),
-  );
-
-  const {defaults} = config;
-
-  const defaultTools: string[] = [
-    ...Object.values(FilesystemPackage.tools).map((tool) => tool.name),
-  ];
-
-  await registry.tools.enableTools(defaults.tools ?? defaultTools);
-  console.log(chalk.greenBright(banner));
-
-  // Initialize the chat context with personas
-  const chatService = new ChatService({
-    personas: config.personas || defaultPersonas, // Use loaded config
-    persona: config.defaults?.persona || "code", // Use loaded config
-  });
+  ]);
 
   const modelRegistry = new ModelRegistry();
   await registerModels(config.models, modelRegistry);
 
+  const filesystemService = new FileSystemService();
 
-  await registry.services.addServices(
-    chatService,
-    new REPLService(),
-    new ReplHumanInterfaceService(),
+  agentTeam.services.register(
     modelRegistry,
+    filesystemService,
+    new AIService(),
     new SQLiteChatMessageStorage({db}),
     new SQLiteChatHistoryStorage({db}),
     new SQLiteChatCheckpointStorage({db}),
@@ -214,7 +174,6 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     new GitService(),
     //new RecordingService(),
     //new SpeechToTextService(),
-    new WorkflowService(),
   );
 
   config.filesystem ??= {
@@ -226,36 +185,28 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     }
   }
 
-  
-  if (config.filesystem) {
-    const filesystemService = new FileSystemService();
-    await registry.services.addServices(filesystemService);
-    await registry.addPackages(FilesystemPackage);
 
-    if (! config.filesystem.providers) {
-      throw new Error(`No filesystem providers configured`);
-    }
-    for (const name in config.filesystem.providers) {
-      const filesystemConfig = config.filesystem.providers[name];
-      switch (filesystemConfig.type) {
-        case "local":
-          filesystemService.registerFileSystemProvider(name, new LocalFileSystemService(filesystemConfig));
-          break;
-        case "s3":
-          filesystemService.registerFileSystemProvider(name, new S3FileSystemProvider(filesystemConfig));
-          break;
-        default:
-          throw new Error(`Invalid filesystem type for filesystem ${name}`);
-      }
-    }
-    filesystemService.setActiveFileSystemProviderName(config.filesystem.default?.provider ?? filesystemService.getAvailableFileSystemProviders()[0]);
+  if (!config.filesystem.providers) {
+    throw new Error(`No filesystem providers configured`);
   }
-
+  for (const name in config.filesystem.providers) {
+    const filesystemConfig = config.filesystem.providers[name];
+    switch (filesystemConfig.type) {
+      case "local":
+        filesystemService.registerFileSystemProvider(name, new LocalFileSystemService(filesystemConfig));
+        break;
+      case "s3":
+        filesystemService.registerFileSystemProvider(name, new S3FileSystemProvider(filesystemConfig));
+        break;
+      default:
+        throw new Error(`Invalid filesystem type for filesystem ${name}`);
+    }
+  }
+  filesystemService.setActiveFileSystemProviderName(config.filesystem.default?.provider ?? filesystemService.getAvailableFileSystemProviders()[0]);
 
   if (config.websearch) {
     const websearchService = new WebSearchService();
-    await registry.services.addServices(websearchService);
-    await registry.addPackages(WebSearchPackage);
+    agentTeam.services.register(websearchService);
 
     for (const name in config.websearch) {
       const websearchConfig = config.websearch[name];
@@ -276,14 +227,12 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   }
   if (config.codewatch) {
     const watchedFileService = new CodeWatchService(config.codewatch);
-    await registry.services.addServices(watchedFileService);
-    await registry.addPackages(CodeWatchPackage);
+    agentTeam.services.register(watchedFileService);
   }
 
   if (config.codebase) {
     const codebaseService = new CodeBaseService();
-    await registry.services.addServices(codebaseService);
-    await registry.addPackages(CodebasePackage);
+    agentTeam.services.register(codebaseService);
 
     for (const name in config.codebase.resources) {
       const filesystemConfig = config.codebase.resources[name];
@@ -302,14 +251,13 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
       }
     }
     if (config.codebase.default?.resources) {
-      codebaseService.enableResources(...config.codebase.default.resources);
+      codebaseService.enableResources(config.codebase.default.resources);
     }
   }
 
   if (config.repoMap) {
     const repoMapService = new RepoMapService();
-    await registry.services.addServices(repoMapService);
-    await registry.addPackages(RepoMapPackage);
+    agentTeam.services.register(repoMapService);
     if (config.repoMap.resources) {
       for (const name in config.repoMap.resources) {
         const repoMapConfig = config.repoMap.resources[name];
@@ -323,14 +271,13 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
       }
     }
     if (config.repoMap.default?.resources) {
-      repoMapService.enableResources(...config.repoMap.default.resources);
+      repoMapService.enableResources(config.repoMap.default.resources);
     }
   }
 
   if (config.testing) {
     const testingService = new TestingService();
-    await registry.services.addServices(testingService);
-    await registry.addPackages(TestingPackage);
+    agentTeam.services.register(testingService);
 
     if (config.testing.resources) {
       for (const name in config.testing.resources) {
@@ -345,14 +292,13 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
       }
     }
     if (config.testing.default?.resources) {
-      testingService.enableResources(...config.testing.default.resources);
+      testingService.enableResources(config.testing.default.resources);
     }
   }
 
   if (config.database) {
     const databaseService = new DatabaseService();
-    await registry.services.addServices(databaseService);
-    await registry.addPackages(DatabasePackage);
+    agentTeam.services.register(databaseService);
     if (config.database.resources) {
       for (const name in config.database.resources) {
         const databaseConfig = config.database.resources[name];
@@ -369,13 +315,12 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
 
   if (config.docker) {
     const dockerService = new DockerService(config.docker);
-    await registry.services.addServices(dockerService);
-    await registry.addPackages(DockerPackage);
+    agentTeam.services.register(dockerService);
   }
 
   if (config.sandbox) {
     const sandboxService = new SandboxService();
-    await registry.services.addServices(sandboxService);
+    agentTeam.services.register(sandboxService);
 
     if (config.sandbox.providers) {
       for (const name in config.sandbox.providers) {
@@ -396,9 +341,40 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
 
   if (config.aws) {
     const awsService = new AWSService(config.aws);
-    await registry.services.addServices(awsService);
-    await registry.addPackages(AWSPackage);
+    agentTeam.services.register(awsService);
   }
+
+  if (config.fileIndex) {
+    const fileIndexService = new FileIndexService();
+    agentTeam.services.register(fileIndexService);
+
+    if (config.fileIndex.providers) {
+      for (const name in config.fileIndex.providers) {
+        const fileIndexConfig = config.fileIndex.providers[name];
+        switch (fileIndexConfig.type) {
+          case "ephemeral":
+            fileIndexService.registerFileIndexProvider(name, new EphemeralFileIndexProvider());
+            break;
+        }
+      }
+    }
+  }
+
+  console.log(chalk.yellow(banner));
+
+  // Initialize agent manager
+  for (const name in agents) {
+    agentTeam.addAgentConfig(name, agents[name]);
+  }
+
+  for (const name in config.agents) {
+    agentTeam.addAgentConfig(name, config.agents[name])
+  }
+
+  //await agentTeam.createAgent("code")
+  const repl = new REPLService(agentTeam);
+
+  await repl.run();
 }
 
 const banner = `

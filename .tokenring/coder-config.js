@@ -1,7 +1,6 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import fs from "fs";
 import path from "path";
-
 function getSubdirectories(srcPath) {
  if (!fs.existsSync(srcPath)) return [];
  return fs
@@ -265,4 +264,29 @@ export default {
    },
   },
  },
+ agents: {
+  codeThink: {
+   name: "Code Deep Think Agent",
+   description: "A deep thinking code assistant that helps with development tasks",
+   visual: {
+    color: "green",
+   },
+   ai: {
+    model: "gpt-5",
+    systemPrompt:
+     "You are a deep thinking developer assistant in an interactive chat, with access to a variety of tools to safely update the users " +
+     "codebase and execute tasks the user has requested. \n" +
+     "You will see a variety of message, showing the requests the users has made over time, and a final prompt from the user, with a task " +
+     "they would like you to complete or continue. Review the users prompt and prior information, and think deeply about it. " +
+     "Then output the tag <think>, and output all of your thought about what the user is telling you to do, and what information you might need to " +
+     "complete the task, ending your thoughts with the text </think>" +
+     "Then call any tools you need to complete the task, and tell the user whether the task is complete, or whether their are items remaining to complete",
+    temperature: 0.2,
+    topP: 0.1,
+   },
+   initialCommands: [
+    "/tools enable @tokenring-ai/filesystem/*",
+   ]
+  }
+ }
 };

@@ -30,7 +30,7 @@ source code, leveraging AI to assist with code edits, refactors, testing, and mo
 
 **Main Dependencies**:
 
-- Multiple internal packages (@token-ring/*)
+- Multiple internal packages (@tokenring-ai/*)
 - @inquirer/prompts: Interactive command-line interface
 - commander: Command-line argument parsing
 
@@ -64,13 +64,13 @@ bun src/tr-coder.js --source ./path-to-codebase
 **Build Command**:
 
 ```bash
-docker build -t token-ring/coder:latest -f docker/Dockerfile .
+docker build -t tokenring-ai/coder:latest -f docker/Dockerfile .
 ```
 
 **Run Command**:
 
 ```bash
-docker run -ti --net host -v ./:/repo:rw token-ring/coder:latest
+docker run -ti --net host -v ./:/repo:rw tokenring-ai/coder:latest
 ```
 
 ## Testing

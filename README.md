@@ -56,12 +56,12 @@ source code, leveraging AI to assist with code edits, refactors, testing, and mo
 2. **Build the docker container**:
    ```bash
    # This command must be run in the root directory of the repo
-   docker build -t token-ring/coder:latest -f docker/Dockerfile .
+   docker build -t tokenring-ai/coder:latest -f docker/Dockerfile .
    ```
 
 3. **Run the docker container**:
    ```bash
-   docker run -ti --net host $(env | grep '_KEY' | sed 's/^/-e /') -v ./:/repo:rw token-ring/coder:latest
+   docker run -ti --net host $(env | grep '_KEY' | sed 's/^/-e /') -v ./:/repo:rw tokenring-ai/coder:latest
    ```
 
 #### Container Registry

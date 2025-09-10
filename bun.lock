@@ -2,40 +2,37 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "@token-ring/coder",
+      "name": "@tokenring-ai/coder",
       "dependencies": {
         "@inquirer/prompts": "^7.8.3",
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/aws": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/chrome": "0.1.0",
-        "@token-ring/cli": "0.1.0",
-        "@token-ring/code-watch": "0.1.0",
-        "@token-ring/codebase": "0.1.0",
-        "@token-ring/database": "0.1.0",
-        "@token-ring/docker": "0.1.0",
-        "@token-ring/feedback": "0.1.0",
-        "@token-ring/file-index": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/git": "0.1.0",
-        "@token-ring/history": "0.1.0",
-        "@token-ring/javascript": "0.1.0",
-        "@token-ring/kubernetes": "0.1.0",
-        "@token-ring/local-filesystem": "0.1.0",
-        "@token-ring/memory": "0.1.0",
-        "@token-ring/mysql": "0.1.0",
-        "@token-ring/planner": "0.1.0",
-        "@token-ring/queue": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/repo-map": "0.1.0",
-        "@token-ring/s3": "0.1.0",
-        "@token-ring/sandbox": "0.1.0",
-        "@token-ring/scraperapi": "0.1.0",
-        "@token-ring/serper": "0.1.0",
-        "@token-ring/sqlite-storage": "0.1.0",
-        "@token-ring/testing": "0.1.0",
-        "@token-ring/websearch": "0.1.0",
-        "@token-ring/workflow": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/aws": "0.1.0",
+        "@tokenring-ai/chrome": "0.1.0",
+        "@tokenring-ai/cli": "0.1.0",
+        "@tokenring-ai/code-watch": "0.1.0",
+        "@tokenring-ai/codebase": "0.1.0",
+        "@tokenring-ai/database": "0.1.0",
+        "@tokenring-ai/docker": "0.1.0",
+        "@tokenring-ai/feedback": "0.1.0",
+        "@tokenring-ai/file-index": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
+        "@tokenring-ai/git": "0.1.0",
+        "@tokenring-ai/history": "0.1.0",
+        "@tokenring-ai/javascript": "0.1.0",
+        "@tokenring-ai/kubernetes": "0.1.0",
+        "@tokenring-ai/local-filesystem": "0.1.0",
+        "@tokenring-ai/memory": "0.1.0",
+        "@tokenring-ai/mysql": "0.1.0",
+        "@tokenring-ai/queue": "0.1.0",
+        "@tokenring-ai/repo-map": "0.1.0",
+        "@tokenring-ai/s3": "0.1.0",
+        "@tokenring-ai/sandbox": "0.1.0",
+        "@tokenring-ai/scraperapi": "0.1.0",
+        "@tokenring-ai/serper": "0.1.0",
+        "@tokenring-ai/sqlite-storage": "0.1.0",
+        "@tokenring-ai/testing": "0.1.0",
+        "@tokenring-ai/websearch": "0.1.0",
       },
       "devDependencies": {
         "@biomejs/biome": "^2.2.0",
@@ -48,21 +45,20 @@
       },
     },
     "pkg/agent": {
-      "name": "@token-ring/agent",
+      "name": "@tokenring-ai/agent",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/utility": "0.1.0",
+        "eventemitter3": "^5.0.1",
+        "glob-gitignore": "^1.0.15",
+        "uuid": "^11.1.0",
       },
       "devDependencies": {
-        "@types/async": "^3.2.25",
-        "@vitest/coverage-v8": "^3.2.4",
         "typescript": "^5.9.2",
-        "vitest": "^3.2.4",
       },
     },
     "pkg/ai-client": {
-      "name": "@token-ring/ai-client",
+      "name": "@tokenring-ai/ai-client",
       "version": "0.1.0",
       "dependencies": {
         "@ai-sdk/anthropic": "^2.0.4",
@@ -78,8 +74,7 @@
         "@ai-sdk/xai": "^2.0.7",
         "@kubernetes/client-node": "^1.3.0",
         "@openrouter/ai-sdk-provider": "^1.1.2",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
         "ai": "^5.0.15",
         "async": "^3.2.6",
         "axios": "^1.11.0",
@@ -99,46 +94,29 @@
       },
     },
     "pkg/aws": {
-      "name": "@token-ring/aws",
+      "name": "@tokenring-ai/aws",
       "version": "0.1.0",
       "dependencies": {
         "@aws-sdk/client-s3": "^3.864.0",
         "@aws-sdk/client-sts": "^3.864.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "node-fetch": "^3.3.2",
         "zod": "^4.0.17",
       },
     },
     "pkg/cdn": {
-      "name": "@token-ring/cdn",
+      "name": "@tokenring-ai/cdn",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-      },
-    },
-    "pkg/chat": {
-      "name": "@token-ring/chat",
-      "version": "0.1.0",
-      "dependencies": {
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/utility": "0.1.0",
-        "eventemitter3": "^5.0.1",
-        "glob-gitignore": "^1.0.15",
-        "uuid": "^11.1.0",
-      },
-      "devDependencies": {
-        "typescript": "^5.9.2",
+        "@tokenring-ai/agent": "0.1.0",
       },
     },
     "pkg/chrome": {
-      "name": "@token-ring/chrome",
+      "name": "@tokenring-ai/chrome",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/websearch": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/websearch": "0.1.0",
         "puppeteer": "^24.16.2",
       },
       "devDependencies": {
@@ -146,19 +124,18 @@
       },
     },
     "pkg/cli": {
-      "name": "@token-ring/cli",
+      "name": "@tokenring-ai/cli",
       "version": "0.1.0",
       "dependencies": {
         "@dotenvx/dotenvx": "^1.48.4",
         "@dqbd/tiktoken": "^1.0.22",
         "@inquirer/prompts": "^7.8.2",
         "@kubernetes/client-node": "^1.3.0",
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/inquirer-command-prompt": "2.0.0",
-        "@token-ring/inquirer-tree-selector": "2.0.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/utility": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/inquirer-command-prompt": "2.0.0",
+        "@tokenring-ai/inquirer-tree-selector": "2.0.0",
+        "@tokenring-ai/utility": "0.1.0",
         "boxen": "8.0.1",
         "chalk": "^5.5.0",
         "clipboardy": "^4.0.0",
@@ -178,51 +155,47 @@
       },
     },
     "pkg/code-watch": {
-      "name": "@token-ring/code-watch",
+      "name": "@tokenring-ai/code-watch",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "ignore": "^7.0.5",
       },
     },
     "pkg/codebase": {
-      "name": "@token-ring/codebase",
+      "name": "@tokenring-ai/codebase",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
       },
     },
     "pkg/database": {
-      "name": "@token-ring/database",
+      "name": "@tokenring-ai/database",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
       },
     },
     "pkg/docker": {
-      "name": "@token-ring/docker",
+      "name": "@tokenring-ai/docker",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/sandbox": "0.1.0",
-        "@token-ring/utility": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
+        "@tokenring-ai/sandbox": "0.1.0",
+        "@tokenring-ai/utility": "0.1.0",
         "execa": "^9.6.0",
         "glob-gitignore": "^1.0.15",
       },
     },
     "pkg/feedback": {
-      "name": "@token-ring/feedback",
+      "name": "@tokenring-ai/feedback",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "esbuild": "^0.25.9",
         "esbuild-plugin-external-global": "^1.0.1",
         "express": "^5.1.0",
@@ -238,12 +211,11 @@
       },
     },
     "pkg/file-index": {
-      "name": "@token-ring/file-index",
+      "name": "@tokenring-ai/file-index",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "chokidar": "^4.0.3",
         "commander": "^14.0.0",
         "glob-gitignore": "^1.0.15",
@@ -256,12 +228,11 @@
       },
     },
     "pkg/filesystem": {
-      "name": "@token-ring/filesystem",
+      "name": "@tokenring-ai/filesystem",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
         "ignore": "^7.0.5",
         "path-browserify": "^1.0.1",
       },
@@ -271,32 +242,30 @@
       },
     },
     "pkg/git": {
-      "name": "@token-ring/git",
+      "name": "@tokenring-ai/git",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/testing": "0.1.0",
-        "@token-ring/utility": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
+        "@tokenring-ai/testing": "0.1.0",
+        "@tokenring-ai/utility": "0.1.0",
         "execa": "^9.6.0",
       },
     },
     "pkg/history": {
-      "name": "@token-ring/history",
+      "name": "@tokenring-ai/history",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
       },
       "devDependencies": {
         "typescript": "^5.9.2",
       },
     },
     "pkg/inquirer-command-prompt": {
-      "name": "@token-ring/inquirer-command-prompt",
+      "name": "@tokenring-ai/inquirer-command-prompt",
       "version": "2.0.0",
       "dependencies": {
         "@inquirer/core": "^10.1.15",
@@ -318,7 +287,7 @@
       },
     },
     "pkg/inquirer-tree-selector": {
-      "name": "@token-ring/inquirer-tree-selector",
+      "name": "@tokenring-ai/inquirer-tree-selector",
       "version": "2.0.0",
       "dependencies": {
         "@inquirer/core": "^10.1.15",
@@ -350,12 +319,11 @@
       ],
     },
     "pkg/javascript": {
-      "name": "@token-ring/javascript",
+      "name": "@tokenring-ai/javascript",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "eslint": "^9.33.0",
         "execa": "^9.6.0",
         "jiti": "^2.5.1",
@@ -363,12 +331,11 @@
       },
     },
     "pkg/kubernetes": {
-      "name": "@token-ring/kubernetes",
+      "name": "@tokenring-ai/kubernetes",
       "version": "0.1.0",
       "dependencies": {
         "@kubernetes/client-node": "^1.3.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
         "glob-gitignore": "^1.0.15",
         "next-auth": "^4.24.11",
         "react-syntax-highlighter": "^15.6.1",
@@ -379,12 +346,11 @@
       },
     },
     "pkg/local-filesystem": {
-      "name": "@token-ring/local-filesystem",
+      "name": "@tokenring-ai/local-filesystem",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "chokidar": "^4.0.3",
         "execa": "^9.6.0",
         "fs-extra": "^11.3.1",
@@ -397,60 +363,39 @@
       },
     },
     "pkg/memory": {
-      "name": "@token-ring/memory",
+      "name": "@tokenring-ai/memory",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/utility": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/utility": "0.1.0",
       },
     },
     "pkg/mysql": {
-      "name": "@token-ring/mysql",
+      "name": "@tokenring-ai/mysql",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/database": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/database": "0.1.0",
         "mysql2": "^3.14.1",
       },
     },
-    "pkg/planner": {
-      "name": "@token-ring/planner",
-      "version": "0.1.0",
-      "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/memory": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-      },
-    },
     "pkg/queue": {
-      "name": "@token-ring/queue",
+      "name": "@tokenring-ai/queue",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/history": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/history": "0.1.0",
       },
       "devDependencies": {
         "typescript": "^5.9.2",
       },
     },
-    "pkg/registry": {
-      "name": "@token-ring/registry",
-      "version": "0.1.0",
-      "devDependencies": {
-        "vitest": "^3.2.4",
-      },
-    },
     "pkg/repo-map": {
-      "name": "@token-ring/repo-map",
+      "name": "@tokenring-ai/repo-map",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
         "tree-sitter": "^0.22.4",
         "tree-sitter-cpp": "^0.23.4",
         "tree-sitter-javascript": "^0.23.1",
@@ -458,45 +403,33 @@
         "zod": "^4.0.17",
       },
     },
-    "pkg/runnable": {
-      "name": "@token-ring/runnable",
-      "version": "0.1.0",
-      "dependencies": {
-        "eventemitter3": "^5.0.1",
-        "zod": "^4.0.17",
-      },
-      "devDependencies": {
-        "typescript": "^5.9.2",
-        "vitest": "^3.2.4",
-      },
-    },
     "pkg/s3": {
-      "name": "@token-ring/s3",
+      "name": "@tokenring-ai/s3",
       "version": "0.1.0",
       "dependencies": {
         "@aws-sdk/client-s3": "^3.0.0",
-        "@token-ring/cdn": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+      },
+      "peerDependencies": {
+        "@tokenring-ai/cdn": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
       },
     },
     "pkg/sandbox": {
-      "name": "@token-ring/sandbox",
+      "name": "@tokenring-ai/sandbox",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
         "zod": "^4.0.17",
       },
     },
     "pkg/scraperapi": {
-      "name": "@token-ring/scraperapi",
+      "name": "@tokenring-ai/scraperapi",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/websearch": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/websearch": "0.1.0",
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^3.2.4",
@@ -504,13 +437,12 @@
       },
     },
     "pkg/serper": {
-      "name": "@token-ring/serper",
+      "name": "@tokenring-ai/serper",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "@token-ring/websearch": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/websearch": "0.1.0",
         "zod": "^4.0.17",
       },
       "devDependencies": {
@@ -519,22 +451,20 @@
       },
     },
     "pkg/sqlite-storage": {
-      "name": "@token-ring/sqlite-storage",
+      "name": "@tokenring-ai/sqlite-storage",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/history": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
+        "@tokenring-ai/history": "0.1.0",
       },
     },
     "pkg/testing": {
-      "name": "@token-ring/testing",
+      "name": "@tokenring-ai/testing",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/queue": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/filesystem": "0.1.0",
+        "@tokenring-ai/queue": "0.1.0",
         "glob-gitignore": "^1.0.15",
       },
       "devDependencies": {
@@ -542,49 +472,30 @@
       },
     },
     "pkg/utility": {
-      "name": "@token-ring/utility",
+      "name": "@tokenring-ai/utility",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
       },
     },
     "pkg/websearch": {
-      "name": "@token-ring/websearch",
+      "name": "@tokenring-ai/websearch",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
         "zod": "^4.0.17",
       },
     },
     "pkg/wikipedia": {
-      "name": "@token-ring/wikipedia",
+      "name": "@tokenring-ai/wikipedia",
       "version": "0.1.0",
       "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/registry": "0.1.0",
+        "@tokenring-ai/agent": "0.1.0",
+        "@tokenring-ai/ai-client": "0.1.0",
         "zod": "^4.0.17",
       },
       "devDependencies": {
         "@vitest/coverage-v8": "^3.2.4",
-        "vitest": "^3.2.4",
-      },
-    },
-    "pkg/workflow": {
-      "name": "@token-ring/workflow",
-      "version": "0.1.0",
-      "dependencies": {
-        "@token-ring/ai-client": "0.1.0",
-        "@token-ring/chat": "0.1.0",
-        "@token-ring/filesystem": "0.1.0",
-        "@token-ring/registry": "0.1.0",
-        "async": "^3.2.6",
-        "async-es": "^3.2.6",
-        "eventemitter3": "^5.0.1",
-      },
-      "devDependencies": {
-        "typescript": "^5.9.2",
         "vitest": "^3.2.4",
       },
     },
@@ -1230,81 +1141,71 @@
 
     "@swc/helpers": ["@swc/helpers@0.5.15", "", { "dependencies": { "tslib": "^2.8.0" } }, "sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g=="],
 
-    "@token-ring/agent": ["@token-ring/agent@workspace:pkg/agent"],
+    "@tokenring-ai/agent": ["@tokenring-ai/agent@workspace:pkg/agent"],
 
-    "@token-ring/ai-client": ["@token-ring/ai-client@workspace:pkg/ai-client"],
+    "@tokenring-ai/ai-client": ["@tokenring-ai/ai-client@workspace:pkg/ai-client"],
 
-    "@token-ring/aws": ["@token-ring/aws@workspace:pkg/aws"],
+    "@tokenring-ai/aws": ["@tokenring-ai/aws@workspace:pkg/aws"],
 
-    "@token-ring/cdn": ["@token-ring/cdn@workspace:pkg/cdn"],
+    "@tokenring-ai/cdn": ["@tokenring-ai/cdn@workspace:pkg/cdn"],
 
-    "@token-ring/chat": ["@token-ring/chat@workspace:pkg/chat"],
+    "@tokenring-ai/chrome": ["@tokenring-ai/chrome@workspace:pkg/chrome"],
 
-    "@token-ring/chrome": ["@token-ring/chrome@workspace:pkg/chrome"],
+    "@tokenring-ai/cli": ["@tokenring-ai/cli@workspace:pkg/cli"],
 
-    "@token-ring/cli": ["@token-ring/cli@workspace:pkg/cli"],
+    "@tokenring-ai/code-watch": ["@tokenring-ai/code-watch@workspace:pkg/code-watch"],
 
-    "@token-ring/code-watch": ["@token-ring/code-watch@workspace:pkg/code-watch"],
+    "@tokenring-ai/codebase": ["@tokenring-ai/codebase@workspace:pkg/codebase"],
 
-    "@token-ring/codebase": ["@token-ring/codebase@workspace:pkg/codebase"],
+    "@tokenring-ai/database": ["@tokenring-ai/database@workspace:pkg/database"],
 
-    "@token-ring/database": ["@token-ring/database@workspace:pkg/database"],
+    "@tokenring-ai/docker": ["@tokenring-ai/docker@workspace:pkg/docker"],
 
-    "@token-ring/docker": ["@token-ring/docker@workspace:pkg/docker"],
+    "@tokenring-ai/feedback": ["@tokenring-ai/feedback@workspace:pkg/feedback"],
 
-    "@token-ring/feedback": ["@token-ring/feedback@workspace:pkg/feedback"],
+    "@tokenring-ai/file-index": ["@tokenring-ai/file-index@workspace:pkg/file-index"],
 
-    "@token-ring/file-index": ["@token-ring/file-index@workspace:pkg/file-index"],
+    "@tokenring-ai/filesystem": ["@tokenring-ai/filesystem@workspace:pkg/filesystem"],
 
-    "@token-ring/filesystem": ["@token-ring/filesystem@workspace:pkg/filesystem"],
+    "@tokenring-ai/git": ["@tokenring-ai/git@workspace:pkg/git"],
 
-    "@token-ring/git": ["@token-ring/git@workspace:pkg/git"],
+    "@tokenring-ai/history": ["@tokenring-ai/history@workspace:pkg/history"],
 
-    "@token-ring/history": ["@token-ring/history@workspace:pkg/history"],
+    "@tokenring-ai/inquirer-command-prompt": ["@tokenring-ai/inquirer-command-prompt@workspace:pkg/inquirer-command-prompt"],
 
-    "@token-ring/inquirer-command-prompt": ["@token-ring/inquirer-command-prompt@workspace:pkg/inquirer-command-prompt"],
+    "@tokenring-ai/inquirer-tree-selector": ["@tokenring-ai/inquirer-tree-selector@workspace:pkg/inquirer-tree-selector"],
 
-    "@token-ring/inquirer-tree-selector": ["@token-ring/inquirer-tree-selector@workspace:pkg/inquirer-tree-selector"],
+    "@tokenring-ai/javascript": ["@tokenring-ai/javascript@workspace:pkg/javascript"],
 
-    "@token-ring/javascript": ["@token-ring/javascript@workspace:pkg/javascript"],
+    "@tokenring-ai/kubernetes": ["@tokenring-ai/kubernetes@workspace:pkg/kubernetes"],
 
-    "@token-ring/kubernetes": ["@token-ring/kubernetes@workspace:pkg/kubernetes"],
+    "@tokenring-ai/local-filesystem": ["@tokenring-ai/local-filesystem@workspace:pkg/local-filesystem"],
 
-    "@token-ring/local-filesystem": ["@token-ring/local-filesystem@workspace:pkg/local-filesystem"],
+    "@tokenring-ai/memory": ["@tokenring-ai/memory@workspace:pkg/memory"],
 
-    "@token-ring/memory": ["@token-ring/memory@workspace:pkg/memory"],
+    "@tokenring-ai/mysql": ["@tokenring-ai/mysql@workspace:pkg/mysql"],
 
-    "@token-ring/mysql": ["@token-ring/mysql@workspace:pkg/mysql"],
+    "@tokenring-ai/queue": ["@tokenring-ai/queue@workspace:pkg/queue"],
 
-    "@token-ring/planner": ["@token-ring/planner@workspace:pkg/planner"],
+    "@tokenring-ai/repo-map": ["@tokenring-ai/repo-map@workspace:pkg/repo-map"],
 
-    "@token-ring/queue": ["@token-ring/queue@workspace:pkg/queue"],
+    "@tokenring-ai/s3": ["@tokenring-ai/s3@workspace:pkg/s3"],
 
-    "@token-ring/registry": ["@token-ring/registry@workspace:pkg/registry"],
+    "@tokenring-ai/sandbox": ["@tokenring-ai/sandbox@workspace:pkg/sandbox"],
 
-    "@token-ring/repo-map": ["@token-ring/repo-map@workspace:pkg/repo-map"],
+    "@tokenring-ai/scraperapi": ["@tokenring-ai/scraperapi@workspace:pkg/scraperapi"],
 
-    "@token-ring/runnable": ["@token-ring/runnable@workspace:pkg/runnable"],
+    "@tokenring-ai/serper": ["@tokenring-ai/serper@workspace:pkg/serper"],
 
-    "@token-ring/s3": ["@token-ring/s3@workspace:pkg/s3"],
+    "@tokenring-ai/sqlite-storage": ["@tokenring-ai/sqlite-storage@workspace:pkg/sqlite-storage"],
 
-    "@token-ring/sandbox": ["@token-ring/sandbox@workspace:pkg/sandbox"],
+    "@tokenring-ai/testing": ["@tokenring-ai/testing@workspace:pkg/testing"],
 
-    "@token-ring/scraperapi": ["@token-ring/scraperapi@workspace:pkg/scraperapi"],
+    "@tokenring-ai/utility": ["@tokenring-ai/utility@workspace:pkg/utility"],
 
-    "@token-ring/serper": ["@token-ring/serper@workspace:pkg/serper"],
+    "@tokenring-ai/websearch": ["@tokenring-ai/websearch@workspace:pkg/websearch"],
 
-    "@token-ring/sqlite-storage": ["@token-ring/sqlite-storage@workspace:pkg/sqlite-storage"],
-
-    "@token-ring/testing": ["@token-ring/testing@workspace:pkg/testing"],
-
-    "@token-ring/utility": ["@token-ring/utility@workspace:pkg/utility"],
-
-    "@token-ring/websearch": ["@token-ring/websearch@workspace:pkg/websearch"],
-
-    "@token-ring/wikipedia": ["@token-ring/wikipedia@workspace:pkg/wikipedia"],
-
-    "@token-ring/workflow": ["@token-ring/workflow@workspace:pkg/workflow"],
+    "@tokenring-ai/wikipedia": ["@tokenring-ai/wikipedia@workspace:pkg/wikipedia"],
 
     "@tootallnate/quickjs-emscripten": ["@tootallnate/quickjs-emscripten@0.23.0", "", {}, "sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA=="],
 
@@ -1421,8 +1322,6 @@
     "ast-v8-to-istanbul": ["ast-v8-to-istanbul@0.3.4", "", { "dependencies": { "@jridgewell/trace-mapping": "^0.3.29", "estree-walker": "^3.0.3", "js-tokens": "^9.0.1" } }, "sha512-cxrAnZNLBnQwBPByK4CeDaw5sWZtMilJE/Q3iDA0aamgaIVNDF9T6K2/8DfYDZEejZ2jNnDrG9m8MY72HFd0KA=="],
 
     "async": ["async@3.2.6", "", {}, "sha512-htCUDlxyyCLMgaM3xXg0C0LW2xqfuQ6p05pCEIsXuyQ+a1koYKTuBMzRNwmybfLgvJDMd0r1LTn4+E0Ti6C2AA=="],
-
-    "async-es": ["async-es@3.2.6", "", {}, "sha512-9C2+oOPd7/EzIeneF4k24o75oY7OcHU/Isl7xIot12EBRwXonyuqKsmxwLuAbFWL6B/FucTQip09xTbiu1CA8A=="],
 
     "asynckit": ["asynckit@0.4.0", "", {}, "sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q=="],
 

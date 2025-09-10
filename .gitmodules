@@ -7,8 +7,8 @@
 	url = git@github.com:tokenring-ai/aws
 	branch = origin/main
 [submodule "pkg/chat"]
-	path = pkg/chat
-	url = git@github.com:tokenring-ai/chat
+	path = pkg/agent
+	url = git@github.com:tokenring-ai/agent.git
 	branch = origin/main
 [submodule "pkg/chrome"]
 	path = pkg/chrome
@@ -74,10 +74,6 @@
 	path = pkg/memory
 	url = git@github.com:tokenring-ai/memory
 	branch = origin/main
-[submodule "pkg/planner"]
-	path = pkg/planner
-	url = git@github.com:tokenring-ai/planner
-	branch = origin/main
 [submodule "pkg/queue"]
 	path = pkg/queue
 	url = git@github.com:tokenring-ai/queue
@@ -98,17 +94,9 @@
 	path = pkg/testing
 	url = git@github.com:tokenring-ai/testing
 	branch = origin/main
-[submodule "pkg/workflow"]
-	path = pkg/workflow
-	url = git@github.com:tokenring-ai/workflow
-	branch = origin/main
 [submodule "pkg/utility"]
 	path = pkg/utility
 	url = git@github.com:tokenring-ai/utility.git
-	branch = origin/main
-[submodule "pkg/runnable"]
-	path = pkg/runnable
-	url = git@github.com:tokenring-ai/runnable.git
 	branch = origin/main
 [submodule "pkg/inquirer-tree-selector"]
 	path = pkg/inquirer-tree-selector
@@ -119,7 +107,7 @@
 	url = git@github.com:tokenring-ai/inquirer-command-prompt.git
 	branch = main
 [submodule "pkg/agent"]
-	path = pkg/agent
+	path = pkg/agent2
 	url = git@github.com:tokenring-ai/agent.git
 	branch = main
 [submodule "pkg/serper"]
