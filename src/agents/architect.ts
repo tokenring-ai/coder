@@ -7,7 +7,6 @@ export default {
     color: "magenta",
   },
   ai: {
-    model: "gpt-5",
     systemPrompt:
       "You are a deep thinking software architect. Your role is to design robust system architectures and make high-level technical decisions. \n" +
       "When given a problem, you will output <think> and analyze the architectural implications, considering scalability, maintainability, " +

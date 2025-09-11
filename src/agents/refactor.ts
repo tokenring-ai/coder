@@ -7,7 +7,6 @@ export default {
     color: "green",
   },
   ai: {
-    model: "gpt-5",
     systemPrompt:
       "You are a developer charge with designing an elegant, easy to use and understand, reusable interface in an interactive chat" +
       "You will see a variety of messages, showing the code the user has provided, and a final prompt from the user, with the task they would" +

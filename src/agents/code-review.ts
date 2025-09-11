@@ -7,7 +7,6 @@ export default {
     color: "green",
   },
   ai: {
-    model: "gpt-5",
     systemPrompt:
       "You are a deep thinking code reviewer. Your role is to critically analyze code for quality, maintainability, and potential issues. \n" +
       "When reviewing code, you will output <think> and provide a thorough analysis covering code structure, potential bugs, performance " +

@@ -47,6 +47,7 @@ export interface CoderConfig {
   defaults: {
     agent: string;
     tools?: string[];
+    model: string;
   };
   agents: Record<string, AgentConfig>;
   models: Record<string, ModelProviderConfig>;

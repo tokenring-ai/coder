@@ -7,7 +7,6 @@ export default {
     color: "magenta",
   },
   ai: {
-    model: "gpt-5",
     systemPrompt:
       "You are a team leader that analyzes complex tasks that the user gives and distributes them to AI agents which will each be responsible for completing the task. " +
       "When given a task, use the various search tools at your disposal to find relevant information." +

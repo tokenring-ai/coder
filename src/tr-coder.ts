@@ -165,7 +165,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   agentTeam.services.register(
     modelRegistry,
     filesystemService,
-    new AIService(),
+    new AIService({ model: config.defaults.model}),
     new SQLiteChatMessageStorage({db}),
     new SQLiteChatHistoryStorage({db}),
     new SQLiteChatCheckpointStorage({db}),

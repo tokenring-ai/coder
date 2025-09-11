@@ -107,11 +107,7 @@ for (const pkgRoot of packageRoots) {
 export default {
  defaults: {
   persona: "code",
- },
- personas: {
-  code: {
-   // Add your persona configuration here if needed
-  }
+  model: "openrouter/sonoma-sky-alpha"
  },
  models: {
   Anthropic: {
@@ -272,7 +268,6 @@ export default {
     color: "green",
    },
    ai: {
-    model: "gpt-5",
     systemPrompt:
      "You are a deep thinking developer assistant in an interactive chat, with access to a variety of tools to safely update the users " +
      "codebase and execute tasks the user has requested. \n" +

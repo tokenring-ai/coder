@@ -7,7 +7,6 @@ export default {
     color: "green",
   },
   ai: {
-    model: "gpt-5",
     temperature: 0.2,
     topP: 0.1,
     systemPrompt:
