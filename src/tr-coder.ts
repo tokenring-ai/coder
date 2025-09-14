@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
+import {AgentStateStorage, AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
 import {ModelRegistry, packageInfo as ChatRouterPackage} from "@tokenring-ai/ai-client";
 import AIService from "@tokenring-ai/ai-client/AIService";
 import {registerModels} from "@tokenring-ai/ai-client/models";
@@ -15,7 +15,6 @@ import {EphemeralFileIndexProvider, FileIndexService, packageInfo as FileIndexPa
 import {FileSystemService, packageInfo as FilesystemPackage} from "@tokenring-ai/filesystem";
 import {GitService, packageInfo as GitPackage} from "@tokenring-ai/git";
 
-import {packageInfo as HistoryPackage} from "@tokenring-ai/history";
 import {packageInfo as JavascriptPackage} from "@tokenring-ai/javascript";
 import {packageInfo as KubernetesPackage} from "@tokenring-ai/kubernetes";
 import {LocalFileSystemService, packageInfo as LocalFileSystemPackage} from "@tokenring-ai/local-filesystem";
@@ -30,11 +29,9 @@ import {ScraperAPIWebSearchResource} from "@tokenring-ai/scraperapi";
 import {SerperWebSearchResource} from "@tokenring-ai/serper";
 import {
   packageInfo as SQLiteChatStoragePackage,
-  SQLiteChatCheckpointStorage,
-  SQLiteChatHistoryStorage,
-  SQLiteChatMessageStorage
 } from "@tokenring-ai/sqlite-storage";
 import initializeLocalDatabase from "@tokenring-ai/sqlite-storage/db/initializeLocalDatabase";
+import SQLiteAgentStateStorage from "@tokenring-ai/sqlite-storage/SQLiteAgentStateStorage";
 import {packageInfo as TestingPackage, ShellCommandTestingResource, TestingService} from "@tokenring-ai/testing";
 import {WebSearchService} from "@tokenring-ai/websearch";
 import chalk from "chalk";
@@ -146,7 +143,6 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     FileIndexPackage,
     FilesystemPackage,
     GitPackage,
-    HistoryPackage,
     JavascriptPackage,
     KubernetesPackage,
     LocalFileSystemPackage,
@@ -166,9 +162,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     modelRegistry,
     filesystemService,
     new AIService({ model: config.defaults.model}),
-    new SQLiteChatMessageStorage({db}),
-    new SQLiteChatHistoryStorage({db}),
-    new SQLiteChatCheckpointStorage({db}),
+    new AgentStateStorage(new SQLiteAgentStateStorage({db})),
     new WorkQueueService(),
     new EphemeralMemoryService(),
     new GitService(),

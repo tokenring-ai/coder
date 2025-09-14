@@ -20,7 +20,6 @@
   "@tokenring-ai/file-index": "0.1.0",
   "@tokenring-ai/filesystem": "0.1.0",
   "@tokenring-ai/git": "0.1.0",
-  "@tokenring-ai/history": "0.1.0",
   "@tokenring-ai/javascript": "0.1.0",
   "@tokenring-ai/kubernetes": "0.1.0",
   "@tokenring-ai/local-filesystem": "0.1.0",

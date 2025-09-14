@@ -54,10 +54,6 @@
 	path = pkg/git
 	url = git@github.com:tokenring-ai/git
 	branch = origin/main
-[submodule "pkg/history"]
-	path = pkg/history
-	url = git@github.com:tokenring-ai/history
-	branch = origin/main
 [submodule "pkg/javascript"]
 	path = pkg/javascript
 	url = git@github.com:tokenring-ai/javascript
