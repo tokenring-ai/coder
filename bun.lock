@@ -18,7 +18,6 @@
         "@tokenring-ai/file-index": "0.1.0",
         "@tokenring-ai/filesystem": "0.1.0",
         "@tokenring-ai/git": "0.1.0",
-        "@tokenring-ai/history": "0.1.0",
         "@tokenring-ai/javascript": "0.1.0",
         "@tokenring-ai/kubernetes": "0.1.0",
         "@tokenring-ai/local-filesystem": "0.1.0",
@@ -253,17 +252,6 @@
         "execa": "^9.6.0",
       },
     },
-    "pkg/history": {
-      "name": "@tokenring-ai/history",
-      "version": "0.1.0",
-      "dependencies": {
-        "@tokenring-ai/agent": "0.1.0",
-        "@tokenring-ai/ai-client": "0.1.0",
-      },
-      "devDependencies": {
-        "typescript": "^5.9.2",
-      },
-    },
     "pkg/inquirer-command-prompt": {
       "name": "@tokenring-ai/inquirer-command-prompt",
       "version": "2.0.0",
@@ -384,7 +372,6 @@
       "dependencies": {
         "@tokenring-ai/agent": "0.1.0",
         "@tokenring-ai/ai-client": "0.1.0",
-        "@tokenring-ai/history": "0.1.0",
       },
       "devDependencies": {
         "typescript": "^5.9.2",
@@ -455,7 +442,6 @@
       "version": "0.1.0",
       "dependencies": {
         "@tokenring-ai/ai-client": "0.1.0",
-        "@tokenring-ai/history": "0.1.0",
       },
     },
     "pkg/testing": {
@@ -1168,8 +1154,6 @@
     "@tokenring-ai/filesystem": ["@tokenring-ai/filesystem@workspace:pkg/filesystem"],
 
     "@tokenring-ai/git": ["@tokenring-ai/git@workspace:pkg/git"],
-
-    "@tokenring-ai/history": ["@tokenring-ai/history@workspace:pkg/history"],
 
     "@tokenring-ai/inquirer-command-prompt": ["@tokenring-ai/inquirer-command-prompt@workspace:pkg/inquirer-command-prompt"],
 
