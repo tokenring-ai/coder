@@ -1,141 +1,152 @@
-# Coder App
+# Token Ring AI Monorepo
 
 ## Overview
 
-The Coder app is an interactive developer assistant tool designed to help you work with your codebase in a
-conversational manner. It provides a chat interface where you can ask questions, issue commands, and interact with your
-source code, leveraging AI to assist with code edits, refactors, testing, and more.
+The Token Ring AI monorepo hosts the development of the Token Ring Coder Application, an interactive AI-powered developer assistant. This framework enables conversational interaction with codebases, supporting tasks like code editing, refactoring, testing, git operations, and integrations with external services (e.g., AWS, Docker, web search). Built as a TypeScript monorepo using Bun, it provides pluggable packages under the `@tokenring-ai/*` scope for modular AI agent functionality. Key features include persistent chat sessions in SQLite, command-based workflows, plugin extensibility, and sandboxed execution. The ecosystem targets developers seeking AI-assisted coding in a secure, local environment (version 0.1.0, early-stage).
 
-## Features
+## Monorepo Structure
 
-- **Interactive chat interface**: Talk to the assistant in a conversational REPL.
-- **Persistent chat history**: Sessions and message threads are saved in a SQLite database.
-- **Command system**: Issue commands prefixed with `/` to manage contexts, plugins, queues, checkpoints, commits,
-  rollbacks, and more.
-- **Codebase integration**: Works directly with your source directory; can initialize with a TokenRing config.
-- **Plugin support**: Extend functionality with plugins.
-- **Multi-line input mode**: Supports multi-line text entry for complex queries or commands.
-- **Queue management**: Batch multiple chat prompts to execute sequentially.
-- **Test execution**: Run tests defined in your coder-config.js.
-- **Git integration**: Commit changes or rollback git history from chat commands.
+- **src/**: Core application source, including the main entry point `tr-coder.js` for the CLI REPL.
+- **pkg/**: Workspace packages for modular components (e.g., `@tokenring-ai/agent`, `@tokenring-ai/ai-client`). Each package has its own `package.json`, source in `index.ts`, and optional tests/docs.
+- **docker/**: Dockerfile and configs for containerized deployment (base: oven/bun:debian).
+- **.github/**: CI/CD workflows (e.g., for building/testing).
+- **Root configs**: `package.json` (workspaces, scripts), `tsconfig.json` (ES2022, strict mode), `biome.json` (linting/formatting), `.gitmodules` (submodules for external deps like inquirer packages).
+- **docs**: `AGENTS.md` (project overview), existing `README.md` (Coder app details).
+- Other: `.tokenring/` (per-project config/DB), `node_modules/` (hoisted via workspaces).
 
-## Getting Started
+Packages integrate via scoped imports (e.g., `import { Agent } from '@tokenring-ai/agent';`), with the root app wiring them into the Coder CLI.
+
+## Installation/Setup
 
 ### Prerequisites
+- Bun (package manager/runtime)
+- Git (with submodules support)
+- Node.js-compatible env for deps (e.g., for testing)
 
-- Bun
-- Git initialized source directory
-
-### Installation (local)
-
-1. **Sync git submodules**: This project uses git submodules that need to be initialized and updated before
-   installation:
-   ```bash
+### Cloning and Setup
+1. Clone the repo:
+   ```
+   git clone <repo-url>
+   cd tokenring-ai-monorepo
+   ```
+2. Initialize submodules (required for external packages like inquirer variants):
+   ```
    git submodule update --init --recursive
    ```
-
-2. **Install dependencies**: This project uses Bun as the package manager in a monorepo structure:
-   ```bash
+3. Install dependencies (uses Bun workspaces for hoisting):
+   ```
    bun install
    ```
-
-3. **Run the application**: Use Bun to start the application:
-
-  ```bash
-  bun src/tr-coder.js --source ./path-to-your-codebase
-  ```
-
-### Installation (As local docker container)
-
-1. **Sync git submodules**: This project uses git submodules that need to be initialized and updated before
-   installation:
-   ```bash
-   git submodule update --init --recursive
+4. (Optional) Initialize a project with Token Ring config:
    ```
+   bun src/tr-coder.js --source ./your-codebase --initialize
+   ```
+   This creates `.tokenring/coder-config.js` and SQLite DB for chat history.
 
-2. **Build the docker container**:
-   ```bash
-   # This command must be run in the root directory of the repo
+### Environment Setup
+Set API keys for integrations (e.g., AI providers, AWS):
+- Export vars like `OPENAI_API_KEY`, `AWS_ACCESS_KEY_ID` (passed to Docker via `-e`).
+- For AI clients: Configure via `@tokenring-ai/ai-client` (supports OpenAI, Anthropic, Groq, etc.).
+
+### Docker Setup
+1. Build image:
+   ```
    docker build -t tokenring-ai/coder:latest -f docker/Dockerfile .
    ```
-
-3. **Run the docker container**:
-   ```bash
-   docker run -ti --net host $(env | grep '_KEY' | sed 's/^/-e /') -v ./:/repo:rw tokenring-ai/coder:latest
+2. Run (mounts codebase, passes env):
+   ```
+   docker run -ti --net host -v ./:/repo:rw $(env | grep '_KEY' | sed 's/^/-e /') tokenring-ai/coder:latest
    ```
 
-#### Container Registry
+## Core Packages and Integration
 
-TODO: This is not implemented yet
-The Docker image is automatically built and published to GitHub Container Registry on each push to the main branch. You
-can pull the latest image with:
+The monorepo uses workspaces for loosely coupled packages. Core packages form the agent framework; integrations extend tools/resources. Agents compose tools from multiple packages (e.g., an agent using `filesystem` for reads, `git` for commits, `ai-client` for LLM calls).
 
-```bash
-docker pull ghcr.io/[owner]/tokenring-coder:latest
-```
+### Core Packages
+| Package | Description | Key Exports/Usage |
+|---------|-------------|-------------------|
+| `@tokenring-ai/agent` | Central agent orchestration with event emitters, UUIDs, glob-gitignore. | `Agent` class; integrates tools via registries. Used in CLI for chat sessions. |
+| `@tokenring-ai/ai-client` | Multi-provider AI SDK wrapper (OpenAI, Anthropic, Groq, etc., via `@ai-sdk/*`). | LLM calls, streaming; e.g., `generateText({ model: 'gpt-4o' })`. Ties to agent for reasoning. |
+| `@tokenring-ai/filesystem` | Abstract FS ops (read/write/search) with ignore patterns. | `FileSystem` interface; extended by `local-filesystem` for local ops. |
+| `@tokenring-ai/cli` | CLI utilities with inquirer prompts, ink for TUI, execa for shell. | Command parsing; powers `tr-coder` REPL with history/autocomplete. |
+| `@tokenring-ai/memory` | In-memory storage for agent state/context. | Session persistence; integrates with `queue` for batched prompts. |
+| `@tokenring-ai/queue` | Task queuing for sequential AI operations. | `Queue` class; used for multi-step workflows like code gen + test. |
 
-Replace `[owner]` with the GitHub repository owner.
+### Integration Packages
+These provide domain-specific tools/resources, registered to agents:
+- **Cloud/Infra**: `@tokenring-ai/aws` (S3/STF clients), `@tokenring-ai/docker` (container exec), `@tokenring-ai/kubernetes` (K8s client), `@tokenring-ai/s3` (S3 FS impl).
+- **Dev Tools**: `@tokenring-ai/git` (commit/rollback via execa), `@tokenring-ai/javascript` (ESLint, jscodeshift for JS ops), `@tokenring-ai/testing` (Vitest integration), `@tokenring-ai/code-watch` (chokidar for change detection).
+- **Data/DB**: `@tokenring-ai/database` (abstract DB), `@tokenring-ai/mysql` (MySQL2 connector), `@tokenring-ai/sqlite-storage` (local DB for history).
+- **Web/Search**: `@tokenring-ai/chrome` (Puppeteer automation), `@tokenring-ai/websearch` (abstract), `@tokenring-ai/serper` (Google search), `@tokenring-ai/scraperapi` (web scraping), `@tokenring-ai/wikipedia` (wiki queries).
+- **Other**: `@tokenring-ai/codebase` (repo scanning), `@tokenring-ai/file-index` (vector search with tree-sitter), `@tokenring-ai/feedback` (UI for sessions with React/Express), `@tokenring-ai/sandbox` (isolated exec via Zod validation).
 
-### Initialization
+Cross-package example: An agent in CLI uses `ai-client` for chat, `filesystem` + `local-filesystem` for code access, `git` for changes, `testing` for validation. See pkg/ READMEs for details (e.g., pkg/agent/README.md).
 
-To initialize your source directory with the necessary TokenRing configuration file, pass the --initialize flag after
-your source directory.
-This will initialize a new .tokenring directory in your project, which stores a coder-config.js config file for your
-project that you can customize, as well as a sqlite database which stores your chat history.
+## Usage Examples
 
-```
-tr-coder --source ./path-to-your-codebase --initialize
-```
+1. **Running the Coder CLI** (full agent workflow):
+   ```
+   bun src/tr-coder.js --source ./my-project
+   ```
+   - Chat: "Refactor this function in src/main.ts" → AI edits via `filesystem` + `javascript`.
+   - Command: `/commit` → Uses `git` to commit with AI message.
+   - Queue: `/queue add "Run tests"` → Batches via `queue` + `testing`.
 
-This copies a default `.tokenring/coder-config.js` into your source directory.
+2. **Building the Monorepo**:
+   ```
+   bun run build  # Compiles root + workspaces
+   bun run test   # Runs Vitest across pkgs
+   ```
 
-### Chat and Commands
+3. **Custom Agent Integration** (in a script):
+   ```typescript
+   import { Agent } from '@tokenring-ai/agent';
+   import { OpenAI } from '@tokenring-ai/ai-client';
+   import { LocalFileSystem } from '@tokenring-ai/local-filesystem';
 
-Once started, you enter the chat REPL:
+   const agent = new Agent({ provider: new OpenAI() });
+   agent.addTool(new LocalFileSystem('./project'));
+   const response = await agent.run('List files');
+   console.log(response);
+   ```
 
-- Type natural language queries about your code.
-- Use commands with `/` prefix, e.g., `/help`, `/commit`, `/checkpoint create`, `/reset`.
-- For multi-line input, type `:paste`, enter your text, then `:end` to submit.
-- Control commands: `/quit` to exit, `/history` to browse chat history.
+## Configuration Options
 
-### Commands
+- **Root `package.json`**: Workspaces (`pkg/*`), scripts (e.g., `build:ts` for TSC, `biome` for linting), deps hoisted.
+- **tsconfig.json**: ES2022 target, NodeNext resolution, strict TS, includes `src/**/*` + `types/`, excludes tests/dist/pkg tests.
+- **biome.json**: Linting/formatting (tabs, double quotes), applies to `src/**/*.js` + `pkg/**/*.js` (excl. some inquirer pkgs).
+- **Env Vars**: AI keys (e.g., `ANTHROPIC_API_KEY`), AWS creds, Serper API for search. Per-project: `.tokenring/coder-config.js` for plugins/tests.
+- **Yarn/Bun Workspaces**: Hoists root deps; submodules for non-npm pkgs (e.g., inquirer forks).
 
-Some example commands:
+## Build/Development Workflow
 
-- `/help`: Show available commands.
-- `/checkpoint create [label]`: Save current chat state.
-- `/commit`: Commit changes to git with AI-generated message.
-- `/rollback [position]`: Rollback git history.
-- `/contexts`: Manage chat contexts.
-- `/plugins`: Enable or disable plugins.
-- `/queue`: Manage a queue of chat prompts.
-- `/test [all|<name>]`: Run tests defined in your config.
-- `/history`: Browse previous chat sessions and messages.
+1. **Build**: `bun run build` (TSC on root + workspaces via `tsc -p tsconfig.tson` in pkgs).
+2. **Test**: `bun run test` (Vitest; per-pkg configs, coverage via `@vitest/coverage-v8`).
+3. **Lint/Format**: `bun run biome` (fixes via Biome); ESLint in some pkgs.
+4. **Typecheck**: `bun run typecheck` (TSC no-emit).
+5. **Contribute**:
+   - Add pkg: Create `pkg/new-pkg/` with `package.json` (name `@tokenring-ai/new-pkg`, exports `./index.ts`), add to root deps if needed.
+   - PR: Fork, update submodules, run `bun install`, build/test, submit to main.
+   - Hooks: Husky for pre-commit (Biome lint).
 
-## Architecture
+Known limitations: Early v0.1.0; submodules may need manual sync; binary deps (e.g., tree-sitter) require build tools.
 
-- **CLI**: Entry point with argument parsing and session management (`tr-coder.js`).
-- **Engine**: Core logic for commands, chat streaming, and persistent chat management.
-- **Components**: React-based components for browsing chat history.
-- **Utility**: Helper functions for logging, file management, and database initialization.
+## API/Exports Overview
 
-## Data Persistence
+Root exports via bin `tr-coder` (CLI). Packages use `exports: { ".": "./index.ts", "./*": "./*.ts" }` for tree-shaking. Import scoped: `import { Tool } from '@tokenring-ai/agent/tools';`. Main root entry: `dist/tr-coder.js`. No direct root API; use packages or CLI.
 
-Chat data and sessions are stored in a SQLite database (`coder-database.sqlite`) managed through the Bun SQLite package.
+## Dependencies
 
-## Extensibility
+- **Root Runtime**: `@inquirer/prompts` (CLI UI), all `@tokenring-ai/*` (internal, version 0.1.0).
+- **Dev**: `@biomejs/biome` (lint), `vitest` (test), `husky` (hooks), `typescript` (in pkgs).
+- **Hoisting**: Workspaces hoist common deps (e.g., `zod`, `execa`); submodules for custom (e.g., `@tokenring-ai/inquirer-command-prompt`).
+- Update: `bun run update-all-dependencies-latest` (via submodules).
 
-The system supports plugins which can add tools callable by the AI assistant during chat sessions.
+## Contributing/Notes
 
-## Contributing
+- **Guidelines**: Follow TS strict, Biome rules. Add tests for new pkgs/tools. Document in pkg/ README.md. Reference `AGENTS.md` for architecture.
+- **License**: MIT (see LICENSE).
+- **Future Plans**: Full CI/CD, more integrations (e.g., GitHub), stable v1.0 with plugin marketplace.
+- **Known Issues**: Submodule sync required pre-install; Docker needs env passthrough for keys. For pkg-specific docs, see individual READMEs (e.g., pkg/ai-client/README.md).
 
-Contributions are welcome! Feel free to fork the repository and submit pull requests.
-
-## License
-
-This project is MIT licensed
-
----
-
-This README provides a high-level overview of the Coder App functionality and usage. For detailed command usage, use
-`/help` inside the chat REPL.
+This monorepo powers AI-driven development; extend via packages for custom agents.
