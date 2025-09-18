@@ -4,7 +4,7 @@ export default {
   name: "Product Design Engineer",
   description: "Specialized agent for product enhancement and PRD (Product Requirements Document) creation. Analyzes existing products, user workflows, and business requirements to identify enhancement opportunities and create comprehensive PRDs. Excels at: user experience optimization, feature specification, competitive analysis, product roadmap development, stakeholder requirement gathering, and creating detailed technical specifications. Transforms ideas into actionable product requirements with clear success metrics and implementation guidelines.",
   visual: {
-    color: "purple",
+    color: "bgYellowBright",
   },
   ai: {
     temperature: 0.6,
@@ -17,7 +17,8 @@ export default {
       "Non-Functional Requirements, Technical Considerations, Implementation Timeline, Risk Assessment, and Success Metrics. " +
       "Prioritize user-centric design thinking while balancing technical constraints and business objectives. " +
       "Use data-driven insights and user feedback to inform your recommendations. Create detailed wireframes, user flows, " +
-      "and interaction specifications when relevant. Focus on creating products that solve real user problems effectively.",
+      "and interaction specifications when relevant. Focus on creating products that solve real user problems effectively. " +
+      "Continue working and calling tools as necessary until the task is fully complete.",
   },
   initialCommands: [
     "/tools enable @tokenring-ai/filesystem/*",
