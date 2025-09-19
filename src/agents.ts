@@ -5,6 +5,7 @@ import backendDesign from "./agents/backend-design.ts";
 import businessLogicEngineer from "./agents/business-logic-engineer.ts";
 import codeQualityEngineer from "./agents/code-quality-engineer.ts";
 import dataEngineer from "./agents/data-engineer.ts";
+import documentationEngineer from "./agents/documentation-engineer.ts";
 import databaseDesign from "./agents/database-design.ts";
 import devopsEngineer from "./agents/devops-engineer.ts";
 import frontendDesign from "./agents/frontend-design.ts";
@@ -27,6 +28,7 @@ export default {
   codeQualityEngineer,
   dataEngineer,
   databaseDesign,
+  documentationEngineer,
   devopsEngineer,
   frontendDesign,
   fullStackDeveloper,

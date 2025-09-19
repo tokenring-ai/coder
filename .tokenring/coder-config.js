@@ -135,11 +135,39 @@ export default {
    provider: "groq",
    apiKey: process.env.GROQ_API_KEY,
   },
-  /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint
-  llama: {
-   provider: "llama",
+  /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint */
+  LLama: {
+   provider: "openaiCompatible",
    apiKey: process.env.LLAMA_API_KEY,
-  },*/
+   baseURL: 'https://api.llama.com/compat/v1',
+   generateModelSpec(modelInfo) {
+    let {id: model} = modelInfo;
+    let type = "chat";
+    let capabilities = {};
+    if (model.match(/scout/i)) {
+     Object.assign(capabilities, {
+      reasoning: 2,
+      tools: 2,
+      intelligence: 2,
+      speed: 2,
+      contextLength: 10000000,
+      costPerMillionInputTokens: 0,
+      costPerMillionOutputTokens: 0,
+     });
+    } else if (model.match(/maverick/i)) {
+     Object.assign(capabilities, {
+      reasoning: 3,
+      tools: 3,
+      intelligence: 3,
+      speed: 3,
+      contextLength: 10000000,
+      costPerMillionInputTokens: 0,
+      costPerMillionOutputTokens: 0,
+     });
+    }
+    return {type, capabilities};
+   },
+  },
   OpenAI: {
    provider: "openai",
    apiKey: process.env.OPENAI_API_KEY,
@@ -173,7 +201,7 @@ export default {
   },
   LocalLLama: {
    provider: "openaiCompatible",
-   baseURL: "http://192.168.15.25:11434",
+   baseURL: "http://192.168.15.25:11434/v1",
    apiKey: "sk-ABCD1234567890",
    generateModelSpec(modelInfo) {
     let {id: model} = modelInfo;
@@ -214,11 +242,31 @@ export default {
    provider: "perplexity",
    apiKey: process.env.PERPLEXITY_API_KEY,
   },
-  /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint
-		qwen: {
-			provider: "qwen",
+  Qwen: {
+			provider: "openaiCompatible",
 			apiKey: process.env.DASHSCOPE_API_KEY,
-		},*/
+   baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
+   generateModelSpec(modelInfo) {
+    let {id: model} = modelInfo;
+    let type = "chat";
+    let capabilities = {};
+    if (model.match(/embed/i)) {
+     type = "embedding";
+     capabilities.alwaysHot = 1;
+    } else if (model.match(/qwen[3]/i)) {
+     Object.assign(capabilities, {
+      reasoning: 2,
+      tools: 2,
+      intelligence: 2,
+      speed: 2,
+      contextLength: 128000,
+      costPerMillionInputTokens: 0,
+      costPerMillionOutputTokens: 0,
+     });
+    }
+    return {type, capabilities};
+   },
+		},
   xAi: {
    provider: "xai",
    apiKey: process.env.XAI_API_KEY,

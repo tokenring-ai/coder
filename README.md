@@ -63,24 +63,25 @@ Set API keys for integrations (e.g., AI providers, AWS):
 The monorepo uses workspaces for loosely coupled packages. Core packages form the agent framework; integrations extend tools/resources. Agents compose tools from multiple packages (e.g., an agent using `filesystem` for reads, `git` for commits, `ai-client` for LLM calls).
 
 ### Core Packages
-| Package | Description | Key Exports/Usage |
-|---------|-------------|-------------------|
-| `@tokenring-ai/agent` | Central agent orchestration with event emitters, UUIDs, glob-gitignore. | `Agent` class; integrates tools via registries. Used in CLI for chat sessions. |
-| `@tokenring-ai/ai-client` | Multi-provider AI SDK wrapper (OpenAI, Anthropic, Groq, etc., via `@ai-sdk/*`). | LLM calls, streaming; e.g., `generateText({ model: 'gpt-4o' })`. Ties to agent for reasoning. |
-| `@tokenring-ai/filesystem` | Abstract FS ops (read/write/search) with ignore patterns. | `FileSystem` interface; extended by `local-filesystem` for local ops. |
-| `@tokenring-ai/cli` | CLI utilities with inquirer prompts, ink for TUI, execa for shell. | Command parsing; powers `tr-coder` REPL with history/autocomplete. |
-| `@tokenring-ai/memory` | In-memory storage for agent state/context. | Session persistence; integrates with `queue` for batched prompts. |
-| `@tokenring-ai/queue` | Task queuing for sequential AI operations. | `Queue` class; used for multi-step workflows like code gen + test. |
+| Package | Description                                                                                      | Key Exports/Usage |
+|---------|--------------------------------------------------------------------------------------------------|-------------------|
+| `@tokenring-ai/agent` | Central agent orchestration with event emitters, UUIDs, glob-gitignore.                          | `Agent` class; integrates tools via registries. Used in CLI for chat sessions. |
+| `@tokenring-ai/ai-client` | Multi-provider AI SDK wrapper (OpenAI, Anthropic, Groq, etc., via `@ai-sdk/*`).                  | LLM calls, streaming; e.g., `generateText({ model: 'gpt-4o' })`. Ties to agent for reasoning. |
+| `@tokenring-ai/filesystem` | Abstract FS ops (read/write/search) with ignore patterns.                                        | `FileSystem` interface; extended by `local-filesystem` for local ops. |
+| `@tokenring-ai/cli` | Agent CLI for interactive agent selection, chat commands, and human interface handling. | `REPLService` class; provides agent lifecycle management, event streaming, and extensible slash commands. |
+| `@tokenring-ai/memory` | In-memory storage for agent state/context.                                                       | Session persistence; integrates with `queue` for batched prompts. |
+| `@tokenring-ai/queue` | Task queuing for sequential AI operations.                                                       | `Queue` class; used for multi-step workflows like code gen + test. |
 
 ### Integration Packages
 These provide domain-specific tools/resources, registered to agents:
 - **Cloud/Infra**: `@tokenring-ai/aws` (S3/STF clients), `@tokenring-ai/docker` (container exec), `@tokenring-ai/kubernetes` (K8s client), `@tokenring-ai/s3` (S3 FS impl).
+- **CLI/Interface**: `@tokenring-ai/cli` (REPL service with REPLService class, agent selection/creation, chat commands like /help, /exit, /multi, /edit, human interface handlers for confirmations/selections).
 - **Dev Tools**: `@tokenring-ai/git` (commit/rollback via execa), `@tokenring-ai/javascript` (ESLint, jscodeshift for JS ops), `@tokenring-ai/testing` (Vitest integration), `@tokenring-ai/code-watch` (chokidar for change detection).
 - **Data/DB**: `@tokenring-ai/database` (abstract DB), `@tokenring-ai/mysql` (MySQL2 connector), `@tokenring-ai/sqlite-storage` (local DB for history).
 - **Web/Search**: `@tokenring-ai/chrome` (Puppeteer automation), `@tokenring-ai/websearch` (abstract), `@tokenring-ai/serper` (Google search), `@tokenring-ai/scraperapi` (web scraping), `@tokenring-ai/wikipedia` (wiki queries).
 - **Other**: `@tokenring-ai/codebase` (repo scanning), `@tokenring-ai/file-index` (vector search with tree-sitter), `@tokenring-ai/feedback` (UI for sessions with React/Express), `@tokenring-ai/sandbox` (isolated exec via Zod validation).
 
-Cross-package example: An agent in CLI uses `ai-client` for chat, `filesystem` + `local-filesystem` for code access, `git` for changes, `testing` for validation. See pkg/ READMEs for details (e.g., pkg/agent/README.md).
+Cross-package example: The CLI's `REPLService` uses `agent` for team management, provides chat commands via modular command system (/help, /exit, /multi, /edit), handles human interface requests (confirmations, selections, tree navigation), and streams agent events (chat output, reasoning, system messages, busy/idle states). See pkg/ READMEs for details (e.g., pkg/agent/README.md, pkg/cli/README.md).
 
 ## Usage Examples
 
@@ -98,16 +99,14 @@ Cross-package example: An agent in CLI uses `ai-client` for chat, `filesystem` +
    bun run test   # Runs Vitest across pkgs
    ```
 
-3. **Custom Agent Integration** (in a script):
+3. **Custom REPL Integration** (in a script):
    ```typescript
-   import { Agent } from '@tokenring-ai/agent';
-   import { OpenAI } from '@tokenring-ai/ai-client';
-   import { LocalFileSystem } from '@tokenring-ai/local-filesystem';
+   import { REPLService } from '@tokenring-ai/cli';
+   import AgentTeam from '@tokenring-ai/agent/AgentTeam';
 
-   const agent = new Agent({ provider: new OpenAI() });
-   agent.addTool(new LocalFileSystem('./project'));
-   const response = await agent.run('List files');
-   console.log(response);
+   const team = new AgentTeam(/* config */);
+   const repl = new REPLService(team);
+   await repl.run();  // Starts interactive CLI with agent selection
    ```
 
 ## Configuration Options
