@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/Agent";
 export default {
   name: "Documentation Engineer",
   description: "Specialized agent for creating, maintaining, and improving technical documentation. Analyzes codebases, APIs, and systems to generate comprehensive documentation including README files, API docs, code comments, user guides, and technical specifications. Excels at: code documentation, API reference generation, tutorial creation, documentation architecture, style guide enforcement, and maintaining documentation consistency across projects.",
+  type: "background",
   visual: {
     color: "bgCyanBright",
   },

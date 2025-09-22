@@ -68,12 +68,6 @@ export interface CoderConfig {
     }
     resources: Record<string, CodeBaseResourceConfig>;
   };
-  repoMap?: {
-    default?: {
-      resources?: string[];
-    }
-    resources: Record<string, RepoMapResourceConfig>;
-  }
   codewatch?: CodeWatchServiceOptions;
   testing: {
     default?: {

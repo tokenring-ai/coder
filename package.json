@@ -1,7 +1,7 @@
 {
  "name": "@tokenring-ai/coder",
  "description": "TokenRing Coder Application",
- "version": "0.1.2",
+ "version": "0.1.4",
  "bin": {
   "tr-coder": "dist/tr-coder.js"
  },
@@ -26,12 +26,12 @@
   "@tokenring-ai/memory": "0.1.0",
   "@tokenring-ai/mysql": "0.1.0",
   "@tokenring-ai/queue": "0.1.0",
-  "@tokenring-ai/repo-map": "0.1.0",
   "@tokenring-ai/s3": "0.1.0",
   "@tokenring-ai/sandbox": "0.1.0",
   "@tokenring-ai/scraperapi": "0.1.0",
   "@tokenring-ai/serper": "0.1.0",
   "@tokenring-ai/sqlite-storage": "0.1.0",
+  "@tokenring-ai/tasks": "0.1.0",
   "@tokenring-ai/testing": "0.1.0",
   "@tokenring-ai/websearch": "0.1.0"
  },

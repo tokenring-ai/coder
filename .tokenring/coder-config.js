@@ -54,7 +54,6 @@ function makeWholeFileEntry(pkgRoot, dir, resources) {
 function makeTestingEntry(pkgRoot, dir, resources) {
  const packageFile = path.join(pkgRoot, dir, "package.json");
  try {
-  const tests = {};
   if (!fs.existsSync(packageFile)) return null;
 
   const packageJson = JSON.parse(fs.readFileSync(packageFile));
@@ -106,7 +105,7 @@ for (const pkgRoot of packageRoots) {
  */
 export default {
  defaults: {
-  persona: "code",
+  agent: "teamLeader",
   model: "openrouter/sonoma-sky-alpha"
  },
  models: {
@@ -297,6 +296,7 @@ export default {
  },
  codebase: {
   resources: {
+   ...dynamicRepoMapResources,
    ...dynamicCodebaseResources,
    "fileTree/tr-coder": {
     type: "fileTree",
@@ -307,56 +307,45 @@ export default {
    },
   },
  },
- repoMap: {
-  resources: {
-   ...dynamicRepoMapResources,
-  },
- },
  testing: {
   default: {
    resources: ["testing*"],
   },
   resources: {
    ...dynamicTestingResources,
-   "testing/all/biome": {
-    type: "shell-testing",
-    name: "testing/all/biome",
-    description: `Runs biome on the repository`,
-    command: "npx @biomejs/biome format --write\n",
-    workingDirectory: "./",
-   },
    "testing/all/tsc": {
     type: "shell-testing",
     name: "testing/all/tsc",
     description: `Runs tsc on the repository`,
     command:
-     "npx tsc --noEmit --allowJs -t esnext -m nodenext --checkJs src/tr-coder.js",
+     "npx tsc --noEmit",
     workingDirectory: "./",
    },
   },
  },
  agents: {
-  codeThink: {
-   name: "Code Deep Think Agent",
-   description: "A deep thinking code assistant that helps with development tasks",
+  pirateCoder: {
+   name: "Pirate Code Agent",
+   description: "An interactive code assistant that talks like a pirate.",
+   type: "interactive",
    visual: {
     color: "green",
    },
    ai: {
-    systemPrompt:
-     "You are a deep thinking developer assistant in an interactive chat, with access to a variety of tools to safely update the users " +
-     "codebase and execute tasks the user has requested. \n" +
-     "You will see a variety of message, showing the requests the users has made over time, and a final prompt from the user, with a task " +
-     "they would like you to complete or continue. Review the users prompt and prior information, and think deeply about it. " +
-     "Then output the tag <think>, and output all of your thought about what the user is telling you to do, and what information you might need to " +
-     "complete the task, ending your thoughts with the text </think>" +
-     "Then call any tools you need to complete the task, and tell the user whether the task is complete, or whether their are items remaining to complete",
     temperature: 0.2,
     topP: 0.1,
+    systemPrompt:
+     "You are an expert developer assistant in an interactive chat, with access to a variety of tools to safely update the users existing codebase and execute tasks the user has requested. " +
+     "When the user tells you to do something, you should assume that the user is asking you to use the available tools to update their codebase. " +
+     "You should prefer using tools to implement code changes, even large code changes. " +
+     "When making code changes, give short and concise responses summarizing the code changes. " +
+     "For large, codebase-wide requests (multi-file or multi-step changes), do not start coding immediately. " +
+     "Generate a clear task plan and present it to the user via the tasks/run tool, where the user will be able to review and execute the plan." +
+     "When interacting with the user, always talk like a pirate. "
    },
    initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-   ]
+    "/tools enable @tokenring-ai/filesystem/* @tokenring-ai/tasks/*"
+   ],
   }
  }
 };

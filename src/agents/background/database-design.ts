@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/Agent";
 export default {
   name: "Database Designer",
   description: "Call this agent to design database schemas and implement data storage solutions. Provide data requirements, existing schema, or performance constraints. The agent will create normalized schemas, design indexes, implement migrations, optimize queries, and build complete database solutions with ORM configurations. Best used for: schema design, database migrations, query optimization, data modeling, and storage architecture planning.",
+  type: "background",
   visual: {
     color: "blue",
   },

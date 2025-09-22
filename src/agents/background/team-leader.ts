@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/Agent";
 export default {
   name: "Team Leader",
   description: "Call this agent to orchestrate full-stack development projects from conception to deployment. Provide project requirements, MVP goals, or complex development tasks. The agent will coordinate specialist teams, manage development workflow, ensure architectural consistency, integrate deliverables, and oversee project completion. Best used for: MVP development, full-stack projects, team coordination, technical leadership, and end-to-end project delivery.",
+  type: "background",
   visual: {
     color: "magenta",
   },
@@ -19,6 +20,6 @@ export default {
     maxSteps: 200,
   },
   initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/* @tokenring-ai/agent/*",
+    "/tools enable @tokenring-ai/filesystem/* @tokenring-ai/tasks/*",
   ]
 } as AgentConfig;

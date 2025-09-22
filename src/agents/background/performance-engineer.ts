@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/Agent";
 export default {
   name: "Performance Engineer",
   description: "Call this agent to optimize application performance, scalability, and monitoring. Provide performance requirements, bottlenecks, or scaling challenges. The agent will implement caching strategies, optimize database queries, configure load balancing, set up monitoring, implement CDNs, and build high-performance systems. Best used for: performance optimization, scalability planning, monitoring setup, caching implementation, and system tuning.",
+  type: "background",
   visual: {
     color: "red",
   },

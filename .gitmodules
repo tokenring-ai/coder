@@ -78,10 +78,6 @@
 	path = pkg/registry
 	url = git@github.com:tokenring-ai/registry
 	branch = origin/main
-[submodule "pkg/repo-map"]
-	path = pkg/repo-map
-	url = git@github.com:tokenring-ai/repo-map
-	branch = origin/main
 [submodule "pkg/sqlite-storage"]
 	path = pkg/sqlite-storage
 	url = git@github.com:tokenring-ai/sqlite-storage
@@ -134,4 +130,8 @@
 [submodule "pkg/cdn"]
 	path = pkg/cdn
 	url = git@github.com:tokenring-ai/cdn.git
+	branch = main
+[submodule "pkg/tasks"]
+	path = pkg/tasks
+	url = git@github.com:tokenring-ai/tasks.git
 	branch = main

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import {AgentStateStorage, AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
+import AgentContextService from "@tokenring-ai/agent/AgentContextService";
 import {ModelRegistry, packageInfo as ChatRouterPackage} from "@tokenring-ai/ai-client";
 import AIService from "@tokenring-ai/ai-client/AIService";
 import {registerModels} from "@tokenring-ai/ai-client/models";
@@ -7,7 +8,7 @@ import {AWSService} from "@tokenring-ai/aws";
 import {ChromeWebSearchResource, packageInfo as ChromePackage} from "@tokenring-ai/chrome";
 import {packageInfo as CLIPackage, REPLService} from "@tokenring-ai/cli";
 import {CodeWatchService} from "@tokenring-ai/code-watch";
-import {CodeBaseService, FileTreeResource, WholeFileResource} from "@tokenring-ai/codebase";
+import {CodeBaseService, FileTreeResource, RepoMapResource, WholeFileResource} from "@tokenring-ai/codebase";
 import DatabaseService from "@tokenring-ai/database/DatabaseService";
 import {DockerSandboxResource, DockerService} from "@tokenring-ai/docker";
 import {packageInfo as FeedbackPackage} from "@tokenring-ai/feedback";
@@ -18,27 +19,25 @@ import {GitService, packageInfo as GitPackage} from "@tokenring-ai/git";
 import {packageInfo as JavascriptPackage} from "@tokenring-ai/javascript";
 import {packageInfo as KubernetesPackage} from "@tokenring-ai/kubernetes";
 import {LocalFileSystemService, packageInfo as LocalFileSystemPackage} from "@tokenring-ai/local-filesystem";
-import {EphemeralMemoryService, packageInfo as MemoryPackage} from "@tokenring-ai/memory";
+import {packageInfo as MemoryPackage, ShortTermMemoryService} from "@tokenring-ai/memory";
 import {MySQLService} from "@tokenring-ai/mysql";
 import {packageInfo as QueuePackage, WorkQueueService} from "@tokenring-ai/queue";
-import {RepoMapResource, RepoMapService} from "@tokenring-ai/repo-map";
+
 import {S3FileSystemProvider} from "@tokenring-ai/s3";
-import {packageInfo as SandboxPackage} from "@tokenring-ai/sandbox";
-import SandboxService from "@tokenring-ai/sandbox/SandboxService";
+import {packageInfo as SandboxPackage, SandboxService} from "@tokenring-ai/sandbox";
 import {ScraperAPIWebSearchResource} from "@tokenring-ai/scraperapi";
 import {SerperWebSearchResource} from "@tokenring-ai/serper";
-import {
-  packageInfo as SQLiteChatStoragePackage,
-} from "@tokenring-ai/sqlite-storage";
+import {packageInfo as SQLiteChatStoragePackage,} from "@tokenring-ai/sqlite-storage";
 import initializeLocalDatabase from "@tokenring-ai/sqlite-storage/db/initializeLocalDatabase";
 import SQLiteAgentStateStorage from "@tokenring-ai/sqlite-storage/SQLiteAgentStateStorage";
+import {packageInfo as TasksPackage, TaskService} from "@tokenring-ai/tasks";
 import {packageInfo as TestingPackage, ShellCommandTestingResource, TestingService} from "@tokenring-ai/testing";
 import {WebSearchService} from "@tokenring-ai/websearch";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "node:fs";
 import path from "path";
-import agents from "./agents.ts";
+import agents from "./agents/index.ts";
 import {CoderConfig} from "./config.types.js";
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
 import {error} from "./prettyString.js";
@@ -150,6 +149,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     QueuePackage,
     SandboxPackage,
     SQLiteChatStoragePackage,
+    TasksPackage,
     TestingPackage,
   ]);
 
@@ -159,13 +159,15 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   const filesystemService = new FileSystemService();
 
   agentTeam.services.register(
+    new AgentContextService(),
     modelRegistry,
     filesystemService,
     new AIService({ model: config.defaults.model}),
     new AgentStateStorage(new SQLiteAgentStateStorage({db})),
     new WorkQueueService(),
-    new EphemeralMemoryService(),
+    new ShortTermMemoryService(),
     new GitService(),
+    new TaskService(),
     //new RecordingService(),
     //new SpeechToTextService(),
   );
@@ -249,25 +251,6 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     }
   }
 
-  if (config.repoMap) {
-    const repoMapService = new RepoMapService();
-    agentTeam.services.register(repoMapService);
-    if (config.repoMap.resources) {
-      for (const name in config.repoMap.resources) {
-        const repoMapConfig = config.repoMap.resources[name];
-        switch (repoMapConfig.type) {
-          case "repoMap":
-            repoMapService.registerResource(name, new RepoMapResource(repoMapConfig));
-            break;
-          default:
-            throw new Error(`Invalid repoMap resource type for repoMap ${name}`);
-        }
-      }
-    }
-    if (config.repoMap.default?.resources) {
-      repoMapService.enableResources(config.repoMap.default.resources);
-    }
-  }
 
   if (config.testing) {
     const testingService = new TestingService();
@@ -298,7 +281,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
         const databaseConfig = config.database.resources[name];
         switch (databaseConfig.type) {
           case "mysql":
-            databaseService.registerResource(name, new MySQLService(databaseConfig));
+            databaseService.registerDatabase(name, new MySQLService(databaseConfig));
             break;
           default:
             throw new Error(`Invalid database resource type for database ${name}`);

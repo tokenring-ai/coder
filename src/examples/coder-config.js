@@ -6,10 +6,10 @@
 
 export default {
 	defaults: {
+		agent: "teamLeader",
 		resources: ["testing*"],
 		selectedFiles: ["AGENTS.md"],
 		model: "gpt-5",
-		persona: "code",
 	},
 	models: {
 		anthropic: {

@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/Agent";
 export default {
   name: "DevOps Engineer",
   description: "Call this agent to set up deployment pipelines, infrastructure, and development environments. Provide deployment requirements, hosting constraints, or existing infrastructure. The agent will create Docker configurations, set up CI/CD pipelines, configure cloud infrastructure, implement monitoring, and establish deployment strategies. Best used for: deployment automation, infrastructure setup, CI/CD configuration, environment management, and production deployment.",
+  type: "background",
   visual: {
     color: "green",
   },
