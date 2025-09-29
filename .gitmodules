@@ -135,3 +135,15 @@
 	path = pkg/tasks
 	url = git@github.com:tokenring-ai/tasks.git
 	branch = main
+[submodule "pkg/voice"]
+	path = pkg/audio
+	url = git@github.com:tokenring-ai/audio.git
+[submodule "pkg/linux-audio"]
+	path = pkg/linux-audio
+	url = git@github.com:tokenring-ai/linux-audio.git
+[submodule "pkg/naudiodon3"]
+	path = pkg/naudiodon3
+	url = git@github.com:tokenring-ai/naudiodon3.git
+[submodule "pkg/mcp"]
+	path = pkg/mcp
+	url = git@github.com:tokenring-ai/mcp.git

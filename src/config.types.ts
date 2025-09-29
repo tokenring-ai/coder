@@ -1,14 +1,15 @@
 import {AgentConfig} from "@tokenring-ai/agent/Agent";
 import {ModelProviderConfig} from "@tokenring-ai/ai-client/models";
 import {AWSCredentials} from "@tokenring-ai/aws/AWSService";
-import {ChromeWebSearchOptions} from "@tokenring-ai/chrome/ChromeWebSearchResource";
+import {ChromeWebSearchOptions} from "@tokenring-ai/chrome/ChromeWebSearchProvider";
 import {CodeWatchServiceOptions} from "@tokenring-ai/code-watch/CodeWatchService";
 import {DockerSandboxProviderParams} from "@tokenring-ai/docker/DockerSandboxProvider";
 import {DockerServiceParams} from "@tokenring-ai/docker/DockerService";
 import {EphemeralFileIndexProvider} from "@tokenring-ai/file-index";
 import {FileMatchResourceConfig} from "@tokenring-ai/filesystem/FileMatchResource";
 import {LocalFileSystemProviderOptions} from "@tokenring-ai/local-filesystem/LocalFileSystemProvider";
-import {MySQLResourceProps} from "@tokenring-ai/mysql/MySQLResource";
+import {MCPTransportConfig} from "@tokenring-ai/mcp/MCPService";
+import {MySQLResourceProps} from "@tokenring-ai/mysql/MySQLProvider";
 import {S3FileSystemProviderOptions} from "@tokenring-ai/s3/S3FileSystemProvider";
 import {ScraperAPIWebSearchProviderOptions} from "@tokenring-ai/scraperapi/ScraperAPIWebSearchProvider";
 import {SerperWebSearchProviderOptions} from "@tokenring-ai/serper/SerperWebSearchProvider";
@@ -27,7 +28,7 @@ export type CodeBaseResourceConfig =
 export type RepoMapResourceConfig =
   | FileMatchResourceConfig & { type: 'repoMap' };
 
-export type DatabaseResourceConfig =
+export type DatabaseProviderConfig =
   | MySQLResourceProps & { type: 'mysql' };
 
 export type TestingResourceConfig =
@@ -40,7 +41,7 @@ export type FileSystemProviderConfig =
   | LocalFileSystemProviderOptions & { type: 'local' }
   | S3FileSystemProviderOptions & { type: 's3' };
 
-export type FileIndexConfig =
+export type FileIndexProviderConfig =
   | EphemeralFileIndexProvider & { type: 'ephemeral' };
 
 export interface CoderConfig {
@@ -60,7 +61,7 @@ export interface CoderConfig {
     providers: Record<string, FileSystemProviderConfig>;
   }
   fileIndex?: {
-    providers: Record<string, FileIndexConfig>;
+    providers: Record<string, FileIndexProviderConfig>;
   }
   codebase?: {
     default?: {
@@ -77,9 +78,9 @@ export interface CoderConfig {
   };
   database?: {
     default?: {
-      resources?: string[];
+      providers?: string[];
     }
-    resources: Record<string, DatabaseResourceConfig>;
+    providers: Record<string, DatabaseProviderConfig>;
   };
   sandbox?: {
     default?: {
@@ -88,5 +89,8 @@ export interface CoderConfig {
     providers: Record<string, SandboxProviderConfig>;
   };
   aws?: AWSCredentials
-  docker?: DockerServiceParams
+  docker?: DockerServiceParams,
+  mcp?: {
+    transports: Record<string, MCPTransportConfig>;
+  };
 }
