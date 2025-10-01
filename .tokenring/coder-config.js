@@ -103,6 +103,7 @@ for (const pkgRoot of packageRoots) {
 
 import AutomatedBrainstormingSession from "./coding-agents/AutomatedBrainstormingSession.js";
 import AutomatedDocumentationGeneration from "./coding-agents/AutomatedDocumentationGeneration.js";
+import AutomatedRefactoringSession from "./coding-agents/AutomatedRefactoringSession.js";
 import PirateCoder from "./coding-agents/PirateCoder.js";
 import brainstormingAgent from "./coding-agents/brainstorming-agent.js";
 import refactorAgent from "./coding-agents/refactoring-agent.js";
@@ -110,6 +111,7 @@ import refactorAgent from "./coding-agents/refactoring-agent.js";
 const agents = {
  AutomatedBrainstormingSession,
  AutomatedDocumentationGeneration,
+ AutomatedRefactoringSession,
  PirateCoder,
  refactorAgent,
  brainstormingAgent,
