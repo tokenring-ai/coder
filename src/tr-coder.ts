@@ -1,47 +1,41 @@
 #!/usr/bin/env node
-import {AgentStateStorage, AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
-import AgentContextService from "@tokenring-ai/agent/AgentContextService";
-import {ModelRegistry, packageInfo as ChatRouterPackage} from "@tokenring-ai/ai-client";
-import AIService from "@tokenring-ai/ai-client/AIService";
-import {registerModels} from "@tokenring-ai/ai-client/models";
-import {AudioService, packageInfo as AudioPackage} from "@tokenring-ai/audio";
-import {AWSService} from "@tokenring-ai/aws";
-import {ChromeWebSearchProvider, packageInfo as ChromePackage} from "@tokenring-ai/chrome";
+import {AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
+import {packageInfo as ChatRouterPackage} from "@tokenring-ai/ai-client";
+import {packageInfo as AudioPackage} from "@tokenring-ai/audio";
+import {packageInfo as AWSPackage} from "@tokenring-ai/aws";
+import {packageInfo as CheckpointPackage} from "@tokenring-ai/checkpoint";
+import {packageInfo as ChromePackage} from "@tokenring-ai/chrome";
 import {packageInfo as CLIPackage, REPLService} from "@tokenring-ai/cli";
-import {CodeWatchService} from "@tokenring-ai/code-watch";
-import {CodeBaseService, FileTreeResource, RepoMapResource, WholeFileResource} from "@tokenring-ai/codebase";
-import DatabaseService from "@tokenring-ai/database/DatabaseService";
-import {DockerSandboxProvider, DockerService} from "@tokenring-ai/docker";
+import {packageInfo as CodeWatchPackage} from "@tokenring-ai/code-watch";
+import {packageInfo as CodeBasePackage} from "@tokenring-ai/codebase";
+import {packageInfo as DatabasePackage} from "@tokenring-ai/database";
+import {packageInfo as DockerPackage} from "@tokenring-ai/docker";
 import {packageInfo as FeedbackPackage} from "@tokenring-ai/feedback";
-import {EphemeralFileIndexProvider, FileIndexService, packageInfo as FileIndexPackage} from "@tokenring-ai/file-index";
-import {FileSystemService, packageInfo as FilesystemPackage} from "@tokenring-ai/filesystem";
-import {GitService, packageInfo as GitPackage} from "@tokenring-ai/git";
-import {LinuxAudioProvider, packageInfo as LinuxAudioPackage} from "@tokenring-ai/linux-audio";
-import {packageInfo as MCPPackage, MCPService} from "@tokenring-ai/mcp";
+import {packageInfo as FileIndexPackage} from "@tokenring-ai/file-index";
+import {packageInfo as FilesystemPackage} from "@tokenring-ai/filesystem";
+import {packageInfo as GitPackage} from "@tokenring-ai/git";
+import {packageInfo as IterablesPackage} from "@tokenring-ai/iterables";
 import {packageInfo as JavascriptPackage} from "@tokenring-ai/javascript";
 import {packageInfo as KubernetesPackage} from "@tokenring-ai/kubernetes";
-import {LocalFileSystemService, packageInfo as LocalFileSystemPackage} from "@tokenring-ai/local-filesystem";
-import {packageInfo as MemoryPackage, ShortTermMemoryService} from "@tokenring-ai/memory";
-import {MySQLProvider} from "@tokenring-ai/mysql";
-import {packageInfo as QueuePackage, WorkQueueService} from "@tokenring-ai/queue";
-
-import {S3FileSystemProvider} from "@tokenring-ai/s3";
-import {packageInfo as SandboxPackage, SandboxService} from "@tokenring-ai/sandbox";
-import {ScraperAPIWebSearchProvider} from "@tokenring-ai/scraperapi";
-import {SerperWebSearchProvider} from "@tokenring-ai/serper";
-import {packageInfo as SQLiteChatStoragePackage,} from "@tokenring-ai/sqlite-storage";
-import initializeLocalDatabase from "@tokenring-ai/sqlite-storage/db/initializeLocalDatabase";
-import SQLiteAgentStateStorage from "@tokenring-ai/sqlite-storage/SQLiteAgentStateStorage";
-import {packageInfo as TasksPackage, TaskService} from "@tokenring-ai/tasks";
-import {packageInfo as TestingPackage, ShellCommandTestingResource, TestingService} from "@tokenring-ai/testing";
-import {WebSearchService} from "@tokenring-ai/websearch";
+import {packageInfo as LinuxAudioPackage} from "@tokenring-ai/linux-audio";
+import {packageInfo as LocalFileSystemPackage} from "@tokenring-ai/local-filesystem";
+import {packageInfo as MCPPackage} from "@tokenring-ai/mcp";
+import {packageInfo as MemoryPackage} from "@tokenring-ai/memory";
+import {packageInfo as MySQLPackage} from "@tokenring-ai/mysql";
+import {packageInfo as QueuePackage} from "@tokenring-ai/queue";
+import {packageInfo as SandboxPackage} from "@tokenring-ai/sandbox";
+import {packageInfo as ScraperAPIPackage} from "@tokenring-ai/scraperapi";
+import {packageInfo as SerperPackage} from "@tokenring-ai/serper";
+import {packageInfo as SQLiteStoragePackage} from "@tokenring-ai/sqlite-storage";
+import {packageInfo as TasksPackage} from "@tokenring-ai/tasks";
+import {packageInfo as TestingPackage} from "@tokenring-ai/testing";
+import {packageInfo as WebSearchPackage} from "@tokenring-ai/websearch";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "node:fs";
 import path from "path";
+import {z} from "zod";
 import agents from "./agents/index.ts";
-import code from "./agents/interactive/code.js";
-import {CoderConfig} from "./config.types.js";
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
 import {error} from "./prettyString.js";
 
@@ -121,26 +115,62 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   }
 
   const configImport = await import(configFile);
-  const config = configImport.default as CoderConfig;
+  const config = z.record(z.string(), z.any()).parse(configImport.default)
 
   const baseDirectory = resolvedSource;
-  const db = initializeLocalDatabase(
-    path.resolve(configDirectory, "./coder-database.sqlite"),
-  );
 
-  const agentTeam = new AgentTeam();
+  config.filesystem ??= {
+    defaultProvider: "local",
+    providers: {
+      local: {
+        type: "local",
+        baseDirectory,
+      }
+    }
+  }
+
+  config.checkpoint ??= {
+    defaultProvider: "sqlite",
+    providers: {
+      sqlite: {
+        type: "sqlite",
+        databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
+      }
+    }
+  };
+
+  config.audio ??= {
+    defaultProvider: "local",
+    providers: {
+      local: {
+        type: "linux"
+      }
+    }
+  };
+
+  const agentTeam = new AgentTeam(config);
   agentTeam.events.on("serviceOutput", message => {
     console.log(chalk.yellow(`🔧 ${message}`));
   })
   agentTeam.events.on("serviceError", message => {
     console.log(chalk.red(`🔧 ❌ ${message}`));
-  })
+  });
 
   await agentTeam.addPackages([
     AgentPackage,
     AudioPackage,
     ChatRouterPackage,
+    CheckpointPackage,
+    AWSPackage,
+    CodeWatchPackage,
+    CodeBasePackage,
+    DatabasePackage,
+    DockerPackage,
     ChromePackage,
+    MySQLPackage,
+    ScraperAPIPackage,
+    SerperPackage,
+    TestingPackage,
     CLIPackage,
     FeedbackPackage,
     FileIndexPackage,
@@ -154,206 +184,15 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     MemoryPackage,
     QueuePackage,
     SandboxPackage,
-    SQLiteChatStoragePackage,
+    SQLiteStoragePackage,
     TasksPackage,
-    TestingPackage,
+    IterablesPackage,
+    WebSearchPackage,
   ]);
 
-  const modelRegistry = new ModelRegistry();
-  await registerModels(config.models, modelRegistry);
-
-  const filesystemService = new FileSystemService();
-
-  const audioService = new AudioService();
-  audioService.registerProvider('linux', new LinuxAudioProvider());
-  audioService.setActiveProvider('linux');
-
-  agentTeam.services.register(
-    new AgentContextService(),
-    modelRegistry,
-    filesystemService,
-    new AIService({ model: config.defaults.model}),
-    new AgentStateStorage(new SQLiteAgentStateStorage({db})),
-    new WorkQueueService(),
-    new ShortTermMemoryService(),
-    new GitService(),
-    new TaskService(),
-    audioService,
-  );
-
-  config.filesystem ??= {
-    providers: {
-      local: {
-        type: "local",
-        baseDirectory,
-      }
-    }
-  }
-
-
-  if (!config.filesystem.providers) {
-    throw new Error(`No filesystem providers configured`);
-  }
-  for (const name in config.filesystem.providers) {
-    const filesystemConfig = config.filesystem.providers[name];
-    switch (filesystemConfig.type) {
-      case "local":
-        filesystemService.registerFileSystemProvider(name, new LocalFileSystemService(filesystemConfig));
-        break;
-      case "s3":
-        filesystemService.registerFileSystemProvider(name, new S3FileSystemProvider(filesystemConfig));
-        break;
-      default:
-        throw new Error(`Invalid filesystem type for filesystem ${name}`);
-    }
-  }
-  filesystemService.setActiveFileSystemProviderName(config.filesystem.default?.provider ?? filesystemService.getAvailableFileSystemProviders()[0]);
-
-  if (config.websearch) {
-    const websearchService = new WebSearchService();
-    agentTeam.services.register(websearchService);
-
-    for (const name in config.websearch) {
-      const websearchConfig = config.websearch[name];
-      switch (websearchConfig.type) {
-        case "chrome":
-          websearchService.registerProvider(name, new ChromeWebSearchProvider(websearchConfig));
-          break;
-        case "serper":
-          websearchService.registerProvider(name, new SerperWebSearchProvider(websearchConfig));
-          break;
-        case "scraperapi":
-          websearchService.registerProvider(name, new ScraperAPIWebSearchProvider(websearchConfig));
-          break;
-        default:
-          throw new Error(`Invalid websearch type for websearch ${name}`);
-      }
-    }
-  }
-  if (config.codewatch) {
-    const watchedFileService = new CodeWatchService(config.codewatch);
-    agentTeam.services.register(watchedFileService);
-  }
-
-  if (config.codebase) {
-    const codebaseService = new CodeBaseService();
-    agentTeam.services.register(codebaseService);
-
-    for (const name in config.codebase.resources) {
-      const filesystemConfig = config.codebase.resources[name];
-      switch (filesystemConfig.type) {
-        case "fileTree":
-          codebaseService.registerResource(name, new FileTreeResource(filesystemConfig));
-          break;
-        case "repoMap":
-          codebaseService.registerResource(name, new RepoMapResource(filesystemConfig));
-          break;
-        case "wholeFile":
-          codebaseService.registerResource(name, new WholeFileResource(filesystemConfig));
-          break;
-        default:
-          throw new Error(`Invalid filesystem resource type for filesystem ${name}`);
-      }
-    }
-    if (config.codebase.default?.resources) {
-      codebaseService.enableResources(config.codebase.default.resources);
-    }
-  }
-
-
-  if (config.testing) {
-    const testingService = new TestingService();
-    agentTeam.services.register(testingService);
-
-    if (config.testing.resources) {
-      for (const name in config.testing.resources) {
-        const testingConfig = config.testing.resources[name];
-        switch (testingConfig.type) {
-          case "shell-testing":
-            testingService.registerResource(name, new ShellCommandTestingResource(testingConfig));
-            break;
-          default:
-            throw new Error(`Invalid testing resource type for testing ${name}`);
-        }
-      }
-    }
-    if (config.testing.default?.resources) {
-      testingService.enableResources(config.testing.default.resources);
-    }
-  }
-
-  if (config.database) {
-    const databaseService = new DatabaseService();
-    agentTeam.services.register(databaseService);
-    if (config.database.providers) {
-      for (const name in config.database.providers) {
-        const databaseConfig = config.database.providers[name];
-        switch (databaseConfig.type) {
-          case "mysql":
-            databaseService.registerDatabase(name, new MySQLProvider(databaseConfig));
-            break;
-          default:
-            throw new Error(`Invalid database resource type for database ${name}`);
-        }
-      }
-    }
-  }
-
-  if (config.mcp) {
-    const mcpService = new MCPService();
-    agentTeam.services.register(mcpService);
-
-    for (const name in config.mcp.transports) {
-      await mcpService.register(name,config.mcp.transports[name], agentTeam);
-    }
-  }
-
-  if (config.docker) {
-    const dockerService = new DockerService(config.docker);
-    agentTeam.services.register(dockerService);
-  }
-
-  if (config.sandbox) {
-    const sandboxService = new SandboxService();
-    agentTeam.services.register(sandboxService);
-
-    if (config.sandbox.providers) {
-      for (const name in config.sandbox.providers) {
-        const sandboxConfig = config.sandbox.providers[name];
-        switch (sandboxConfig.type) {
-          case "docker":
-            sandboxService.registerSandboxProvider(name, new DockerSandboxProvider(config.sandbox.providers[name]));
-            break;
-          default:
-            throw new Error(`Invalid sandbox resource type for sandbox ${name}`);
-        }
-      }
-    }
-    if (config.sandbox.default?.provider) {
-      sandboxService.setActiveSandboxProviderName(config.sandbox.default.provider);
-    }
-  }
-
-  if (config.aws) {
-    const awsService = new AWSService(config.aws);
-    agentTeam.services.register(awsService);
-  }
-
-  if (config.fileIndex) {
-    const fileIndexService = new FileIndexService();
-    agentTeam.services.register(fileIndexService);
-
-    if (config.fileIndex.providers) {
-      for (const name in config.fileIndex.providers) {
-        const fileIndexConfig = config.fileIndex.providers[name];
-        switch (fileIndexConfig.type) {
-          case "ephemeral":
-            fileIndexService.registerFileIndexProvider(name, new EphemeralFileIndexProvider());
-            break;
-        }
-      }
-    }
-  }
+  agentTeam.addAgentConfigs(
+    agents
+  )
 
   console.log(chalk.yellow(banner));
 

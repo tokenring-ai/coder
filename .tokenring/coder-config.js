@@ -121,196 +121,195 @@ const agents = {
  * @type {import("../src/config.types.js").CoderConfig}
  */
 export default {
- defaults: {
-  agent: "teamLeader",
-  model: "LocalLLama:openai/gpt-oss-120b"
- },
  agents,
- models: {
-  Anthropic: {
-   provider: "anthropic",
-   apiKey: process.env.ANTHROPIC_API_KEY,
-  },
-  Azure: {
-   provider: "azure",
-   apiKey: process.env.AZURE_API_KEY,
-   baseURL: process.env.AZURE_API_ENDPOINT,
-  },
-  Cerebras: {
-   provider: "cerebras",
-   apiKey: process.env.CEREBRAS_API_KEY,
-  },
-  DeepSeek: {
-   provider: "deepseek",
-   apiKey: process.env.DEEPSEEK_API_KEY,
-  },
-  Google: {
-   provider: "google",
-   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-  },
-  Groq: {
-   provider: "groq",
-   apiKey: process.env.GROQ_API_KEY,
-  },
-  /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint */
-  LLama: {
-   provider: "openaiCompatible",
-   apiKey: process.env.LLAMA_API_KEY,
-   baseURL: 'https://api.llama.com/compat/v1',
-   generateModelSpec(modelInfo) {
-    let {id: model} = modelInfo;
-    let type = "chat";
-    let capabilities = {};
-    if (model.match(/scout/i)) {
-     Object.assign(capabilities, {
-      reasoning: 2,
-      tools: 2,
-      intelligence: 2,
-      speed: 2,
-      contextLength: 10000000,
-      costPerMillionInputTokens: 0,
-      costPerMillionOutputTokens: 0,
-     });
-    } else if (model.match(/maverick/i)) {
-     Object.assign(capabilities, {
-      reasoning: 3,
-      tools: 3,
-      intelligence: 3,
-      speed: 3,
-      contextLength: 10000000,
-      costPerMillionInputTokens: 0,
-      costPerMillionOutputTokens: 0,
-     });
-    }
-    return {type, capabilities};
+ ai: {
+  defaultModel: "LocalLLama:openai/gpt-oss-120b",
+  models: {
+   Anthropic: {
+    provider: "anthropic",
+    apiKey: process.env.ANTHROPIC_API_KEY,
+   },
+   Azure: {
+    provider: "azure",
+    apiKey: process.env.AZURE_API_KEY,
+    baseURL: process.env.AZURE_API_ENDPOINT,
+   },
+   Cerebras: {
+    provider: "cerebras",
+    apiKey: process.env.CEREBRAS_API_KEY,
+   },
+   DeepSeek: {
+    provider: "deepseek",
+    apiKey: process.env.DEEPSEEK_API_KEY,
+   },
+   Google: {
+    provider: "google",
+    apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
+   },
+   Groq: {
+    provider: "groq",
+    apiKey: process.env.GROQ_API_KEY,
+   },
+   /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint */
+   LLama: {
+    provider: "openaiCompatible",
+    apiKey: process.env.LLAMA_API_KEY,
+    baseURL: 'https://api.llama.com/compat/v1',
+    generateModelSpec(modelInfo) {
+     let {id: model} = modelInfo;
+     let type = "chat";
+     let capabilities = {};
+     if (model.match(/scout/i)) {
+      Object.assign(capabilities, {
+       reasoning: 2,
+       tools: 2,
+       intelligence: 2,
+       speed: 2,
+       contextLength: 10000000,
+       costPerMillionInputTokens: 0,
+       costPerMillionOutputTokens: 0,
+      });
+     } else if (model.match(/maverick/i)) {
+      Object.assign(capabilities, {
+       reasoning: 3,
+       tools: 3,
+       intelligence: 3,
+       speed: 3,
+       contextLength: 10000000,
+       costPerMillionInputTokens: 0,
+       costPerMillionOutputTokens: 0,
+      });
+     }
+     return {type, capabilities};
+    },
+   },
+   OpenAI: {
+    provider: "openai",
+    apiKey: process.env.OPENAI_API_KEY,
+   },
+   LlamaCPP: {
+    provider: "openaiCompatible",
+    baseURL: "http://192.168.15.20:11434",
+    apiKey: "sk-ABCD1234567890",
+    generateModelSpec(modelInfo) {
+     let {id: model} = modelInfo;
+     model = model.replace(/:latest$/, "");
+     model = model.replace(/^hf.co\/([^\/]*)\//, "");
+     let type = "chat";
+     let capabilities = {};
+     if (model.match(/embed/i)) {
+      type = "embedding";
+      capabilities.alwaysHot = 1;
+     } else if (model.match(/qwen[23]/i)) {
+      Object.assign(capabilities, {
+       reasoning: 2,
+       tools: 2,
+       intelligence: 2,
+       speed: 2,
+       contextLength: 128000,
+       costPerMillionInputTokens: 0,
+       costPerMillionOutputTokens: 0,
+      });
+     }
+     return {type, capabilities};
+    },
+   },
+   LocalLLama: {
+    provider: "openaiCompatible",
+    baseURL: "http://192.168.15.25:11434/v1",
+    apiKey: "sk-ABCD1234567890",
+    generateModelSpec(modelInfo) {
+     let {id: model} = modelInfo;
+     model = model.replace(/:latest$/, "");
+     model = model.replace(/^hf.co\/([^\/]*)\//, "");
+     let type = "chat";
+     let capabilities = {};
+     if (model.match(/embed/i)) {
+      type = "embedding";
+      capabilities.alwaysHot = 1;
+     } else if (model.match(/qwen[23]/i)) {
+      Object.assign(capabilities, {
+       reasoning: 2,
+       tools: 2,
+       intelligence: 2,
+       speed: 2,
+       contextLength: 128000,
+       costPerMillionInputTokens: 0,
+       costPerMillionOutputTokens: 0,
+      });
+     }
+     return {type, capabilities};
+    },
+   },
+   OpenRouter: {
+    provider: "openrouter",
+    apiKey: process.env.OPENROUTER_API_KEY,
+    modelFilter: (model) => {
+     if (!model.supported_parameters?.includes("tools")) {
+      return false;
+     } else if (/openai|anthropic|xai|perplexity|cerebras/.test(model.id)) {
+      return false;
+     }
+     return true;
+    },
+   },
+   Perplexity: {
+    provider: "perplexity",
+    apiKey: process.env.PERPLEXITY_API_KEY,
+   },
+   Qwen: {
+    provider: "openaiCompatible",
+    apiKey: process.env.DASHSCOPE_API_KEY,
+    baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
+    generateModelSpec(modelInfo) {
+     let {id: model} = modelInfo;
+     let type = "chat";
+     let capabilities = {};
+     if (model.match(/embed/i)) {
+      type = "embedding";
+      capabilities.alwaysHot = 1;
+     } else if (model.match(/qwen[3]/i)) {
+      Object.assign(capabilities, {
+       reasoning: 2,
+       tools: 2,
+       intelligence: 2,
+       speed: 2,
+       contextLength: 128000,
+       costPerMillionInputTokens: 0,
+       costPerMillionOutputTokens: 0,
+      });
+     }
+     return {type, capabilities};
+    },
+   },
+   xAi: {
+    provider: "xai",
+    apiKey: process.env.XAI_API_KEY,
    },
   },
-  OpenAI: {
-   provider: "openai",
-   apiKey: process.env.OPENAI_API_KEY,
-  },
-  LlamaCPP: {
-   provider: "openaiCompatible",
-   baseURL: "http://192.168.15.20:11434",
-   apiKey: "sk-ABCD1234567890",
-   generateModelSpec(modelInfo) {
-    let {id: model} = modelInfo;
-    model = model.replace(/:latest$/, "");
-    model = model.replace(/^hf.co\/([^\/]*)\//, "");
-    let type = "chat";
-    let capabilities = {};
-    if (model.match(/embed/i)) {
-     type = "embedding";
-     capabilities.alwaysHot = 1;
-    } else if (model.match(/qwen[23]/i)) {
-     Object.assign(capabilities, {
-      reasoning: 2,
-      tools: 2,
-      intelligence: 2,
-      speed: 2,
-      contextLength: 128000,
-      costPerMillionInputTokens: 0,
-      costPerMillionOutputTokens: 0,
-     });
-    }
-    return {type, capabilities};
+  websearch: {
+   serper: {
+    type: "serper",
+    apiKey: process.env.SERPER_API_KEY,
+   },
+   scraperapi: {
+    type: "scraperapi",
+    apiKey: process.env.SCRAPERAPI_API_KEY,
    },
   },
-  LocalLLama: {
-   provider: "openaiCompatible",
-   baseURL: "http://192.168.15.25:11434/v1",
-   apiKey: "sk-ABCD1234567890",
-   generateModelSpec(modelInfo) {
-    let {id: model} = modelInfo;
-    model = model.replace(/:latest$/, "");
-    model = model.replace(/^hf.co\/([^\/]*)\//, "");
-    let type = "chat";
-    let capabilities = {};
-    if (model.match(/embed/i)) {
-     type = "embedding";
-     capabilities.alwaysHot = 1;
-    } else if (model.match(/qwen[23]/i)) {
-     Object.assign(capabilities, {
-      reasoning: 2,
-      tools: 2,
-      intelligence: 2,
-      speed: 2,
-      contextLength: 128000,
-      costPerMillionInputTokens: 0,
-      costPerMillionOutputTokens: 0,
-     });
-    }
-    return {type, capabilities};
+  filesystem: {
+   default: {
+    selectedFiles: ["AGENTS.md"],
    },
-  },
-  OpenRouter: {
-   provider: "openrouter",
-   apiKey: process.env.OPENROUTER_API_KEY,
-   modelFilter: (model) => {
-    if (!model.supported_parameters?.includes("tools")) {
-     return false;
-    } else if (/openai|anthropic|xai|perplexity|cerebras/.test(model.id)) {
-     return false;
+   providers: {
+    local: {
+     type: "local",
+     baseDirectory: path.resolve(import.meta.dirname, "../"),
+     indexedFiles: [{path: "./"}],
+     watchedFiles: [{path: "./", include: /.(js|md|jsx|sql|txt)$/}],
     }
-    return true;
-   },
-  },
-  Perplexity: {
-   provider: "perplexity",
-   apiKey: process.env.PERPLEXITY_API_KEY,
-  },
-  Qwen: {
-			provider: "openaiCompatible",
-			apiKey: process.env.DASHSCOPE_API_KEY,
-   baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
-   generateModelSpec(modelInfo) {
-    let {id: model} = modelInfo;
-    let type = "chat";
-    let capabilities = {};
-    if (model.match(/embed/i)) {
-     type = "embedding";
-     capabilities.alwaysHot = 1;
-    } else if (model.match(/qwen[3]/i)) {
-     Object.assign(capabilities, {
-      reasoning: 2,
-      tools: 2,
-      intelligence: 2,
-      speed: 2,
-      contextLength: 128000,
-      costPerMillionInputTokens: 0,
-      costPerMillionOutputTokens: 0,
-     });
-    }
-    return {type, capabilities};
-   },
-		},
-  xAi: {
-   provider: "xai",
-   apiKey: process.env.XAI_API_KEY,
-  },
- },
- websearch: {
-  serper: {
-   type: "serper",
-   apiKey: process.env.SERPER_API_KEY,
-  },
-  scraperapi: {
-   type: "scraperapi",
-   apiKey: process.env.SCRAPERAPI_API_KEY,
-  },
- },
- filesystem: {
-  default: {
-   selectedFiles: ["AGENTS.md"],
-  },
-  providers: {
-   local: {
-    type: "local",
-    baseDirectory: path.resolve(import.meta.dirname,"../"),
-    indexedFiles: [{path: "./"}],
-    watchedFiles: [{path: "./", include: /.(js|md|jsx|sql|txt)$/}],
    }
-  }
+  },
  },
  codebase: {
   resources: {

@@ -119,6 +119,7 @@
 [submodule "pkg/mysql"]
 	path = pkg/mysql
 	url = git@github.com:tokenring-ai/mysql.git
+	branch = main
 [submodule "pkg/sandbox"]
 	path = pkg/sandbox
 	url = git@github.com:tokenring-ai/sandbox.git
@@ -138,12 +139,24 @@
 [submodule "pkg/voice"]
 	path = pkg/audio
 	url = git@github.com:tokenring-ai/audio.git
+	branch = main
 [submodule "pkg/linux-audio"]
 	path = pkg/linux-audio
 	url = git@github.com:tokenring-ai/linux-audio.git
+	branch = main
 [submodule "pkg/naudiodon3"]
 	path = pkg/naudiodon3
 	url = git@github.com:tokenring-ai/naudiodon3.git
+	branch = main
 [submodule "pkg/mcp"]
 	path = pkg/mcp
 	url = git@github.com:tokenring-ai/mcp.git
+	branch = main
+[submodule "pkg/checkpoint"]
+	path = pkg/checkpoint
+	url = git@github.com:tokenring-ai/checkpoint.git
+	branch = main
+[submodule "pkg/iterables"]
+	path = pkg/iterables
+	url = git@github.com:tokenring-ai/iterables.git
+	branch = main
