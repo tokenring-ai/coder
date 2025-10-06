@@ -160,3 +160,7 @@
 	path = pkg/iterables
 	url = git@github.com:tokenring-ai/iterables.git
 	branch = main
+[submodule "pkg/scripting"]
+	path = pkg/scripting
+	url = git@github.com:tokenring-ai/scripting.git
+	branch = main

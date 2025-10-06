@@ -4,42 +4,40 @@
     "": {
       "name": "@tokenring-ai/coder",
       "dependencies": {
-        "@inquirer/prompts": "^7.8.3",
-        "@tokenring-ai/agent": "0.1.0",
-        "@tokenring-ai/ai-client": "0.1.0",
-        "@tokenring-ai/audio": "0.1.0",
-        "@tokenring-ai/aws": "0.1.0",
-        "@tokenring-ai/checkpoint": "0.1.0",
-        "@tokenring-ai/chrome": "0.1.0",
-        "@tokenring-ai/cli": "0.1.0",
-        "@tokenring-ai/code-watch": "0.1.0",
-        "@tokenring-ai/codebase": "0.1.0",
-        "@tokenring-ai/database": "0.1.0",
-        "@tokenring-ai/docker": "0.1.0",
-        "@tokenring-ai/feedback": "0.1.0",
-        "@tokenring-ai/file-index": "0.1.0",
-        "@tokenring-ai/filesystem": "0.1.0",
-        "@tokenring-ai/git": "0.1.0",
-        "@tokenring-ai/iterables": "0.1.0",
-        "@tokenring-ai/javascript": "0.1.0",
-        "@tokenring-ai/kubernetes": "0.1.0",
-        "@tokenring-ai/linux-audio": "0.1.0",
-        "@tokenring-ai/local-filesystem": "0.1.0",
-        "@tokenring-ai/mcp": "0.1.0",
-        "@tokenring-ai/memory": "0.1.0",
-        "@tokenring-ai/mysql": "0.1.0",
-        "@tokenring-ai/queue": "0.1.0",
-        "@tokenring-ai/s3": "0.1.0",
-        "@tokenring-ai/sandbox": "0.1.0",
-        "@tokenring-ai/scraperapi": "0.1.0",
-        "@tokenring-ai/serper": "0.1.0",
-        "@tokenring-ai/sqlite-storage": "0.1.0",
-        "@tokenring-ai/tasks": "0.1.0",
-        "@tokenring-ai/testing": "0.1.0",
-        "@tokenring-ai/websearch": "0.1.0",
-      },
-      "devDependencies": {
         "@biomejs/biome": "^2.2.0",
+        "@inquirer/prompts": "^7.8.3",
+        "@tokenring-ai/agent": "workspace:*",
+        "@tokenring-ai/ai-client": "workspace:*",
+        "@tokenring-ai/audio": "workspace:*",
+        "@tokenring-ai/aws": "workspace:*",
+        "@tokenring-ai/checkpoint": "workspace:*",
+        "@tokenring-ai/chrome": "workspace:*",
+        "@tokenring-ai/cli": "workspace:*",
+        "@tokenring-ai/code-watch": "workspace:*",
+        "@tokenring-ai/codebase": "workspace:*",
+        "@tokenring-ai/database": "workspace:*",
+        "@tokenring-ai/docker": "workspace:*",
+        "@tokenring-ai/feedback": "workspace:*",
+        "@tokenring-ai/file-index": "workspace:*",
+        "@tokenring-ai/filesystem": "workspace:*",
+        "@tokenring-ai/git": "workspace:*",
+        "@tokenring-ai/javascript": "workspace:*",
+        "@tokenring-ai/kubernetes": "workspace:*",
+        "@tokenring-ai/linux-audio": "workspace:*",
+        "@tokenring-ai/local-filesystem": "workspace:*",
+        "@tokenring-ai/mcp": "workspace:*",
+        "@tokenring-ai/memory": "workspace:*",
+        "@tokenring-ai/mysql": "workspace:*",
+        "@tokenring-ai/queue": "workspace:*",
+        "@tokenring-ai/s3": "workspace:*",
+        "@tokenring-ai/sandbox": "workspace:*",
+        "@tokenring-ai/scraperapi": "workspace:*",
+        "@tokenring-ai/scripting": "workspace:*",
+        "@tokenring-ai/serper": "workspace:*",
+        "@tokenring-ai/sqlite-storage": "workspace:*",
+        "@tokenring-ai/tasks": "workspace:*",
+        "@tokenring-ai/testing": "workspace:*",
+        "@tokenring-ai/websearch": "workspace:*",
         "husky": "^9.1.7",
         "jsdom": "^26.1.0",
         "node-gyp": "^11.3.0",
@@ -241,7 +239,6 @@
       "dependencies": {
         "@tokenring-ai/agent": "0.1.0",
         "@tokenring-ai/ai-client": "0.1.0",
-        "@tokenring-ai/iterables": "0.1.0",
         "ignore": "^7.0.5",
         "path-browserify": "^1.0.1",
       },
@@ -460,6 +457,14 @@
       "devDependencies": {
         "@vitest/coverage-v8": "^3.2.4",
         "vitest": "^3.2.4",
+      },
+    },
+    "pkg/scripting": {
+      "name": "@tokenring-ai/scripting",
+      "version": "0.1.0",
+      "dependencies": {
+        "@tokenring-ai/agent": "^0.1.0",
+        "@tokenring-ai/utility": "^0.1.0",
       },
     },
     "pkg/serper": {
@@ -1238,6 +1243,8 @@
 
     "@tokenring-ai/scraperapi": ["@tokenring-ai/scraperapi@workspace:pkg/scraperapi"],
 
+    "@tokenring-ai/scripting": ["@tokenring-ai/scripting@workspace:pkg/scripting"],
+
     "@tokenring-ai/serper": ["@tokenring-ai/serper@workspace:pkg/serper"],
 
     "@tokenring-ai/sqlite-storage": ["@tokenring-ai/sqlite-storage@workspace:pkg/sqlite-storage"],
@@ -1462,7 +1469,7 @@
 
     "character-reference-invalid": ["character-reference-invalid@1.1.4", "", {}, "sha512-mKKUkUbhPpQlCOfIuZkvSEgktjPFIsZKRRbC6KWVEMvlzblj3i3asQv5ODsrwt0N3pHAEvjP8KTQPHkp0+6jOg=="],
 
-    "chardet": ["chardet@0.7.0", "", {}, "sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA=="],
+    "chardet": ["chardet@2.1.0", "", {}, "sha512-bNFETTG/pM5ryzQ9Ad0lJOTa6HWD/YsScAR3EnCPZRPlQh77JocYktSHOUHelyhm8IARL+o4c4F1bP5KVOjiRA=="],
 
     "check-error": ["check-error@2.1.1", "", {}, "sha512-OAlb+T7V4Op9OwdkjmguYRqncdlx5JiofwOAUkmTF+jNdHwzTaTs4sRAGpzLF3oOz5xAyDGrPgeIDFQmDOTiJw=="],
 
@@ -2686,8 +2693,6 @@
 
     "@eslint/eslintrc/ignore": ["ignore@5.3.2", "", {}, "sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g=="],
 
-    "@inquirer/external-editor/chardet": ["chardet@2.1.0", "", {}, "sha512-bNFETTG/pM5ryzQ9Ad0lJOTa6HWD/YsScAR3EnCPZRPlQh77JocYktSHOUHelyhm8IARL+o4c4F1bP5KVOjiRA=="],
-
     "@isaacs/cliui/string-width": ["string-width@5.1.2", "", { "dependencies": { "eastasianwidth": "^0.2.0", "emoji-regex": "^9.2.2", "strip-ansi": "^7.0.1" } }, "sha512-HnLOCR3vjcY8beoNLtcjZ5/nxn2afmME6lhrDrebokqMap+XbeW8n9TXpPDOqdGK5qcI3oT0GKTW6wC7EMiVqA=="],
 
     "@isaacs/cliui/wrap-ansi": ["wrap-ansi@8.1.0", "", { "dependencies": { "ansi-styles": "^6.1.0", "string-width": "^5.0.1", "strip-ansi": "^7.0.1" } }, "sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ=="],
@@ -2795,6 +2800,8 @@
     "espree/eslint-visitor-keys": ["eslint-visitor-keys@4.2.1", "", {}, "sha512-Uhdk5sfqcee/9H/rCOJikYz67o0a2Tw2hGRPOG2Y1R2dg7brRe1uG0yaNQDHu+TO/uQPF/5eCapvYSmHUjt7JQ=="],
 
     "execa/figures": ["figures@6.1.0", "", { "dependencies": { "is-unicode-supported": "^2.0.0" } }, "sha512-d+l3qxjSesT4V7v2fh+QnmFnUWv9lSpjarhShNTgBOfA0ttejbQUAlHLitbjkoRiDulW0OPoQPYIGhIC8ohejg=="],
+
+    "external-editor/chardet": ["chardet@0.7.0", "", {}, "sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA=="],
 
     "external-editor/iconv-lite": ["iconv-lite@0.4.24", "", { "dependencies": { "safer-buffer": ">= 2.1.2 < 3" } }, "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA=="],
 

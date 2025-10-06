@@ -14,7 +14,6 @@ import {packageInfo as FeedbackPackage} from "@tokenring-ai/feedback";
 import {packageInfo as FileIndexPackage} from "@tokenring-ai/file-index";
 import {packageInfo as FilesystemPackage} from "@tokenring-ai/filesystem";
 import {packageInfo as GitPackage} from "@tokenring-ai/git";
-import {packageInfo as IterablesPackage} from "@tokenring-ai/iterables";
 import {packageInfo as JavascriptPackage} from "@tokenring-ai/javascript";
 import {packageInfo as KubernetesPackage} from "@tokenring-ai/kubernetes";
 import {packageInfo as LinuxAudioPackage} from "@tokenring-ai/linux-audio";
@@ -25,6 +24,7 @@ import {packageInfo as MySQLPackage} from "@tokenring-ai/mysql";
 import {packageInfo as QueuePackage} from "@tokenring-ai/queue";
 import {packageInfo as SandboxPackage} from "@tokenring-ai/sandbox";
 import {packageInfo as ScraperAPIPackage} from "@tokenring-ai/scraperapi";
+import {packageInfo as ScriptingPackage} from "@tokenring-ai/scripting";
 import {packageInfo as SerperPackage} from "@tokenring-ai/serper";
 import {packageInfo as SQLiteStoragePackage} from "@tokenring-ai/sqlite-storage";
 import {packageInfo as TasksPackage} from "@tokenring-ai/tasks";
@@ -169,6 +169,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     ChromePackage,
     MySQLPackage,
     ScraperAPIPackage,
+    ScriptingPackage,
     SerperPackage,
     TestingPackage,
     CLIPackage,
@@ -186,7 +187,6 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     SandboxPackage,
     SQLiteStoragePackage,
     TasksPackage,
-    IterablesPackage,
     WebSearchPackage,
   ]);
 
