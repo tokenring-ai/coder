@@ -1,7 +1,7 @@
 {
  "name": "@tokenring-ai/coder",
  "description": "TokenRing Coder Application",
- "version": "0.1.4",
+ "version": "0.1.5",
  "dependencies": {
   "@inquirer/prompts": "^7.8.3",
   "@tokenring-ai/audio": "workspace:*",
