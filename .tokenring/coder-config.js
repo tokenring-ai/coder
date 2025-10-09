@@ -1,6 +1,13 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import fs from "fs";
 import path from "path";
+import AutomatedBrainstormingSession from "./coding-agents/AutomatedBrainstormingSession.js";
+import AutomatedDocumentationGeneration from "./coding-agents/AutomatedDocumentationGeneration.js";
+import AutomatedRefactoringSession from "./coding-agents/AutomatedRefactoringSession.js";
+import PirateCoder from "./coding-agents/PirateCoder.js";
+import brainstormingAgent from "./coding-agents/brainstorming-agent.js";
+import refactorAgent from "./coding-agents/refactoring-agent.js";
+
 function getSubdirectories(srcPath) {
  if (!fs.existsSync(srcPath)) return [];
  return fs
@@ -101,13 +108,6 @@ for (const pkgRoot of packageRoots) {
 }
 
 
-import AutomatedBrainstormingSession from "./coding-agents/AutomatedBrainstormingSession.js";
-import AutomatedDocumentationGeneration from "./coding-agents/AutomatedDocumentationGeneration.js";
-import AutomatedRefactoringSession from "./coding-agents/AutomatedRefactoringSession.js";
-import PirateCoder from "./coding-agents/PirateCoder.js";
-import brainstormingAgent from "./coding-agents/brainstorming-agent.js";
-import refactorAgent from "./coding-agents/refactoring-agent.js";
-
 const agents = {
  AutomatedBrainstormingSession,
  AutomatedDocumentationGeneration,
@@ -150,108 +150,28 @@ export default {
     provider: "groq",
     apiKey: process.env.GROQ_API_KEY,
    },
-   /* Not compatible with Vercel AI SDK 5 yet; use through OpenRouter or openaiCompatible endpoint */
    LLama: {
     provider: "openaiCompatible",
     apiKey: process.env.LLAMA_API_KEY,
     baseURL: 'https://api.llama.com/compat/v1',
-    generateModelSpec(modelInfo) {
-     let {id: model} = modelInfo;
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/scout/i)) {
-      Object.assign(capabilities, {
-       reasoning: 2,
-       tools: 2,
-       intelligence: 2,
-       speed: 2,
-       contextLength: 10000000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     } else if (model.match(/maverick/i)) {
-      Object.assign(capabilities, {
-       reasoning: 3,
-       tools: 3,
-       intelligence: 3,
-       speed: 3,
-       contextLength: 10000000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
    },
    OpenAI: {
     provider: "openai",
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY
    },
    LlamaCPP: {
     provider: "openaiCompatible",
     baseURL: "http://192.168.15.20:11434",
-    apiKey: "sk-ABCD1234567890",
-    generateModelSpec(modelInfo) {
-     let {id: model} = modelInfo;
-     model = model.replace(/:latest$/, "");
-     model = model.replace(/^hf.co\/([^\/]*)\//, "");
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (model.match(/qwen[23]/i)) {
-      Object.assign(capabilities, {
-       reasoning: 2,
-       tools: 2,
-       intelligence: 2,
-       speed: 2,
-       contextLength: 128000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
+    apiKey: "sk-ABCD1234567890"
    },
    LocalLLama: {
     provider: "openaiCompatible",
     baseURL: "http://192.168.15.25:11434/v1",
-    apiKey: "sk-ABCD1234567890",
-    generateModelSpec(modelInfo) {
-     let {id: model} = modelInfo;
-     model = model.replace(/:latest$/, "");
-     model = model.replace(/^hf.co\/([^\/]*)\//, "");
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (model.match(/qwen[23]/i)) {
-      Object.assign(capabilities, {
-       reasoning: 2,
-       tools: 2,
-       intelligence: 2,
-       speed: 2,
-       contextLength: 128000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
+    apiKey: "sk-ABCD1234567890"
    },
    OpenRouter: {
     provider: "openrouter",
-    apiKey: process.env.OPENROUTER_API_KEY,
-    modelFilter: (model) => {
-     if (!model.supported_parameters?.includes("tools")) {
-      return false;
-     } else if (/openai|anthropic|xai|perplexity|cerebras/.test(model.id)) {
-      return false;
-     }
-     return true;
-    },
+    apiKey: process.env.OPENROUTER_API_KEY
    },
    Perplexity: {
     provider: "perplexity",
@@ -260,27 +180,7 @@ export default {
    Qwen: {
     provider: "openaiCompatible",
     apiKey: process.env.DASHSCOPE_API_KEY,
-    baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
-    generateModelSpec(modelInfo) {
-     let {id: model} = modelInfo;
-     let type = "chat";
-     let capabilities = {};
-     if (model.match(/embed/i)) {
-      type = "embedding";
-      capabilities.alwaysHot = 1;
-     } else if (model.match(/qwen[3]/i)) {
-      Object.assign(capabilities, {
-       reasoning: 2,
-       tools: 2,
-       intelligence: 2,
-       speed: 2,
-       contextLength: 128000,
-       costPerMillionInputTokens: 0,
-       costPerMillionOutputTokens: 0,
-      });
-     }
-     return {type, capabilities};
-    },
+    baseURL: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1'
    },
    xAi: {
     provider: "xai",

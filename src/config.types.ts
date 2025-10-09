@@ -1,4 +1,4 @@
-import {AgentConfig} from "@tokenring-ai/agent/Agent";
+import {AgentConfig} from "@tokenring-ai/agent/types";
 import {ModelProviderConfig} from "@tokenring-ai/ai-client/models";
 import {AWSCredentials} from "@tokenring-ai/aws/AWSService";
 import {ChromeWebSearchOptions} from "@tokenring-ai/chrome/ChromeWebSearchProvider";
