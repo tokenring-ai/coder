@@ -20,38 +20,60 @@ secure.
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Run with npx (Easiest)
 
-- [Bun](https://bun.sh) (recommended) or Node.js 18+
-- Git
+```bash
+# Initialize your project
+npx @tokenring-ai/coder --source ./your-project --initialize
 
-### Installation
+# Set up API keys
+export OPENAI_API_KEY="your-key-here"
+export ANTHROPIC_API_KEY="your-key-here"
 
-1. **Clone and setup:**
-   ```bash
-   git clone https://github.com/your-org/tokenring-coder.git
-   cd tokenring-coder
-   git submodule update --init --recursive
-   bun install
-   ```
+# Start coding with AI
+npx @tokenring-ai/coder --source ./your-project
+```
 
-2. **Initialize your project:**
-   ```bash
-   bun src/tr-coder.ts --source ./your-project --initialize
-   ```
-   This creates a `.tokenring/` directory with configuration files.
+### Option 2: Run with Docker
 
-3. **Set up API keys:**
-   ```bash
-   export OPENAI_API_KEY="your-key-here"
-   export ANTHROPIC_API_KEY="your-key-here"
-   # Add other provider keys as needed
-   ```
+```bash
+# Pull from GitHub Container Registry
+docker pull ghcr.io/tokenring-ai/tokenring-coder:latest
 
-4. **Start coding with AI:**
-   ```bash
-   bun src/tr-coder.ts --source ./your-project
-   ```
+# Initialize your project
+docker run -ti --rm \
+  -v ./your-project:/repo:rw \
+  ghcr.io/tokenring-ai/tokenring-coder:latest \
+  --source /repo --initialize
+
+# Start coding with AI
+docker run -ti --rm \
+  -v ./your-project:/repo:rw \
+  -e OPENAI_API_KEY \
+  -e ANTHROPIC_API_KEY \
+  ghcr.io/tokenring-ai/tokenring-coder:latest \
+  --source /repo
+```
+
+### Option 3: Clone and Build from Source
+
+```bash
+# Clone and setup
+git clone https://github.com/tokenring-ai/tokenring-coder.git
+cd tokenring-coder
+git submodule update --init --recursive
+bun install
+
+# Initialize your project
+bun src/tr-coder.ts --source ./your-project --initialize
+
+# Set up API keys
+export OPENAI_API_KEY="your-key-here"
+export ANTHROPIC_API_KEY="your-key-here"
+
+# Start coding with AI
+bun src/tr-coder.ts --source ./your-project
+```
 
 ## 💡 Usage Examples
 
@@ -80,6 +102,43 @@ secure.
 > @testEngineer Add comprehensive tests for the API
 > @securityReview Check this code for vulnerabilities
 ```
+
+## 🤖 Available Agents
+
+TokenRing Coder includes specialized AI agents for different development tasks:
+
+### Interactive Agent
+- **interactiveCodeAgent** - Interactive code assistant for direct development tasks
+
+### Planning & Management
+- **teamLeader** - Orchestrates full-stack projects, coordinates specialists, manages workflow
+- **productManager** - Creates PRDs, defines user stories, plans feature roadmaps
+- **productDesignEngineer** - Product enhancement and comprehensive PRD creation
+- **systemArchitect** - Designs system architectures and selects technology stacks
+
+### Development Specialists
+- **fullStackDeveloper** - Implements complete features across frontend and backend
+- **frontendDesign** - Creates React/Vue components, responsive layouts, state management
+- **backendDesign** - Implements server-side logic, business rules, data processing
+- **apiDesigner** - Designs REST/GraphQL APIs, creates OpenAPI specifications
+- **databaseDesign** - Designs schemas, implements migrations, optimizes queries
+
+### Engineering Specialists
+- **businessLogicEngineer** - Implements workflows, rules engines, automation systems
+- **dataEngineer** - Creates ETL pipelines, data migrations, processing workflows
+- **integrationEngineer** - Implements third-party integrations, APIs, webhooks
+- **authDesign** - Designs authentication/authorization systems, OAuth/OIDC
+
+### Quality & Operations
+- **testEngineer** - Creates unit/integration/E2E tests, test automation
+- **codeQualityEngineer** - Code reviews, refactoring, standards enforcement
+- **securityReview** - Security assessments, vulnerability remediation, OWASP compliance
+- **performanceEngineer** - Performance optimization, caching, monitoring, scalability
+- **devopsEngineer** - CI/CD pipelines, Docker configs, infrastructure setup
+
+### Design & Documentation
+- **uiUxDesigner** - Creates wireframes, design systems, user flows
+- **documentationEngineer** - Technical documentation, API docs, user guides
 
 ## 🏗️ Architecture
 
@@ -117,16 +176,34 @@ export default {
 
 ## 🐳 Docker Usage
 
+### Using Pre-built Image from GHCR
+
 ```bash
-# Build
-docker build -t tokenring-coder .
+# Pull latest image
+docker pull ghcr.io/tokenring-ai/tokenring-coder:latest
 
 # Run with your project mounted
-docker run -ti --net host \
+docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
   -e ANTHROPIC_API_KEY \
-  tokenring-coder
+  ghcr.io/tokenring-ai/tokenring-coder:latest \
+  --source /repo
+```
+
+### Building from Source
+
+```bash
+# Build
+docker build -t tokenring-coder -f docker/Dockerfile .
+
+# Run with your project mounted
+docker run -ti --rm \
+  -v ./your-project:/repo:rw \
+  -e OPENAI_API_KEY \
+  -e ANTHROPIC_API_KEY \
+  tokenring-coder \
+  --source /repo
 ```
 
 ## 🛠️ Development

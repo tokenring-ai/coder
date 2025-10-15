@@ -164,3 +164,10 @@
 	path = pkg/scripting
 	url = git@github.com:tokenring-ai/scripting.git
 	branch = main
+[submodule "pkg/slack"]
+	path = pkg/slack
+	url = git@github.com:tokenring-ai/slack.git
+[submodule "pkg/telegram"]
+	path = pkg/telegram
+	url = git@github.com:tokenring-ai/telegram.git
+	branch = main

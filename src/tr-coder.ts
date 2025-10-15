@@ -26,8 +26,10 @@ import {packageInfo as SandboxPackage} from "@tokenring-ai/sandbox";
 import {packageInfo as ScraperAPIPackage} from "@tokenring-ai/scraperapi";
 import {packageInfo as ScriptingPackage} from "@tokenring-ai/scripting";
 import {packageInfo as SerperPackage} from "@tokenring-ai/serper";
+import {packageInfo as SlackPackage} from "@tokenring-ai/slack";
 import {packageInfo as SQLiteStoragePackage} from "@tokenring-ai/sqlite-storage";
 import {packageInfo as TasksPackage} from "@tokenring-ai/tasks";
+import {packageInfo as TelegramPackage} from "@tokenring-ai/telegram";
 import {packageInfo as TestingPackage} from "@tokenring-ai/testing";
 import {packageInfo as WebSearchPackage} from "@tokenring-ai/websearch";
 import chalk from "chalk";
@@ -185,8 +187,10 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     MemoryPackage,
     QueuePackage,
     SandboxPackage,
+    SlackPackage,
     SQLiteStoragePackage,
     TasksPackage,
+    TelegramPackage,
     WebSearchPackage,
   ]);
 
