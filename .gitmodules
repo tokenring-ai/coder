@@ -171,3 +171,19 @@
 	path = pkg/telegram
 	url = git@github.com:tokenring-ai/telegram.git
 	branch = main
+[submodule "pkg/web-frontend"]
+	path = pkg/web-frontend
+	url = git@github.com:tokenring-ai/web-frontend.git
+	branch = main
+[submodule "pkg/web-host"]
+	path = pkg/web-host
+	url = git@github.com:tokenring-ai/web-host.git
+	branch = main
+[submodule "pkg/agent-api"]
+	path = pkg/agent-api
+	url = git@github.com:tokenring-ai/agent-api.git
+	branch = main
+[submodule "pkg/drizzle-storage"]
+	path = pkg/drizzle-storage
+	url = git@github.com:tokenring-ai/drizzle-storage.git
+	branch = main

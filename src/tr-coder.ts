@@ -1,37 +1,41 @@
 #!/usr/bin/env node
-import {AgentTeam, packageInfo as AgentPackage} from "@tokenring-ai/agent";
-import {packageInfo as ChatRouterPackage} from "@tokenring-ai/ai-client";
-import {packageInfo as AudioPackage} from "@tokenring-ai/audio";
-import {packageInfo as AWSPackage} from "@tokenring-ai/aws";
-import {packageInfo as CheckpointPackage} from "@tokenring-ai/checkpoint";
-import {packageInfo as ChromePackage} from "@tokenring-ai/chrome";
-import {packageInfo as CLIPackage, REPLService} from "@tokenring-ai/cli";
-import {packageInfo as CodeWatchPackage} from "@tokenring-ai/code-watch";
-import {packageInfo as CodeBasePackage} from "@tokenring-ai/codebase";
-import {packageInfo as DatabasePackage} from "@tokenring-ai/database";
-import {packageInfo as DockerPackage} from "@tokenring-ai/docker";
-import {packageInfo as FeedbackPackage} from "@tokenring-ai/feedback";
-import {packageInfo as FileIndexPackage} from "@tokenring-ai/file-index";
-import {packageInfo as FilesystemPackage} from "@tokenring-ai/filesystem";
-import {packageInfo as GitPackage} from "@tokenring-ai/git";
-import {packageInfo as JavascriptPackage} from "@tokenring-ai/javascript";
-import {packageInfo as KubernetesPackage} from "@tokenring-ai/kubernetes";
-import {packageInfo as LinuxAudioPackage} from "@tokenring-ai/linux-audio";
-import {packageInfo as LocalFileSystemPackage} from "@tokenring-ai/local-filesystem";
-import {packageInfo as MCPPackage} from "@tokenring-ai/mcp";
-import {packageInfo as MemoryPackage} from "@tokenring-ai/memory";
-import {packageInfo as MySQLPackage} from "@tokenring-ai/mysql";
-import {packageInfo as QueuePackage} from "@tokenring-ai/queue";
-import {packageInfo as SandboxPackage} from "@tokenring-ai/sandbox";
-import {packageInfo as ScraperAPIPackage} from "@tokenring-ai/scraperapi";
-import {packageInfo as ScriptingPackage} from "@tokenring-ai/scripting";
-import {packageInfo as SerperPackage} from "@tokenring-ai/serper";
-import {packageInfo as SlackPackage} from "@tokenring-ai/slack";
-import {packageInfo as SQLiteStoragePackage} from "@tokenring-ai/sqlite-storage";
-import {packageInfo as TasksPackage} from "@tokenring-ai/tasks";
-import {packageInfo as TelegramPackage} from "@tokenring-ai/telegram";
-import {packageInfo as TestingPackage} from "@tokenring-ai/testing";
-import {packageInfo as WebSearchPackage} from "@tokenring-ai/websearch";
+
+import AgentPackage, { AgentTeam} from "@tokenring-ai/agent";
+import ChatRouterPackage from "@tokenring-ai/ai-client";
+import AgentAPIPackage from "@tokenring-ai/agent-api";
+import AudioPackage from "@tokenring-ai/audio";
+import AWSPackage from "@tokenring-ai/aws";
+import CheckpointPackage from "@tokenring-ai/checkpoint";
+import ChromePackage from "@tokenring-ai/chrome";
+import CLIPackage, { REPLService } from "@tokenring-ai/cli";
+import CodeWatchPackage from "@tokenring-ai/code-watch";
+import CodeBasePackage from "@tokenring-ai/codebase";
+import DatabasePackage from "@tokenring-ai/database";
+import DockerPackage from "@tokenring-ai/docker";
+import DrizzleStoragePackage from "@tokenring-ai/drizzle-storage";
+import FeedbackPackage from "@tokenring-ai/feedback";
+import FileIndexPackage from "@tokenring-ai/file-index";
+import FilesystemPackage from "@tokenring-ai/filesystem";
+import GitPackage from "@tokenring-ai/git";
+import JavascriptPackage from "@tokenring-ai/javascript";
+import KubernetesPackage from "@tokenring-ai/kubernetes";
+import LinuxAudioPackage from "@tokenring-ai/linux-audio";
+import LocalFileSystemPackage from "@tokenring-ai/local-filesystem";
+import MCPPackage from "@tokenring-ai/mcp";
+import MemoryPackage from "@tokenring-ai/memory";
+import MySQLPackage from "@tokenring-ai/mysql";
+import QueuePackage from "@tokenring-ai/queue";
+import SandboxPackage from "@tokenring-ai/sandbox";
+import ScraperAPIPackage from "@tokenring-ai/scraperapi";
+import ScriptingPackage from "@tokenring-ai/scripting";
+import SerperPackage from "@tokenring-ai/serper";
+import SlackPackage from "@tokenring-ai/slack";
+import TasksPackage from "@tokenring-ai/tasks";
+import TelegramPackage from "@tokenring-ai/telegram";
+import TestingPackage from "@tokenring-ai/testing";
+import WebHostPackage from "@tokenring-ai/web-host";
+import WebFrontendPackage from "@tokenring-ai/web-frontend";
+import WebSearchPackage from "@tokenring-ai/websearch";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "node:fs";
@@ -132,9 +136,9 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   }
 
   config.checkpoint ??= {
-    defaultProvider: "sqlite",
+    defaultProvider: "local",
     providers: {
-      sqlite: {
+      local: {
         type: "sqlite",
         databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
       }
@@ -163,11 +167,13 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     AudioPackage,
     ChatRouterPackage,
     CheckpointPackage,
+    AgentAPIPackage,
     AWSPackage,
     CodeWatchPackage,
     CodeBasePackage,
     DatabasePackage,
     DockerPackage,
+    DrizzleStoragePackage,
     ChromePackage,
     MySQLPackage,
     ScraperAPIPackage,
@@ -188,9 +194,10 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     QueuePackage,
     SandboxPackage,
     SlackPackage,
-    SQLiteStoragePackage,
     TasksPackage,
     TelegramPackage,
+    WebHostPackage,
+    WebFrontendPackage,
     WebSearchPackage,
   ]);
 

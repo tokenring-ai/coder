@@ -32,7 +32,7 @@ yarn-error.log*
 
 # turbo
 .turbo
-/.tokenring/coder-database.sqlite
+/.tokenring/*.sqlite*
 /awscliv2.sig
 /app/coder/dist/
 /.zencoder/

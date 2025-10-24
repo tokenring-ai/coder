@@ -211,6 +211,8 @@ export default {
    }
   },
  },
+ /*webHost: {
+ },*/
  codebase: {
   resources: {
    ...dynamicRepoMapResources,
