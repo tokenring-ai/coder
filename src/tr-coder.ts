@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import AgentPackage, { AgentTeam} from "@tokenring-ai/agent";
-import ChatRouterPackage from "@tokenring-ai/ai-client";
+import AgentPackage, {AgentConfigService, AgentPackageManager, AgentTeam} from "@tokenring-ai/agent";
 import AgentAPIPackage from "@tokenring-ai/agent-api";
+import ChatRouterPackage from "@tokenring-ai/ai-client";
 import AudioPackage from "@tokenring-ai/audio";
 import AWSPackage from "@tokenring-ai/aws";
 import CheckpointPackage from "@tokenring-ai/checkpoint";
 import ChromePackage from "@tokenring-ai/chrome";
-import CLIPackage, { REPLService } from "@tokenring-ai/cli";
+import CLIPackage, {REPLService} from "@tokenring-ai/cli";
 import CodeWatchPackage from "@tokenring-ai/code-watch";
 import CodeBasePackage from "@tokenring-ai/codebase";
 import DatabasePackage from "@tokenring-ai/database";
@@ -33,8 +33,8 @@ import SlackPackage from "@tokenring-ai/slack";
 import TasksPackage from "@tokenring-ai/tasks";
 import TelegramPackage from "@tokenring-ai/telegram";
 import TestingPackage from "@tokenring-ai/testing";
-import WebHostPackage from "@tokenring-ai/web-host";
 import WebFrontendPackage from "@tokenring-ai/web-frontend";
+import WebHostPackage from "@tokenring-ai/web-host";
 import WebSearchPackage from "@tokenring-ai/websearch";
 import chalk from "chalk";
 import {Command} from "commander";
@@ -162,7 +162,10 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     console.log(chalk.red(`🔧 ❌ ${message}`));
   });
 
-  await agentTeam.addPackages([
+  const packageManager = new AgentPackageManager()
+  agentTeam.addServices(packageManager);
+
+  await packageManager.installPackages([
     AgentPackage,
     AudioPackage,
     ChatRouterPackage,
@@ -199,21 +202,16 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     WebHostPackage,
     WebFrontendPackage,
     WebSearchPackage,
-  ]);
+  ], agentTeam);
 
-  agentTeam.addAgentConfigs(
-    agents
-  )
+  const agentConfigService = agentTeam.requireService(AgentConfigService);
+
+  agentConfigService.addAgentConfigs(agents);
 
   console.log(chalk.yellow(banner));
 
-  // Initialize agent manager
-  for (const name in agents) {
-    agentTeam.addAgentConfig(name, agents[name]);
-  }
-
   for (const name in config.agents) {
-    agentTeam.addAgentConfig(name, config.agents[name])
+    agentConfigService.addAgentConfig(name, config.agents[name])
   }
 
   //await agentTeam.createAgent("code")

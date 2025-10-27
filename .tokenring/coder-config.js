@@ -162,7 +162,7 @@ export default {
    LlamaCPP: {
     provider: "openaiCompatible",
     baseURL: "http://192.168.15.20:11434",
-    apiKey: "sk-ABCD1234567890"
+    apiKey: "sk-ABCD1234567890",
    },
    LocalLLama: {
     provider: "openaiCompatible",
