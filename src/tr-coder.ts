@@ -2,9 +2,10 @@
 
 import AgentPackage, {AgentConfigService, AgentPackageManager, AgentTeam} from "@tokenring-ai/agent";
 import AgentAPIPackage from "@tokenring-ai/agent-api";
-import ChatRouterPackage from "@tokenring-ai/ai-client";
+import AIClientPackage from "@tokenring-ai/ai-client";
 import AudioPackage from "@tokenring-ai/audio";
 import AWSPackage from "@tokenring-ai/aws";
+import ChatPackage from "@tokenring-ai/chat";
 import CheckpointPackage from "@tokenring-ai/checkpoint";
 import ChromePackage from "@tokenring-ai/chrome";
 import CLIPackage, {REPLService} from "@tokenring-ai/cli";
@@ -168,10 +169,11 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
   await packageManager.installPackages([
     AgentPackage,
     AudioPackage,
-    ChatRouterPackage,
+    AIClientPackage,
     CheckpointPackage,
     AgentAPIPackage,
     AWSPackage,
+    ChatPackage,
     CodeWatchPackage,
     CodeBasePackage,
     DatabasePackage,

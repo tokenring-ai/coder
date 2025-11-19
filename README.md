@@ -108,15 +108,18 @@ bun src/tr-coder.ts --source ./your-project
 TokenRing Coder includes specialized AI agents for different development tasks:
 
 ### Interactive Agent
+
 - **interactiveCodeAgent** - Interactive code assistant for direct development tasks
 
 ### Planning & Management
+
 - **teamLeader** - Orchestrates full-stack projects, coordinates specialists, manages workflow
 - **productManager** - Creates PRDs, defines user stories, plans feature roadmaps
 - **productDesignEngineer** - Product enhancement and comprehensive PRD creation
 - **systemArchitect** - Designs system architectures and selects technology stacks
 
 ### Development Specialists
+
 - **fullStackDeveloper** - Implements complete features across frontend and backend
 - **frontendDesign** - Creates React/Vue components, responsive layouts, state management
 - **backendDesign** - Implements server-side logic, business rules, data processing
@@ -124,12 +127,14 @@ TokenRing Coder includes specialized AI agents for different development tasks:
 - **databaseDesign** - Designs schemas, implements migrations, optimizes queries
 
 ### Engineering Specialists
+
 - **businessLogicEngineer** - Implements workflows, rules engines, automation systems
 - **dataEngineer** - Creates ETL pipelines, data migrations, processing workflows
 - **integrationEngineer** - Implements third-party integrations, APIs, webhooks
 - **authDesign** - Designs authentication/authorization systems, OAuth/OIDC
 
 ### Quality & Operations
+
 - **testEngineer** - Creates unit/integration/E2E tests, test automation
 - **codeQualityEngineer** - Code reviews, refactoring, standards enforcement
 - **securityReview** - Security assessments, vulnerability remediation, OWASP compliance
@@ -137,6 +142,7 @@ TokenRing Coder includes specialized AI agents for different development tasks:
 - **devopsEngineer** - CI/CD pipelines, Docker configs, infrastructure setup
 
 ### Design & Documentation
+
 - **uiUxDesigner** - Creates wireframes, design systems, user flows
 - **documentationEngineer** - Technical documentation, API docs, user guides
 

@@ -122,8 +122,10 @@ const agents = {
  */
 export default {
  agents,
+ chat: {
+  defaultModel: "LocalLLama:glm/glm-air-4.5",
+ },
  ai: {
-  defaultModel: "LocalLLama:openai/gpt-oss-120b",
   models: {
    Anthropic: {
     provider: "anthropic",
