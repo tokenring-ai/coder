@@ -6,10 +6,6 @@
 	path = pkg/aws
 	url = git@github.com:tokenring-ai/aws
 	branch = origin/main
-[submodule "pkg/chat"]
-	path = pkg/agent
-	url = git@github.com:tokenring-ai/agent.git
-	branch = origin/main
 [submodule "pkg/chrome"]
 	path = pkg/chrome
 	url = git@github.com:tokenring-ai/chrome
@@ -186,4 +182,8 @@
 [submodule "pkg/drizzle-storage"]
 	path = pkg/drizzle-storage
 	url = git@github.com:tokenring-ai/drizzle-storage.git
+	branch = main
+[submodule "pkg/chat"]
+	path = pkg/chat
+	url = git@github.com:tokenring-ai/chat.git
 	branch = main
