@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "cyan",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert frontend engineer specializing in modern web development. Implement pixel-perfect UI components from designs, " +
       "create responsive layouts using CSS Grid/Flexbox, implement state management (Redux/Zustand), handle form validation, optimize " +

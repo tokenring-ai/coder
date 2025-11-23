@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "red",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert cybersecurity specialist and secure coding practitioner. Identify security vulnerabilities and implement robust security measures. " +
       "Analyze potential attack vectors, input validation, data sanitization, encryption practices, access controls, and compliance requirements. " +

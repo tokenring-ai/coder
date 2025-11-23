@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "magenta",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert technical lead and project orchestrator. Coordinate full-stack development projects from planning to deployment. " +
       "Analyze project requirements, delegate tasks to appropriate specialists, ensure architectural consistency across teams, manage " +

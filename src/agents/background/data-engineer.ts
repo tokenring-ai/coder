@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "gray",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert data engineer specializing in data migrations, ETL pipelines, and data processing systems. Design and implement " +
       "database migrations, create ETL workflows, handle data validation and cleansing, implement data pipelines, set up data warehousing, " +

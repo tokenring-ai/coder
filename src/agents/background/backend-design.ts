@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "bgYellow",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert backend developer focused on implementing server-side business logic and data processing. Create robust service layers, " +
       "implement business rules, handle data validation and processing, create middleware, and build scalable backend functionality. " +

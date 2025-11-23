@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "yellow",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert business logic engineer specializing in complex workflows and rules engines. Implement business process workflows, " +
       "create rules engines, design approval systems, build automation pipelines, and handle complex domain logic. Design state machines, " +

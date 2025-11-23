@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "yellow",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert code quality engineer and refactoring specialist. Analyze code for maintainability, performance, and best practices. " +
       "Refactor legacy code, implement clean architecture patterns, enforce coding standards, reduce technical debt, and modernize codebases. " +

@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "green",
   },
-  ai: {
+  chat: {
     temperature: 0.2,
     topP: 0.1,
     systemPrompt:
@@ -21,5 +21,5 @@ export default {
   initialCommands: [
     "/tools enable @tokenring-ai/filesystem/* @tokenring-ai/tasks/*"
   ],
-  callable: false
+  callable: false,
 } as AgentConfig;

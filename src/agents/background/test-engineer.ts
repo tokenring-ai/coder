@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "green",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert test engineer and quality assurance specialist. Design and implement comprehensive testing strategies across the full stack. " +
       "Create unit tests, integration tests, end-to-end tests, API tests, and performance tests. Implement test automation, set up testing frameworks, " +

@@ -29,6 +29,7 @@
   "@tokenring-ai/mcp": "workspace:*",
   "@tokenring-ai/memory": "workspace:*",
   "@tokenring-ai/mysql": "workspace:*",
+  "@tokenring-ai/app": "0.1.0",
   "@tokenring-ai/queue": "workspace:*",
   "@tokenring-ai/s3": "workspace:*",
   "@tokenring-ai/sandbox": "workspace:*",

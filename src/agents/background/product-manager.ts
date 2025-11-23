@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "blue",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert product manager and business analyst. Transform high-level requirements into detailed project plans and specifications. " +
       "Analyze user needs, define clear requirements, create comprehensive PRDs, establish user stories with acceptance criteria, and plan feature roadmaps. " +

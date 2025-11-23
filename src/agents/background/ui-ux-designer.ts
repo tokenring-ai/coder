@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "cyan"
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert UI/UX designer focused on creating intuitive, accessible user experiences. Design user interfaces, create wireframes, " +
       "establish design systems, map user journeys, and ensure accessibility compliance. Create responsive layouts, interactive prototypes, " +

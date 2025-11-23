@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "green"
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert API architect and backend developer. Design and implement robust, scalable APIs and service contracts. " +
       "Analyze data flow requirements, design RESTful endpoints or GraphQL schemas, create comprehensive API specifications, implement validation, " +

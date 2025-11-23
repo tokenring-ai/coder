@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "bgCyanBright",
   },
-  ai: {
+  chat: {
     temperature: 0.3,
     topP: 0.8,
     systemPrompt:

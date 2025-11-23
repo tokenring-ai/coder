@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-import AgentPackage, {AgentConfigService, AgentPackageManager, AgentTeam} from "@tokenring-ai/agent";
+import AgentPackage, {AgentManager} from "@tokenring-ai/agent";
+import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import AgentAPIPackage from "@tokenring-ai/agent-api";
 import AIClientPackage from "@tokenring-ai/ai-client";
 import AudioPackage from "@tokenring-ai/audio";
@@ -155,18 +156,15 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     }
   };
 
-  const agentTeam = new AgentTeam(config);
-  agentTeam.events.on("serviceOutput", message => {
-    console.log(chalk.yellow(`🔧 ${message}`));
-  })
-  agentTeam.events.on("serviceError", message => {
-    console.log(chalk.red(`🔧 ❌ ${message}`));
-  });
 
-  const packageManager = new AgentPackageManager()
-  agentTeam.addServices(packageManager);
 
-  await packageManager.installPackages([
+
+  const app = new TokenRingApp(config);
+
+  const pluginManager = new PluginManager();
+  app.addServices(pluginManager);
+
+  await pluginManager.installPlugins([
     AgentPackage,
     AudioPackage,
     AIClientPackage,
@@ -204,20 +202,20 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     WebHostPackage,
     WebFrontendPackage,
     WebSearchPackage,
-  ], agentTeam);
+  ], app);
 
-  const agentConfigService = agentTeam.requireService(AgentConfigService);
+  const agentManager = app.requireService(AgentManager);
 
-  agentConfigService.addAgentConfigs(agents);
+  agentManager.addAgentConfigs(agents);
 
   console.log(chalk.yellow(banner));
 
   for (const name in config.agents) {
-    agentConfigService.addAgentConfig(name, config.agents[name])
+    agentManager.addAgentConfig(name, config.agents[name])
   }
 
-  //await agentTeam.createAgent("code")
-  const repl = new REPLService(agentTeam);
+  //await app.createAgent("code")
+  const repl = new REPLService(app);
 
   await repl.run();
 }

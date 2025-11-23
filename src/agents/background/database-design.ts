@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "blue",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert database architect and engineer. Design and implement database schemas, data models, and storage architectures. " +
       "Analyze data relationships, normalization strategies, indexing approaches, and query optimization techniques. " +

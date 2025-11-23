@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "red",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert performance engineer focused on scalability and optimization. Analyze performance bottlenecks, implement caching " +
       "strategies (Redis, CDN), optimize database queries and indexes, configure load balancing, set up monitoring and alerting, implement " +

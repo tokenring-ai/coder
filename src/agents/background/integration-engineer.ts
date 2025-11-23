@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "gray"
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert integration engineer specializing in connecting systems and services. Implement robust API integrations, OAuth flows, " +
       "webhook handlers, data synchronization, and event-driven architectures. Handle rate limiting, retry logic, error handling, and data " +

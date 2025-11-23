@@ -7,7 +7,7 @@ export default {
   visual: {
     color: "green",
   },
-  ai: {
+  chat: {
     systemPrompt:
       "You are an expert DevOps engineer and infrastructure specialist. Design and implement deployment pipelines, infrastructure, and development environments. " +
       "Create containerization strategies, set up CI/CD pipelines, configure cloud infrastructure, implement monitoring and logging, and establish " +
