@@ -1,15 +1,18 @@
 #!/usr/bin/env node
 
 import AgentPackage, {AgentManager} from "@tokenring-ai/agent";
-import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import AgentAPIPackage from "@tokenring-ai/agent-api";
+import {AgentConfigSchema} from "@tokenring-ai/agent/types";
 import AIClientPackage from "@tokenring-ai/ai-client";
-import AudioPackage from "@tokenring-ai/audio";
+import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
+import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
+import AudioPackage, {AudioConfigSchema} from "@tokenring-ai/audio";
 import AWSPackage from "@tokenring-ai/aws";
 import ChatPackage from "@tokenring-ai/chat";
-import CheckpointPackage from "@tokenring-ai/checkpoint";
+import CheckpointPackage, {CheckpointPackageConfigSchema} from "@tokenring-ai/checkpoint";
 import ChromePackage from "@tokenring-ai/chrome";
-import CLIPackage, {REPLService} from "@tokenring-ai/cli";
+import CLIPackage from "@tokenring-ai/cli";
+import {CLIConfigSchema} from "@tokenring-ai/cli/AgentCLIService";
 import CodeWatchPackage from "@tokenring-ai/code-watch";
 import CodeBasePackage from "@tokenring-ai/codebase";
 import DatabasePackage from "@tokenring-ai/database";
@@ -17,7 +20,7 @@ import DockerPackage from "@tokenring-ai/docker";
 import DrizzleStoragePackage from "@tokenring-ai/drizzle-storage";
 import FeedbackPackage from "@tokenring-ai/feedback";
 import FileIndexPackage from "@tokenring-ai/file-index";
-import FilesystemPackage from "@tokenring-ai/filesystem";
+import FilesystemPackage, {FileSystemConfigSchema} from "@tokenring-ai/filesystem";
 import GitPackage from "@tokenring-ai/git";
 import JavascriptPackage from "@tokenring-ai/javascript";
 import KubernetesPackage from "@tokenring-ai/kubernetes";
@@ -35,6 +38,7 @@ import SlackPackage from "@tokenring-ai/slack";
 import TasksPackage from "@tokenring-ai/tasks";
 import TelegramPackage from "@tokenring-ai/telegram";
 import TestingPackage from "@tokenring-ai/testing";
+import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import WebFrontendPackage from "@tokenring-ai/web-frontend";
 import WebHostPackage from "@tokenring-ai/web-host";
 import WebSearchPackage from "@tokenring-ai/websearch";
@@ -44,8 +48,8 @@ import fs from "node:fs";
 import path from "path";
 import {z} from "zod";
 import agents from "./agents/index.ts";
+import banner from "./banner.txt" with {type: "text"};
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
-import {error} from "./prettyString.js";
 
 // Interface definitions
 interface CommandOptions {
@@ -54,7 +58,6 @@ interface CommandOptions {
   initialize?: boolean;
 }
 
-
 // Create a new Commander program
 const program = new Command();
 
@@ -62,8 +65,7 @@ program
   .name("tr-coder")
   .description("TokenRing Coder - AI-powered coding assistant")
   .version("1.0.0")
-  .requiredOption("-s, --source <path>", "Path to the codebase to work with")
-  .option("-c, --config <path>", "Path to the configuration file")
+  .option("-s, --source <path>", "Path to the working directory to work with")
   .option(
     "-i, --initialize",
     "Initialize the source directory with a new config directory",
@@ -74,21 +76,13 @@ program
 Examples:
   tr-coder --source ./my-app
   tr-coder --source ./my-app --initialize
-  tr-coder --source ./my-app --config ./custom-config.js
 `,
   )
-  .action(async (options: CommandOptions) => {
-    try {
-      await runCoder(options);
-    } catch (err) {
-      console.error(error(`Caught Error:`), err);
-      process.exit(1);
-    }
-  });
+  .action(runApp)
+  .parse();
 
-program.parse();
-
-async function runCoder({source, config: configFile, initialize}: CommandOptions): Promise<void> {
+async function runApp({source, config: configFile, initialize}: CommandOptions): Promise<void> {
+  try {
   // noinspection JSCheckFunctionSignatures
   const resolvedSource = path.resolve(source);
 
@@ -100,7 +94,7 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
 
   if (!configFile) {
     // Try each extension in order
-    const possibleExtensions = ["mjs", "cjs", "js"];
+    const possibleExtensions = ["ts","mjs", "cjs", "js"];
     for (const ext of possibleExtensions) {
       const potentialConfig = path.join(configDirectory, `coder-config.${ext}`);
       if (fs.existsSync(potentialConfig)) {
@@ -122,44 +116,48 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     );
   }
 
-  const configImport = await import(configFile);
-  const config = z.record(z.string(), z.any()).parse(configImport.default)
-
   const baseDirectory = resolvedSource;
 
-  config.filesystem ??= {
-    defaultProvider: "local",
-    providers: {
-      local: {
-        type: "local",
-        baseDirectory,
+  const defaultConfig = {
+    filesystem: {
+      defaultProvider: "local",
+      providers: {
+        local: {
+          type: "local",
+          baseDirectory,
+        }
       }
-    }
-  }
-
-  config.checkpoint ??= {
-    defaultProvider: "local",
-    providers: {
-      local: {
-        type: "sqlite",
-        databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
+    } as z.infer<typeof FileSystemConfigSchema>,
+    checkpoint: {
+      defaultProvider: "sqlite",
+      providers: {
+        sqlite: {
+          type: "sqlite",
+          databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
+        }
       }
-    }
+    } as z.infer<typeof CheckpointPackageConfigSchema>,
+    audio: {
+      defaultProvider: "linux",
+      providers: {
+        linux: {
+          type: "linux"
+        }
+      }
+    } as z.infer<typeof AudioConfigSchema>,
+    cli: {
+      banner,
+      bannerColor: "cyan"
+    } as z.infer<typeof CLIConfigSchema>,
+    agents
   };
 
-  config.audio ??= {
-    defaultProvider: "local",
-    providers: {
-      local: {
-        type: "linux"
-      }
-    }
-  };
+  const configImport = await import(configFile);
+  const config = TokenRingAppConfigSchema.parse(configImport.default);
 
+  config.agents = { ...agents, ...config.agents};
 
-
-
-  const app = new TokenRingApp(config);
+  const app = new TokenRingApp(config, defaultConfig);
 
   const pluginManager = new PluginManager();
   app.addServices(pluginManager);
@@ -204,34 +202,8 @@ async function runCoder({source, config: configFile, initialize}: CommandOptions
     WebSearchPackage,
   ], app);
 
-  const agentManager = app.requireService(AgentManager);
-
-  agentManager.addAgentConfigs(agents);
-
-  console.log(chalk.yellow(banner));
-
-  for (const name in config.agents) {
-    agentManager.addAgentConfig(name, config.agents[name])
+  } catch (err) {
+    console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
+    process.exit(1);
   }
-
-  //await app.createAgent("code")
-  const repl = new REPLService(app);
-
-  await repl.run();
 }
-
-const banner = `
-████████╗ ██████╗ ██╗  ██╗███████╗███╗   ██╗██████╗ ██╗███╗   ██╗ ██████╗ 
-╚══██╔══╝██╔═══██╗██║ ██╔╝██╔════╝████╗  ██║██╔══██╗██║████╗  ██║██╔════╝ 
-   ██║   ██║   ██║█████╔╝ █████╗  ██╔██╗ ██║██████╔╝██║██╔██╗ ██║██║  ███╗
-   ██║   ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╗██║██╔══██╗██║██║╚██╗██║██║   ██║
-   ██║   ╚██████╔╝██║  ██╗███████╗██║ ╚████║██║  ██║██║██║ ╚████║╚██████╔╝
-   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
-                                                                          
- ██████╗ ██████╗ ██████╗ ███████╗██████╗                                  
-██╔════╝██╔═══██╗██╔══██╗██╔════╝██╔══██╗                                 
-██║     ██║   ██║██║  ██║█████╗  ██████╔╝                                 
-██║     ██║   ██║██║  ██║██╔══╝  ██╔══██╗                                 
-╚██████╗╚██████╔╝██████╔╝███████╗██║  ██║                                 
- ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝                                 
-`;

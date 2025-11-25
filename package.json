@@ -40,11 +40,12 @@
   "@tokenring-ai/tasks": "workspace:*",
   "@tokenring-ai/telegram": "workspace:*",
   "@tokenring-ai/testing": "workspace:*",
+  "@tokenring-ai/utility": "workspace:*",
   "@tokenring-ai/web-frontend": "workspace:*",
   "@tokenring-ai/web-host": "workspace:*",
   "@tokenring-ai/websearch": "workspace:*",
-  "@types/bun": "^1.3.2",
-  "bun-types": "^1.3.2",
+  "@types/bun": "^1.3.3",
+  "bun-types": "^1.3.3",
   "chalk": "^5.6.2",
   "commander": "^14.0.2",
   "husky": "^9.1.7",
@@ -53,8 +54,8 @@
   "trufflehog": "^0.0.5",
   "ts": "^0.2.2",
   "typescript": "^5.9.3",
-  "vitest": "^4.0.10",
-  "zod": "^4.1.12"
+  "vitest": "^4.0.13",
+  "zod": "^4.1.13"
  },
  "license": "MIT",
  "bin": {

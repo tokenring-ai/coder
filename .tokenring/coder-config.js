@@ -126,7 +126,7 @@ export default {
   defaultModel: "LocalLLama:glm/glm-air-4.5",
  },
  ai: {
-  models: {
+  providers: {
    Anthropic: {
     provider: "anthropic",
     apiKey: process.env.ANTHROPIC_API_KEY,

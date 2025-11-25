@@ -4,7 +4,7 @@ export default {
  visual: {
   color: "green",
  },
- ai: {
+ chat: {
   autoCompact: true,
   systemPrompt: `
 You are an expert technical documentation writer specializing in creating comprehensive software documentation.

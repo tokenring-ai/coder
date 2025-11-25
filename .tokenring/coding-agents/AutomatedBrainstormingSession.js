@@ -4,7 +4,7 @@ export default {
  visual: {
   color: "green",
  },
- ai: {
+ chat: {
   autoCompact: true,
   systemPrompt: `
 You are an innovative product development assistant specializing in software package enhancement.

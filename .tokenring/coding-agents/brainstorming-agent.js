@@ -5,7 +5,7 @@ export default {
  visual: {
   color: "magenta",
  },
- ai: {
+ chat: {
   systemPrompt:
    "You are a sophisticated brainstorming assistant that works by analyzing existing codebases to identify opportunities for improvement and innovation. " +
    "When given code to review, you should:\n" +

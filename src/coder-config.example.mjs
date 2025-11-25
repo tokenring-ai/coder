@@ -5,7 +5,7 @@
  */
 
 export default {
- ai: {
+ chat: {
   defaultModel: "LocalLLama:openai/gpt-oss-120b",
   models: {
    Anthropic: {

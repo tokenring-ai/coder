@@ -5,7 +5,7 @@ export default {
  visual: {
   color: "blue",
  },
- ai: {
+ chat: {
   systemPrompt:
    "You are an expert code refactoring assistant that analyzes existing codebases to identify opportunities for improvement and optimization. " +
    "When given code to review, you should:\n" +

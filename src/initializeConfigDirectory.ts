@@ -1,7 +1,8 @@
+import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
+import chalk from "chalk";
 import fs from "fs";
 import path from "path";
-import exampleConfig from "./examples/coder-config.js" with {type: "text"};
-import {error, success} from "./prettyString.js";
+import exampleConfig from "./coder-config.example.mjs" with {type: "text"};
 
 /**
  * Initializes the configuration directory for the application
@@ -12,23 +13,23 @@ export function initializeConfigDirectory(configDir: string): string {
       fs.mkdirSync(configDir);
     }
     if (!fs.statSync(configDir).isDirectory()) {
-      console.error(error(`${configDir} is not a directory, aborting`));
+      console.error(chalk.red(`${configDir} is not a directory, aborting`));
       process.exit(1);
     }
 
     const configFile = path.join(configDir, "coder-config.mjs");
     const gitignoreFile = path.join(configDir, ".gitignore");
 
-    console.log(success(`Copying example config to ${configFile}`));
+    console.log(chalk.green(`Copying example config to ${configFile}`));
     fs.writeFileSync(configFile, exampleConfig.toString());
 
-    console.log(success(`Creating .gitignore file`));
+    console.log(chalk.green(`Creating .gitignore file`));
     fs.writeFileSync(gitignoreFile, "# Ignore database files\n*.db\n*.sqlite");
 
-    console.log(success(`Initialized: ${configFile}`));
+    console.log(chalk.green(`Initialized: ${configFile}`));
     return configFile;
   } catch (err) {
-    console.error(error(`Initialization failed: ${err}`));
+    console.error(chalk.red(formatLogMessages(['Initialization failed:', err as Error])));
     process.exit(1);
   }
 }

@@ -4,7 +4,7 @@ export default {
  visual: {
   color: "blue",
  },
- ai: {
+ chat: {
   autoCompact: true,
   systemPrompt: `
 You are an expert code refactoring assistant specializing in identifying and suggesting improvements to software codebases.
