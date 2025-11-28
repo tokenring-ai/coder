@@ -13,6 +13,7 @@
   "@tokenring-ai/checkpoint": "workspace:*",
   "@tokenring-ai/chrome": "workspace:*",
   "@tokenring-ai/cli": "workspace:*",
+  "@tokenring-ai/cli-ink": "workspace:*",
   "@tokenring-ai/code-watch": "workspace:*",
   "@tokenring-ai/codebase": "workspace:*",
   "@tokenring-ai/database": "workspace:*",

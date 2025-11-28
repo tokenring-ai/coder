@@ -182,3 +182,7 @@
 	path = pkg/app
 	url = git@github.com:tokenring-ai/app.git
 	branch = main
+[submodule "pkg/cli-ink"]
+	path = pkg/cli-ink
+	url = git@github.com:tokenring-ai/cli-ink.git
+	branch = main

@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import AgentPackage, {AgentManager} from "@tokenring-ai/agent";
+import AgentPackage from "@tokenring-ai/agent";
 import AgentAPIPackage from "@tokenring-ai/agent-api";
-import {AgentConfigSchema} from "@tokenring-ai/agent/types";
 import AIClientPackage from "@tokenring-ai/ai-client";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
@@ -11,8 +10,8 @@ import AWSPackage from "@tokenring-ai/aws";
 import ChatPackage from "@tokenring-ai/chat";
 import CheckpointPackage, {CheckpointPackageConfigSchema} from "@tokenring-ai/checkpoint";
 import ChromePackage from "@tokenring-ai/chrome";
-import CLIPackage from "@tokenring-ai/cli";
-import {CLIConfigSchema} from "@tokenring-ai/cli/AgentCLIService";
+import CLIPackage, {CLIConfigSchema} from "@tokenring-ai/cli";
+import InkCLIPackage, {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
 import CodeWatchPackage from "@tokenring-ai/code-watch";
 import CodeBasePackage from "@tokenring-ai/codebase";
 import DatabasePackage from "@tokenring-ai/database";
@@ -47,8 +46,10 @@ import {Command} from "commander";
 import fs from "node:fs";
 import path from "path";
 import {z} from "zod";
+import packageInfo from '../package.json' with {type: 'json'};
 import agents from "./agents/index.ts";
-import banner from "./banner.txt" with {type: "text"};
+import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
+import bannerWide from "./banner.wide.txt" with {type: "text"};
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
 
 // Interface definitions
@@ -56,6 +57,7 @@ interface CommandOptions {
   source: string;
   config?: string;
   initialize?: boolean;
+  ui: "ink" | "inquirer";
 }
 
 // Create a new Commander program
@@ -66,6 +68,7 @@ program
   .description("TokenRing Coder - AI-powered coding assistant")
   .version("1.0.0")
   .option("-s, --source <path>", "Path to the working directory to work with")
+  .option("--ui <inquirer|ink>", "Select the UI to use for prompts", "ink")
   .option(
     "-i, --initialize",
     "Initialize the source directory with a new config directory",
@@ -81,7 +84,7 @@ Examples:
   .action(runApp)
   .parse();
 
-async function runApp({source, config: configFile, initialize}: CommandOptions): Promise<void> {
+async function runApp({source, config: configFile, initialize, ui}: CommandOptions): Promise<void> {
   try {
   // noinspection JSCheckFunctionSignatures
   const resolvedSource = path.resolve(source);
@@ -146,9 +149,14 @@ async function runApp({source, config: configFile, initialize}: CommandOptions):
       }
     } as z.infer<typeof AudioConfigSchema>,
     cli: {
-      banner,
+      banner: bannerNarrow,
       bannerColor: "cyan"
     } as z.infer<typeof CLIConfigSchema>,
+    inkCLI: {
+      bannerNarrow,
+      bannerWide,
+      bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
+    } as z.infer<typeof InkCLIConfigSchema>,
     agents
   };
 
@@ -181,7 +189,6 @@ async function runApp({source, config: configFile, initialize}: CommandOptions):
     ScriptingPackage,
     SerperPackage,
     TestingPackage,
-    CLIPackage,
     FeedbackPackage,
     FileIndexPackage,
     FilesystemPackage,
@@ -201,6 +208,16 @@ async function runApp({source, config: configFile, initialize}: CommandOptions):
     WebFrontendPackage,
     WebSearchPackage,
   ], app);
+
+    if (ui === "ink") {
+      await pluginManager.installPlugins([
+        InkCLIPackage,
+      ], app);
+    } else {
+      await pluginManager.installPlugins([
+        CLIPackage,
+      ], app);
+    }
 
   } catch (err) {
     console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
