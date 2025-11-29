@@ -66,9 +66,9 @@ const program = new Command();
 program
   .name("tr-coder")
   .description("TokenRing Coder - AI-powered coding assistant")
-  .version("1.0.0")
+  .version(packageInfo.version)
   .option("-s, --source <path>", "Path to the working directory to work with")
-  .option("--ui <inquirer|ink>", "Select the UI to use for prompts", "ink")
+  .option("--ui <inquirer|ink>", "Select the UI to use for prompts", "inquirer")
   .option(
     "-i, --initialize",
     "Initialize the source directory with a new config directory",
