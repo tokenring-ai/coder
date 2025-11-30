@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/types";
 export default {
   name: "Product Design Engineer",
   description: "Specialized agent for product enhancement and PRD (Product Requirements Document) creation. Analyzes existing products, user workflows, and business requirements to identify enhancement opportunities and create comprehensive PRDs. Excels at: user experience optimization, feature specification, competitive analysis, product roadmap development, stakeholder requirement gathering, and creating detailed technical specifications. Transforms ideas into actionable product requirements with clear success metrics and implementation guidelines.",
+  category: "Planning & Management",
   type: "background",
   visual: {
     color: "bgYellowBright",

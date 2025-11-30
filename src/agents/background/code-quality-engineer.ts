@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/types";
 export default {
   name: "Code Quality Engineer",
   description: "Call this agent to perform code quality reviews, refactoring, and implement quality standards. Provide code files, legacy systems, or quality requirements. The agent will review code quality, refactor legacy code, enforce coding standards, identify technical debt, implement quality gates, and modernize codebases. Best used for: code quality audits, refactoring projects, standards enforcement, technical debt reduction, and code modernization.",
+  category: "Quality & Operations",
   type: "background",
   visual: {
     color: "yellow",

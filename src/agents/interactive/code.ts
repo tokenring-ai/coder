@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/types";
 export default {
   name: "Interactive Code Agent",
   description: "An interactive code assistant that directly executes development tasks",
+  category: "Interactive",
   type: "interactive",
   visual: {
     color: "green",

@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/types";
 export default {
   name: "Test Engineer",
   description: "Call this agent to create comprehensive testing strategies and implement test suites. Provide code modules, API endpoints, or UI components to test. The agent will create unit tests, integration tests, E2E tests, implement test automation, set up CI/CD testing pipelines, and ensure code quality through testing. Best used for: test strategy, test implementation, test automation, quality assurance, and testing infrastructure setup.",
+  category: "Quality & Operations",
   type: "background",
   visual: {
     color: "green",

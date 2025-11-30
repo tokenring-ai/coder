@@ -3,6 +3,7 @@ import {AgentConfig} from "@tokenring-ai/agent/types";
 export default {
   name: "Full Stack Developer",
   description: "Call this agent to implement complete features across frontend and backend. Provide feature specifications, user stories, or component requirements. The agent will implement full-stack features, integrate frontend with backend, handle data flow, create reusable components, and deliver complete working functionality. Best used for: feature implementation, component development, integration work, bug fixes, and end-to-end development tasks.",
+  category: "Development",
   type: "background",
   visual: {
     color: "green",
