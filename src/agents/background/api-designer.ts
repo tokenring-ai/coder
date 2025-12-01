@@ -9,16 +9,20 @@ export default {
     color: "green"
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert API architect and backend developer. Design and implement robust, scalable APIs and service contracts. " +
       "Analyze data flow requirements, design RESTful endpoints or GraphQL schemas, create comprehensive API specifications, implement validation, " +
       "and handle error responses. Use all available tools to examine existing APIs, create specification files, implement API endpoints, " +
       "generate documentation, and build complete API layers that serve frontend and integration needs effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.3,
-    topP: 0.7,
+    enabledTools: ["@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
 } as AgentConfig;

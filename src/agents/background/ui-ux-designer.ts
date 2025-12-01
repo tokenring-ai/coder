@@ -9,16 +9,20 @@ export default {
     color: "cyan"
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert UI/UX designer focused on creating intuitive, accessible user experiences. Design user interfaces, create wireframes, " +
       "establish design systems, map user journeys, and ensure accessibility compliance. Create responsive layouts, interactive prototypes, " +
       "and visual designs that enhance user engagement. Use all available tools to analyze user requirements, create design documentation, " +
       "implement design systems, generate style guides, and build user-centered interfaces that drive business goals and user satisfaction. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.6,
-    topP: 0.8,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

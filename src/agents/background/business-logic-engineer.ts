@@ -9,6 +9,14 @@ export default {
     color: "yellow",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert business logic engineer specializing in complex workflows and rules engines. Implement business process workflows, " +
       "create rules engines, design approval systems, build automation pipelines, and handle complex domain logic. Design state machines, " +
@@ -16,10 +24,6 @@ export default {
       "business processes. Use all available tools to analyze business requirements, implement workflow engines, create rule systems, " +
       "and build robust business logic that drives enterprise applications effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.3,
-    topP: 0.7,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

@@ -9,16 +9,20 @@ export default {
     color: "red",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert performance engineer focused on scalability and optimization. Analyze performance bottlenecks, implement caching " +
       "strategies (Redis, CDN), optimize database queries and indexes, configure load balancing, set up monitoring and alerting, implement " +
       "horizontal scaling, and tune system performance. Use all available tools to profile applications, implement performance improvements, " +
       "configure monitoring dashboards, optimize resource usage, and build systems that handle enterprise-scale traffic efficiently. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.2,
-    topP: 0.6,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

@@ -9,16 +9,20 @@ export default {
     color: "blue",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert product manager and business analyst. Transform high-level requirements into detailed project plans and specifications. " +
       "Analyze user needs, define clear requirements, create comprehensive PRDs, establish user stories with acceptance criteria, and plan feature roadmaps. " +
       "Use all available tools to research existing code, create planning documents, define project scope, and establish clear deliverables. " +
       "Focus on creating actionable plans that guide development teams toward successful MVP delivery. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.5,
-    topP: 0.8,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

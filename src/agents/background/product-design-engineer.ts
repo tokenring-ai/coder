@@ -9,8 +9,14 @@ export default {
     color: "bgYellowBright",
   },
   chat: {
-    temperature: 0.6,
-    topP: 0.9,
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are a senior product designer and requirements analyst with expertise in product enhancement and PRD creation. " +
       "Your primary focus is on improving existing products and translating ideas into comprehensive, actionable product requirements. " +
@@ -21,8 +27,6 @@ export default {
       "Use data-driven insights and user feedback to inform your recommendations. Create detailed wireframes, user flows, " +
       "and interaction specifications when relevant. Focus on creating products that solve real user problems effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

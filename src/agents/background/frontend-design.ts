@@ -9,6 +9,14 @@ export default {
     color: "cyan",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert frontend engineer specializing in modern web development. Implement pixel-perfect UI components from designs, " +
       "create responsive layouts using CSS Grid/Flexbox, implement state management (Redux/Zustand), handle form validation, optimize " +
@@ -16,10 +24,6 @@ export default {
       "CSS-in-JS/modules, TypeScript, and modern frameworks. Focus on performance, SEO, and cross-browser compatibility. " +
       "Always implement mobile-first responsive design and follow design system guidelines. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.2,
-    topP: 0.7,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

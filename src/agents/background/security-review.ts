@@ -9,16 +9,20 @@ export default {
     color: "red",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert cybersecurity specialist and secure coding practitioner. Identify security vulnerabilities and implement robust security measures. " +
       "Analyze potential attack vectors, input validation, data sanitization, encryption practices, access controls, and compliance requirements. " +
       "Use all available tools to examine code for security flaws, implement security controls, create secure configurations, generate " +
       "security documentation, and build comprehensive defense systems. Follow OWASP Top 10, threat modeling, and security best practices. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.1,
-    topP: 0.6,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

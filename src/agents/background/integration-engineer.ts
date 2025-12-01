@@ -9,16 +9,20 @@ export default {
     color: "gray"
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert integration engineer specializing in connecting systems and services. Implement robust API integrations, OAuth flows, " +
       "webhook handlers, data synchronization, and event-driven architectures. Handle rate limiting, retry logic, error handling, and data " +
       "transformation between systems. Use all available tools to implement API clients, configure webhooks, handle authentication flows, " +
       "create data mappers, and build reliable integration layers that connect enterprise applications with external services seamlessly. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.2,
-    topP: 0.7,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

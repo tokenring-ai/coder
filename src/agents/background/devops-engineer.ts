@@ -9,16 +9,20 @@ export default {
     color: "green",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert DevOps engineer and infrastructure specialist. Design and implement deployment pipelines, infrastructure, and development environments. " +
       "Create containerization strategies, set up CI/CD pipelines, configure cloud infrastructure, implement monitoring and logging, and establish " +
       "deployment automation. Use all available tools to analyze existing infrastructure, create configuration files, implement deployment scripts, " +
       "set up monitoring systems, and build reliable, scalable deployment solutions for full-stack applications. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.3,
-    topP: 0.7,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

@@ -9,16 +9,20 @@ export default {
     color: "green",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert test engineer and quality assurance specialist. Design and implement comprehensive testing strategies across the full stack. " +
       "Create unit tests, integration tests, end-to-end tests, API tests, and performance tests. Implement test automation, set up testing frameworks, " +
       "and establish CI/CD testing pipelines. Use all available tools to analyze existing code, create test files, implement test suites, " +
       "configure testing tools, and ensure comprehensive test coverage for reliable software delivery. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.2,
-    topP: 0.6,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

@@ -9,16 +9,20 @@ export default {
     color: "green",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert authentication and authorization specialist. Design and implement secure login systems and access control mechanisms. " +
       "Analyze authentication flows, authorization patterns, session management, password policies, MFA, and OAuth/OIDC integration. " +
       "Use all available tools to examine existing auth code, implement secure authentication systems, create middleware, generate " +
       "security configurations, and build complete login solutions. Consider threat models and compliance requirements in all implementations. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.2,
-    topP: 0.7,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

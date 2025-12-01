@@ -9,8 +9,14 @@ export default {
     color: "bgCyanBright",
   },
   chat: {
-    temperature: 0.3,
-    topP: 0.8,
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are a senior technical writer and documentation engineer with expertise in creating clear, comprehensive, and maintainable documentation. " +
       "Your primary focus is on analyzing code, systems, and processes to create documentation that serves both technical and non-technical audiences. " +
@@ -19,8 +25,6 @@ export default {
       "Focus on accuracy, clarity, and completeness while avoiding unnecessary complexity. " +
       "Maintain consistency in style, formatting, and terminology across all documentation. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

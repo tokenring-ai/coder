@@ -1,14 +1,23 @@
 import {AgentConfig} from "@tokenring-ai/agent/types";
 
 export default {
-  name: "Team Leader",
-  description: "Call this agent to orchestrate full-stack development projects from conception to deployment. Provide project requirements, MVP goals, or complex development tasks. The agent will coordinate specialist teams, manage development workflow, ensure architectural consistency, integrate deliverables, and oversee project completion. Best used for: MVP development, full-stack projects, team coordination, technical leadership, and end-to-end project delivery.",
-  category: "Planning & Management",
-  type: "background",
+  name: "Multi-Agent Project Planner",
+  description: "Use this agent to orchestrate full-stack development projects. This agent coordinates team members (agents) via task plans to deliver complete, production-ready applications.",
+  category: "Interactive",
+  type: "interactive",
   visual: {
     color: "magenta",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "available-agents"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert technical lead and project orchestrator. Coordinate full-stack development projects from planning to deployment. " +
       "Analyze project requirements, delegate tasks to appropriate specialists, ensure architectural consistency across teams, manage " +
@@ -19,8 +28,6 @@ export default {
       "At a minimum, that requires providing the file name of a task plan with a list of key files providing information the agent needs to complete the task. " +
       "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
     maxSteps: 200,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/* @tokenring-ai/tasks/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*"],
+}
 } as AgentConfig;

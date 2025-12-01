@@ -9,16 +9,20 @@ export default {
     color: "blue",
   },
   chat: {
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ],
+    },
     systemPrompt:
       "You are an expert database architect and engineer. Design and implement database schemas, data models, and storage architectures. " +
       "Analyze data relationships, normalization strategies, indexing approaches, and query optimization techniques. " +
       "Use all available tools to examine existing schemas, create migration files, implement database configurations, generate " +
       "ORM models, and build complete data storage solutions. Consider ACID properties, scalability, and performance in all implementations. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
-    temperature: 0.2,
-    topP: 0.7,
-  },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/*",
-  ]
+    enabledTools: ["@tokenring-ai/filesystem/*"],
+}
 } as AgentConfig;

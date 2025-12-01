@@ -16,7 +16,7 @@ import productDesignEngineer from "./background/product-design-engineer.ts";
 import productManager from "./background/product-manager.ts";
 import securityReview from "./background/security-review.ts";
 import systemArchitect from "./background/system-architect.ts";
-import teamLeader from "./background/team-leader.ts";
+import teamLeader from "./interactive/team-leader.ts";
 import testEngineer from "./background/test-engineer.ts";
 import uiUxDesigner from "./background/ui-ux-designer.ts";
 

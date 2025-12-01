@@ -1,7 +1,7 @@
 import {AgentConfig} from "@tokenring-ai/agent/types";
 
 export default {
-  name: "Interactive Code Agent",
+  name: "Coding Agent",
   description: "An interactive code assistant that directly executes development tasks",
   category: "Interactive",
   type: "interactive",
@@ -17,10 +17,16 @@ export default {
       "You should prefer using tools to implement code changes, even large code changes. " +
       "When making code changes, give short and concise responses summarizing the code changes. " +
       "For large, codebase-wide requests (multi-file or multi-step changes), do not start coding immediately. " +
-      "Generate a clear task plan and present it to the user via the tasks/run tool, where the user will be able to review and execute the plan."
+      "Generate a clear task plan and present it to the user via the tasks/run tool, where the user will be able to review and execute the plan.",
+    context: {
+      initial: [
+        {type: "system-message"},
+        {type: "search-files"},
+        {type: "selected-files"},
+        {type: "current-message"},
+      ]
+    },
+    enabledTools: ["@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/tools enable @tokenring-ai/filesystem/* @tokenring-ai/tasks/*"
-  ],
   callable: false,
 } as AgentConfig;
