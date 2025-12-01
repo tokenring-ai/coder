@@ -12,7 +12,8 @@ export default {
     context: {
       initial: [
         {type: "system-message"},
-        {type: "available-agents"},
+        // Task plan not needed for this agent, as it is the agent creating the task plan.
+        {type: "tool-context"},
         {type: "search-files"},
         {type: "selected-files"},
         {type: "current-message"},
@@ -29,5 +30,6 @@ export default {
       "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
     maxSteps: 200,
     enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*"],
-}
+  },
+  callable: false
 } as AgentConfig;

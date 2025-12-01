@@ -2,15 +2,13 @@ import {AgentConfig} from "@tokenring-ai/agent/types";
 
 export default {
   name: "Coding Agent",
-  description: "An interactive code assistant that directly executes development tasks",
+  description: "A general code assistant that directly executes development tasks",
   category: "Interactive",
   type: "interactive",
   visual: {
     color: "green",
   },
   chat: {
-    temperature: 0.2,
-    topP: 0.1,
     systemPrompt:
       "You are an expert developer assistant in an interactive chat, with access to a variety of tools to safely update the users existing codebase and execute tasks the user has requested. " +
       "When the user tells you to do something, you should assume that the user is asking you to use the available tools to update their codebase. " +
@@ -21,12 +19,13 @@ export default {
     context: {
       initial: [
         {type: "system-message"},
+        {type: "task-plan"},
+        {type: "tool-context"},
         {type: "search-files"},
         {type: "selected-files"},
         {type: "current-message"},
       ]
     },
     enabledTools: ["@tokenring-ai/filesystem/*"],
-  },
-  callable: false,
+  }
 } as AgentConfig;

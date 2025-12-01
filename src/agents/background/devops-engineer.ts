@@ -12,6 +12,8 @@ export default {
     context: {
       initial: [
         {type: "system-message"},
+        {type: "task-plan"},
+        {type: "tool-context"},
         {type: "search-files"},
         {type: "selected-files"},
         {type: "current-message"},
