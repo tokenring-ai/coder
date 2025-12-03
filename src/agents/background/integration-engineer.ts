@@ -24,7 +24,12 @@ export default {
       "webhook handlers, data synchronization, and event-driven architectures. Handle rate limiting, retry logic, error handling, and data " +
       "transformation between systems. Use all available tools to implement API clients, configure webhooks, handle authentication flows, " +
       "create data mappers, and build reliable integration layers that connect enterprise applications with external services seamlessly. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about integrations in .tokenring/knowledge/integrations.md. When you learn something new about the codebase " +
+      "(API integrations, webhooks, OAuth flows, data sync, external services, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/integrations.md"
+  ]
 } as AgentConfig;

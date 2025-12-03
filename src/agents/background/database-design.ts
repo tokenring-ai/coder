@@ -24,7 +24,12 @@ export default {
       "Analyze data relationships, normalization strategies, indexing approaches, and query optimization techniques. " +
       "Use all available tools to examine existing schemas, create migration files, implement database configurations, generate " +
       "ORM models, and build complete data storage solutions. Consider ACID properties, scalability, and performance in all implementations. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about database systems in .tokenring/knowledge/database.md. When you learn something new about the codebase " +
+      "(schemas, data models, migrations, query patterns, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/database.md"
+  ]
 } as AgentConfig;

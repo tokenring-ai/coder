@@ -24,7 +24,12 @@ export default {
       "Create containerization strategies, set up CI/CD pipelines, configure cloud infrastructure, implement monitoring and logging, and establish " +
       "deployment automation. Use all available tools to analyze existing infrastructure, create configuration files, implement deployment scripts, " +
       "set up monitoring systems, and build reliable, scalable deployment solutions for full-stack applications. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about DevOps systems in .tokenring/knowledge/devops.md. When you learn something new about the codebase " +
+      "(deployment pipelines, infrastructure, CI/CD, monitoring, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/devops.md"
+  ]
 } as AgentConfig;

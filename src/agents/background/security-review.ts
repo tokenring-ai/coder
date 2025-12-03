@@ -26,5 +26,5 @@ export default {
       "security documentation, and build comprehensive defense systems. Follow OWASP Top 10, threat modeling, and security best practices. " +
       "Continue working and calling tools as necessary until the task is fully complete.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  }
 } as AgentConfig;

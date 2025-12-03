@@ -26,7 +26,12 @@ export default {
       "Always structure documentation with clear headings, examples, and logical flow. Include code examples, diagrams, and step-by-step instructions where appropriate. " +
       "Focus on accuracy, clarity, and completeness while avoiding unnecessary complexity. " +
       "Maintain consistency in style, formatting, and terminology across all documentation. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about documentation in .tokenring/knowledge/documentation.md. When you learn something new about the codebase " +
+      "(documentation patterns, style guides, structure, standards, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/documentation.md"
+  ]
 } as AgentConfig;

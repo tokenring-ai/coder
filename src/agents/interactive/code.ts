@@ -15,7 +15,9 @@ export default {
       "You should prefer using tools to implement code changes, even large code changes. " +
       "When making code changes, give short and concise responses summarizing the code changes. " +
       "For large, codebase-wide requests (multi-file or multi-step changes), do not start coding immediately. " +
-      "Generate a clear task plan and present it to the user via the tasks/run tool, where the user will be able to review and execute the plan.",
+      "Generate a clear task plan and present it to the user via the tasks/run tool, where the user will be able to review and execute the plan.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about the codebase in .tokenring/knowledge/code.md. When you learn something new about the codebase " +
+      "(code structure, patterns, implementations, conventions, etc.), update this file with the discovered knowledge for future reference.",
     context: {
       initial: [
         {type: "system-message"},
@@ -27,5 +29,8 @@ export default {
       ]
     },
     enabledTools: ["@tokenring-ai/filesystem/*"],
-  }
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/code.md"
+  ]
 } as AgentConfig;

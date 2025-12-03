@@ -24,7 +24,12 @@ export default {
       "Analyze authentication flows, authorization patterns, session management, password policies, MFA, and OAuth/OIDC integration. " +
       "Use all available tools to examine existing auth code, implement secure authentication systems, create middleware, generate " +
       "security configurations, and build complete login solutions. Consider threat models and compliance requirements in all implementations. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about authentication systems in .tokenring/knowledge/auth.md. When you learn something new about the codebase " +
+      "(auth flows, session management, security patterns, access controls, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/auth.md"
+  ]
 } as AgentConfig;

@@ -24,7 +24,12 @@ export default {
       "database migrations, create ETL workflows, handle data validation and cleansing, implement data pipelines, set up data warehousing, " +
       "and build analytics infrastructure. Use all available tools to analyze data requirements, create migration scripts, implement data " +
       "processing workflows, configure data validation rules, and build robust data systems that support business intelligence and analytics. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about data engineering in .tokenring/knowledge/data-engineering.md. When you learn something new about the codebase " +
+      "(data migrations, ETL pipelines, data processing, validation rules, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/data-engineering.md"
+  ]
 } as AgentConfig;

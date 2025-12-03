@@ -24,7 +24,12 @@ export default {
       "Refactor legacy code, implement clean architecture patterns, enforce coding standards, reduce technical debt, and modernize codebases. " +
       "Use all available tools to review code quality, implement refactoring solutions, create quality reports, establish coding standards, " +
       "configure linting tools, and build quality assurance processes that improve developer productivity and code maintainability. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about code quality in .tokenring/knowledge/code-quality.md. When you learn something new about the codebase " +
+      "(coding standards, refactoring patterns, technical debt, quality metrics, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/code-quality.md"
+  ]
 } as AgentConfig;

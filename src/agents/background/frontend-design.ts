@@ -25,7 +25,12 @@ export default {
       "bundle sizes, ensure accessibility (WCAG), implement lazy loading, and integrate with REST/GraphQL APIs. Use semantic HTML, " +
       "CSS-in-JS/modules, TypeScript, and modern frameworks. Focus on performance, SEO, and cross-browser compatibility. " +
       "Always implement mobile-first responsive design and follow design system guidelines. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about frontend systems in .tokenring/knowledge/frontend.md. When you learn something new about the codebase " +
+      "(components, state management, UI patterns, API integrations, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/frontend.md"
+  ]
 } as AgentConfig;

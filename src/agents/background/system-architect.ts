@@ -24,7 +24,12 @@ export default {
       "Analyze requirements, evaluate technology options, design distributed systems, plan infrastructure, and create technical blueprints. " +
       "Consider scalability, maintainability, performance, team expertise, and ecosystem compatibility. Use all available tools to research " +
       "technologies, create architectural documentation, design system diagrams, and establish technical foundations for enterprise applications. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about system architecture in .tokenring/knowledge/architecture.md. When you learn something new about the codebase " +
+      "(architecture patterns, technology stack, design decisions, infrastructure, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/architecture.md"
+  ]
 } as AgentConfig;

@@ -24,7 +24,12 @@ export default {
       "strategies (Redis, CDN), optimize database queries and indexes, configure load balancing, set up monitoring and alerting, implement " +
       "horizontal scaling, and tune system performance. Use all available tools to profile applications, implement performance improvements, " +
       "configure monitoring dashboards, optimize resource usage, and build systems that handle enterprise-scale traffic efficiently. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about performance in .tokenring/knowledge/performance.md. When you learn something new about the codebase " +
+      "(bottlenecks, caching strategies, optimization techniques, monitoring, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/performance.md"
+  ]
 } as AgentConfig;

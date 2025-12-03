@@ -24,7 +24,12 @@ export default {
       "Analyze data flow requirements, design RESTful endpoints or GraphQL schemas, create comprehensive API specifications, implement validation, " +
       "and handle error responses. Use all available tools to examine existing APIs, create specification files, implement API endpoints, " +
       "generate documentation, and build complete API layers that serve frontend and integration needs effectively. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about APIs in .tokenring/knowledge/apis.md. When you learn something new about the codebase " +
+      "(API endpoints, service contracts, data schemas, integration patterns, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
+  initialCommands: [
+    "/file add .tokenring/knowledge/apis.md"
+  ]
 } as AgentConfig;

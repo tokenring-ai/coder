@@ -28,7 +28,12 @@ export default {
       "Prioritize user-centric design thinking while balancing technical constraints and business objectives. " +
       "Use data-driven insights and user feedback to inform your recommendations. Create detailed wireframes, user flows, " +
       "and interaction specifications when relevant. Focus on creating products that solve real user problems effectively. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about product design in .tokenring/knowledge/product.md. When you learn something new about the codebase " +
+      "(features, requirements, user flows, design decisions, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/product.md"
+  ]
 } as AgentConfig;

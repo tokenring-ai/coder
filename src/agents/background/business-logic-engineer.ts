@@ -25,7 +25,12 @@ export default {
       "implement conditional logic, create workflow orchestration, handle business validations, and build systems that automate complex " +
       "business processes. Use all available tools to analyze business requirements, implement workflow engines, create rule systems, " +
       "and build robust business logic that drives enterprise applications effectively. " +
-      "Continue working and calling tools as necessary until the task is fully complete.",
+      "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
+      "IMPORTANT: Maintain a knowledge repository about business logic in .tokenring/knowledge/business-logic.md. When you learn something new about the codebase " +
+      "(workflows, rules engines, automation systems, approval processes, etc.), update this file with the discovered knowledge for future reference.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
-}
+  },
+  initialCommands: [
+    "/file add .tokenring/knowledge/business-logic.md"
+  ]
 } as AgentConfig;
