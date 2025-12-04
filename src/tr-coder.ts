@@ -220,6 +220,8 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
       ]);
     }
 
+    await app.startServices();
+
   } catch (err) {
     console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
     process.exit(1);
