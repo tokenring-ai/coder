@@ -130,7 +130,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           baseDirectory,
         }
       }
-    } as z.infer<typeof FileSystemConfigSchema>,
+    } as z.input<typeof FileSystemConfigSchema>,
     checkpoint: {
       defaultProvider: "sqlite",
       providers: {
@@ -139,7 +139,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
         }
       }
-    } as z.infer<typeof CheckpointPackageConfigSchema>,
+    } as z.input<typeof CheckpointPackageConfigSchema>,
     audio: {
       defaultProvider: "linux",
       providers: {
@@ -147,16 +147,16 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           type: "linux"
         }
       }
-    } as z.infer<typeof AudioConfigSchema>,
+    } as z.input<typeof AudioConfigSchema>,
     cli: {
       banner: bannerNarrow,
       bannerColor: "cyan"
-    } as z.infer<typeof CLIConfigSchema>,
+    } as z.input<typeof CLIConfigSchema>,
     inkCLI: {
       bannerNarrow,
       bannerWide,
       bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-    } as z.infer<typeof InkCLIConfigSchema>,
+    } as z.input<typeof InkCLIConfigSchema>,
     agents
   };
 
