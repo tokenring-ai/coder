@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import AgentPackage from "@tokenring-ai/agent";
-import AgentAPIPackage from "@tokenring-ai/agent-api";
+//import AgentAPIPackage from "@tokenring-ai/agent-api";
 import AIClientPackage from "@tokenring-ai/ai-client";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
@@ -37,8 +37,9 @@ import SlackPackage from "@tokenring-ai/slack";
 import TasksPackage from "@tokenring-ai/tasks";
 import TelegramPackage from "@tokenring-ai/telegram";
 import TestingPackage from "@tokenring-ai/testing";
+import TrpcPackage from "@tokenring-ai/trpc-backend";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
-import WebFrontendPackage from "@tokenring-ai/web-frontend";
+//import WebFrontendPackage from "@tokenring-ai/web-frontend";
 import WebHostPackage from "@tokenring-ai/web-host";
 import WebSearchPackage from "@tokenring-ai/websearch";
 import chalk from "chalk";
@@ -167,15 +168,15 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
 
   const app = new TokenRingApp(config, defaultConfig);
 
-  const pluginManager = new PluginManager();
-  app.addServices(pluginManager);
+  const pluginManager = new PluginManager(app);
 
   await pluginManager.installPlugins([
     AgentPackage,
     AudioPackage,
     AIClientPackage,
     CheckpointPackage,
-    AgentAPIPackage,
+    //AgentAPIPackage,
+    TrpcPackage,
     AWSPackage,
     ChatPackage,
     CodeWatchPackage,
@@ -205,18 +206,18 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
     TasksPackage,
     TelegramPackage,
     WebHostPackage,
-    WebFrontendPackage,
+    //WebFrontendPackage,
     WebSearchPackage,
-  ], app);
+  ]);
 
     if (ui === "ink") {
       await pluginManager.installPlugins([
         InkCLIPackage,
-      ], app);
+      ]);
     } else {
       await pluginManager.installPlugins([
         CLIPackage,
-      ], app);
+      ]);
     }
 
   } catch (err) {

@@ -41,6 +41,7 @@
   "@tokenring-ai/tasks": "workspace:*",
   "@tokenring-ai/telegram": "workspace:*",
   "@tokenring-ai/testing": "workspace:*",
+  "@tokenring-ai/trpc-backend": "workspace:*",
   "@tokenring-ai/utility": "workspace:*",
   "@tokenring-ai/web-frontend": "workspace:*",
   "@tokenring-ai/web-host": "workspace:*",
