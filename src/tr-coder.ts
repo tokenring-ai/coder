@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import AgentPackage from "@tokenring-ai/agent";
-//import AgentAPIPackage from "@tokenring-ai/agent-api";
 import AIClientPackage from "@tokenring-ai/ai-client";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
@@ -37,10 +36,8 @@ import SlackPackage from "@tokenring-ai/slack";
 import TasksPackage from "@tokenring-ai/tasks";
 import TelegramPackage from "@tokenring-ai/telegram";
 import TestingPackage from "@tokenring-ai/testing";
-import TrpcPackage from "@tokenring-ai/trpc-backend";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
-//import WebFrontendPackage from "@tokenring-ai/web-frontend";
-import WebHostPackage from "@tokenring-ai/web-host";
+import WebHostPackage, {WebHostConfigSchema} from "@tokenring-ai/web-host";
 import WebSearchPackage from "@tokenring-ai/websearch";
 import chalk from "chalk";
 import {Command} from "commander";
@@ -158,6 +155,18 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
       bannerWide,
       bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
     } as z.input<typeof InkCLIConfigSchema>,
+    webHost: {
+      resources: {
+        "Chat Frontend": {
+          description: "Chat frontend for the Coder application",
+          type: "static",
+          root: path.resolve(import.meta.dirname, "../../../frontend/chat/dist"),
+          indexFile: "index.html",
+          notFoundFile: "index.html",
+          prefix: "/chat"
+        }
+      }
+    } as z.input<typeof WebHostConfigSchema>,
     agents
   };
 
@@ -175,8 +184,6 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
     AudioPackage,
     AIClientPackage,
     CheckpointPackage,
-    //AgentAPIPackage,
-    TrpcPackage,
     AWSPackage,
     ChatPackage,
     CodeWatchPackage,
