@@ -32,4 +32,4 @@ export default {
   initialCommands: [
     "/file add .tokenring/knowledge/fullstack.md"
   ]
-} as AgentConfig;
+} satisfies AgentConfig;

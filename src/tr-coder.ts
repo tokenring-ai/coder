@@ -128,7 +128,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           baseDirectory,
         }
       }
-    } as z.input<typeof FileSystemConfigSchema>,
+    } satisfies z.input<typeof FileSystemConfigSchema>,
     checkpoint: {
       defaultProvider: "sqlite",
       providers: {
@@ -137,7 +137,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
         }
       }
-    } as z.input<typeof CheckpointPackageConfigSchema>,
+    } satisfies z.input<typeof CheckpointPackageConfigSchema>,
     audio: {
       defaultProvider: "linux",
       providers: {
@@ -145,16 +145,16 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           type: "linux"
         }
       }
-    } as z.input<typeof AudioConfigSchema>,
+    } satisfies z.input<typeof AudioConfigSchema>,
     cli: {
       banner: bannerNarrow,
       bannerColor: "cyan"
-    } as z.input<typeof CLIConfigSchema>,
+    } satisfies z.input<typeof CLIConfigSchema>,
     inkCLI: {
       bannerNarrow,
       bannerWide,
       bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-    } as z.input<typeof InkCLIConfigSchema>,
+    } satisfies z.input<typeof InkCLIConfigSchema>,
     webHost: {
       resources: {
         "Chat Frontend": {
@@ -166,7 +166,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
           prefix: "/chat"
         }
       }
-    } as z.input<typeof WebHostConfigSchema>,
+    } satisfies z.input<typeof WebHostConfigSchema>,
     agents
   };
 

@@ -32,4 +32,4 @@ export default {
   initialCommands: [
     "/file add .tokenring/knowledge/devops.md"
   ]
-} as AgentConfig;
+} satisfies AgentConfig;

@@ -44,4 +44,4 @@ export default {
   teamLeader,
   testEngineer,
   uiUxDesigner,
-} as Record<string, AgentConfig>;
+} satisfies Record<string, AgentConfig>;

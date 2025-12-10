@@ -32,4 +32,4 @@ export default {
     enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*"],
   },
   callable: false
-} as AgentConfig;
+} satisfies AgentConfig;

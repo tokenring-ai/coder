@@ -32,4 +32,4 @@ export default {
   initialCommands: [
     "/file add .tokenring/knowledge/data-engineering.md"
   ]
-} as AgentConfig;
+} satisfies AgentConfig;

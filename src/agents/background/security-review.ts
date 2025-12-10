@@ -27,4 +27,4 @@ export default {
       "Continue working and calling tools as necessary until the task is fully complete.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   }
-} as AgentConfig;
+} satisfies AgentConfig;
