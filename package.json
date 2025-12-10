@@ -58,7 +58,7 @@
  },
  "license": "MIT",
  "bin": {
-  "tr-coder": "./dist/tr-coder"
+  "tr-coder": "dist/tr-coder"
  },
  "files": [
   "dist",
