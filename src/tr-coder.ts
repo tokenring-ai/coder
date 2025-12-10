@@ -65,8 +65,8 @@ program
   .name("tr-coder")
   .description("TokenRing Coder - AI-powered coding assistant")
   .version(packageInfo.version)
-  .option("-s, --source <path>", "Path to the working directory to work with")
-  .option("--ui <inquirer|ink>", "Select the UI to use for prompts", "inquirer")
+  .option("--ui <inquirer|ink>", "Select the UI to use for the application", "inquirer")
+  .option("-s, --source <path>", "Path to the working directory to work with (default: cwd)", ".")
   .option(
     "-i, --initialize",
     "Initialize the source directory with a new config directory",
@@ -95,7 +95,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
 
   if (!configFile) {
     // Try each extension in order
-    const possibleExtensions = ["ts","mjs", "cjs", "js"];
+    const possibleExtensions = ["ts", "mjs", "cjs", "js"];
     for (const ext of possibleExtensions) {
       const potentialConfig = path.join(configDirectory, `coder-config.${ext}`);
       if (fs.existsSync(potentialConfig)) {
@@ -116,6 +116,8 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
       `./tr-coder --source ${resolvedSource} --initialize`,
     );
   }
+
+  console.log("Loading configuration from: ", configFile);
 
   const baseDirectory = resolvedSource;
 
@@ -173,7 +175,7 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
   const configImport = await import(configFile);
   const config = TokenRingAppConfigSchema.parse(configImport.default);
 
-  config.agents = { ...agents, ...config.agents};
+  config.agents = {...agents, ...config.agents};
 
   const app = new TokenRingApp(config, defaultConfig);
 
@@ -228,7 +230,6 @@ async function runApp({source, config: configFile, initialize, ui}: CommandOptio
     }
 
     await app.startServices();
-
   } catch (err) {
     console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
     process.exit(1);
