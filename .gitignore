@@ -14,6 +14,7 @@ coverage
 .next/
 out/
 build
+dist
 
 # misc
 .DS_Store
@@ -30,15 +31,7 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# turbo
-.turbo
-/.tokenring/*.sqlite*
 /awscliv2.sig
-/app/coder/dist/
 /.zencoder/
 /.idea/
 /.claude/
-/dist-ts/
-/delight/
-/ideas/
-/brainstorm/

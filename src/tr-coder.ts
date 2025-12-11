@@ -117,14 +117,15 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
   }
 
   if (!configFile) {
-    throw new Error(
+    console.error(
       `Source directory ${resolvedSource} does not contain a .tokenring/coder-config.{mjs,cjs,js} file.\n` +
       `You can create one by adding --initialize:\n` +
       `./tr-coder --source ${resolvedSource} --initialize`,
     );
+    process.exit(1);
   }
 
-  console.log("Loading configuration from: ", configFile);
+  //console.log("Loading configuration from: ", configFile);
 
   const baseDirectory = resolvedSource;
 
@@ -176,6 +177,12 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
       banner: bannerNarrow,
       bannerColor: "cyan"
     } satisfies z.input<typeof CLIConfigSchema>,
+
+    inkCLI: {
+      bannerNarrow,
+      bannerWide,
+      bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
+    } satisfies z.input<typeof InkCLIConfigSchema>,
     ...(http && {
       webHost: {
         host: listenHost,
@@ -183,20 +190,21 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
         auth,
       } satisfies z.input<typeof WebHostConfigSchema>
     }),
-    inkCLI: {
-      bannerNarrow,
-      bannerWide,
-      bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-    } satisfies z.input<typeof InkCLIConfigSchema>,
     agents
   };
 
   const configImport = await import(configFile);
   const config = TokenRingAppConfigSchema.parse(configImport.default);
 
-  config.agents = {...agents, ...config.agents};
+  config.agents = {...agents, ...(config.agents ?? {})};
 
-  const app = new TokenRingApp(config, defaultConfig);
+  // TODO: Figure out a more elegant way to bundle SPA apps into a Single Executable
+  let packageDirectory = path.resolve(import.meta.dirname, "../");
+  if (packageDirectory.startsWith("/$bunfs")) {
+    packageDirectory = path.resolve(process.execPath, "../");
+  }
+
+  const app = new TokenRingApp(packageDirectory, config, defaultConfig);
 
   const pluginManager = new PluginManager(app);
 

@@ -1,13 +1,12 @@
 # vim:set ft=docker/dockerfile:1.8
 
-FROM oven/bun:debian
+FROM debian:trixie
 
-RUN mkdir /repo
-COPY . /repo/
-RUN sh /repo/docker/install.sh
+COPY dist /dist
+COPY docker/install.sh /install.sh
+RUN /install.sh
 
 EXPOSE 80
 
-WORKDIR /repo
-CMD ["bun","/repo/src/tr-coder.js", "--source", "/repo"]
-
+WORKDIR /dist
+CMD ["/dist/tr-coder"]

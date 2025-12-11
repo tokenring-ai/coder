@@ -3,14 +3,12 @@
 set -e
 
 apt update
-apt install -y git python3 build-essential
+apt install -y git python3 libportaudio2 build-essential
 
-cd /repo
-rm -rf /repo/node_modules
-bun install
-
-rm -rf /var/cache/apt
-rm -rf /var/lib/apt/lists/*
+chmod 755 /dist/tr-coder
 
 apt remove -y build-essential
 apt autoremove -y
+
+rm -rf /var/cache/apt
+rm -rf /var/lib/apt/lists/*
