@@ -2,6 +2,8 @@
 
 FROM debian:trixie
 
+LABEL org.opencontainers.image.source="https://github.com/tokenring-ai/monorepo"
+
 COPY dist /dist
 COPY docker/install.sh /install.sh
 RUN /install.sh
