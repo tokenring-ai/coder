@@ -37,6 +37,7 @@ import SlackPackage from "@tokenring-ai/slack";
 import TasksPackage from "@tokenring-ai/tasks";
 import TelegramPackage from "@tokenring-ai/telegram";
 import TestingPackage from "@tokenring-ai/testing";
+import ThinkingPackage from "@tokenring-ai/thinking"
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import WebHostPackage, {WebHostConfigSchema} from "@tokenring-ai/web-host";
 import WebSearchPackage from "@tokenring-ai/websearch";
@@ -59,7 +60,7 @@ interface CommandOptions {
   http?: string;
   httpPassword?: string;
   httpBearer?: string;
-  ui: "ink" | "inquirer";
+  ui: "ink" | "inquirer" | "none";
 }
 
 // Create a new Commander program
@@ -69,7 +70,7 @@ program
   .name("tr-coder")
   .description("TokenRing Coder - AI-powered coding assistant")
   .version(packageInfo.version)
-  .option("--ui <inquirer|ink>", "Select the UI to use for the application", "inquirer")
+  .option("--ui <inquirer|ink|none>", "Select the UI to use for the application", "inquirer")
   .option("-s, --source <path>", "Path to the working directory to work with (default: cwd)", ".")
   .option("--http [host:port]", "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified")
   .option("--httpPassword <user:password>", "Username and password for authentication with the webui (default: No auth required)")
@@ -91,173 +92,176 @@ Examples:
 
 async function runApp({source, config: configFile, initialize, ui, http, httpPassword, httpBearer}: CommandOptions): Promise<void> {
   try {
-  // noinspection JSCheckFunctionSignatures
-  const resolvedSource = path.resolve(source);
+    // noinspection JSCheckFunctionSignatures
+    const resolvedSource = path.resolve(source);
 
-  if (!fs.existsSync(resolvedSource)) {
-    throw new Error(`Source directory not found: ${resolvedSource}`);
-  }
+    if (!fs.existsSync(resolvedSource)) {
+      throw new Error(`Source directory not found: ${resolvedSource}`);
+    }
 
-  const configDirectory = path.join(resolvedSource, "/.tokenring");
+    const configDirectory = path.join(resolvedSource, "/.tokenring");
 
-  if (!configFile) {
-    // Try each extension in order
-    const possibleExtensions = ["ts", "mjs", "cjs", "js"];
-    for (const ext of possibleExtensions) {
-      const potentialConfig = path.join(configDirectory, `coder-config.${ext}`);
-      if (fs.existsSync(potentialConfig)) {
-        configFile = potentialConfig;
-        break;
+    if (!configFile) {
+      // Try each extension in order
+      const possibleExtensions = ["ts", "mjs", "cjs", "js"];
+      for (const ext of possibleExtensions) {
+        const potentialConfig = path.join(configDirectory, `coder-config.${ext}`);
+        if (fs.existsSync(potentialConfig)) {
+          configFile = potentialConfig;
+          break;
+        }
       }
     }
-  }
 
-  if (!configFile && initialize) {
-    configFile = initializeConfigDirectory(configDirectory);
-  }
+    if (!configFile && initialize) {
+      configFile = initializeConfigDirectory(configDirectory);
+    }
 
-  if (!configFile) {
-    console.error(
-      `Source directory ${resolvedSource} does not contain a .tokenring/coder-config.{mjs,cjs,js} file.\n` +
-      `You can create one by adding --initialize:\n` +
-      `./tr-coder --source ${resolvedSource} --initialize`,
-    );
-    process.exit(1);
-  }
+    if (!configFile) {
+      console.error(
+        `Source directory ${resolvedSource} does not contain a .tokenring/coder-config.{mjs,cjs,js} file.\n` +
+        `You can create one by adding --initialize:\n` +
+        `./tr-coder --source ${resolvedSource} --initialize`,
+      );
+      process.exit(1);
+    }
 
-  //console.log("Loading configuration from: ", configFile);
+    //console.log("Loading configuration from: ", configFile);
 
-  const baseDirectory = resolvedSource;
+    const baseDirectory = resolvedSource;
 
-  let auth: z.infer<typeof WebHostConfigSchema>["auth"] = undefined;
-  if (httpPassword) {
-    const [username, password] = httpPassword.split(":");
-    ((auth ??= { users: {}}).users[username] ??= {}).password = password;
-  }
-  if (httpBearer) {
-    const [username, bearerToken] = httpBearer.split(":");
-    ((auth ??= { users: {}}).users[username] ??= {}).bearerToken = bearerToken;
-  }
+    let auth: z.infer<typeof WebHostConfigSchema>["auth"] = undefined;
+    if (httpPassword) {
+      const [username, password] = httpPassword.split(":");
+      ((auth ??= {users: {}}).users[username] ??= {}).password = password;
+    }
+    if (httpBearer) {
+      const [username, bearerToken] = httpBearer.split(":");
+      ((auth ??= {users: {}}).users[username] ??= {}).bearerToken = bearerToken;
+    }
 
-  const [listenHost, listenPortStr] = http?.split?.(":") ?? ['127.0.0.1', ''];
-  let listenPort = listenPortStr ? parseInt(listenPortStr) : undefined;
-  if (listenPort && isNaN(listenPort)) {
-    console.error(`Invalid port number: ${listenPort}`);
-    process.exit(1);
-  }
+    const [listenHost, listenPortStr] = http?.split?.(":") ?? ['127.0.0.1', ''];
+    let listenPort = listenPortStr ? parseInt(listenPortStr) : undefined;
+    if (listenPort && isNaN(listenPort)) {
+      console.error(`Invalid port number: ${listenPort}`);
+      process.exit(1);
+    }
 
-  const defaultConfig = {
-    filesystem: {
-      defaultProvider: "local",
-      providers: {
-        local: {
-          type: "local",
-          baseDirectory,
+    const defaultConfig = {
+      filesystem: {
+        defaultProvider: "local",
+        providers: {
+          local: {
+            type: "local",
+            baseDirectory,
+          }
         }
-      }
-    } satisfies z.input<typeof FileSystemConfigSchema>,
-    checkpoint: {
-      defaultProvider: "sqlite",
-      providers: {
-        sqlite: {
-          type: "sqlite",
-          databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
+      } satisfies z.input<typeof FileSystemConfigSchema>,
+      checkpoint: {
+        defaultProvider: "sqlite",
+        providers: {
+          sqlite: {
+            type: "sqlite",
+            databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
+          }
         }
-      }
-    } satisfies z.input<typeof CheckpointPackageConfigSchema>,
-    audio: {
-      defaultProvider: "linux",
-      providers: {
-        linux: {
-          type: "linux"
+      } satisfies z.input<typeof CheckpointPackageConfigSchema>,
+      audio: {
+        defaultProvider: "linux",
+        providers: {
+          linux: {
+            type: "linux"
+          }
         }
-      }
-    } satisfies z.input<typeof AudioConfigSchema>,
-    cli: {
-      banner: bannerNarrow,
-      bannerColor: "cyan"
-    } satisfies z.input<typeof CLIConfigSchema>,
+      } satisfies z.input<typeof AudioConfigSchema>,
+      cli: {
+        banner: bannerNarrow,
+        bannerColor: "cyan"
+      } satisfies z.input<typeof CLIConfigSchema>,
 
-    inkCLI: {
-      bannerNarrow,
-      bannerWide,
-      bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-    } satisfies z.input<typeof InkCLIConfigSchema>,
-    ...(http && {
-      webHost: {
-        host: listenHost,
-        ...(listenPort && {port: listenPort}),
-        auth,
-      } satisfies z.input<typeof WebHostConfigSchema>
-    }),
-    agents
-  };
+      inkCLI: {
+        bannerNarrow,
+        bannerWide,
+        bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
+      } satisfies z.input<typeof InkCLIConfigSchema>,
+      ...(http && {
+        webHost: {
+          host: listenHost,
+          ...(listenPort && {port: listenPort}),
+          auth,
+        } satisfies z.input<typeof WebHostConfigSchema>
+      }),
+      agents
+    };
 
-  const configImport = await import(configFile);
-  const config = TokenRingAppConfigSchema.parse(configImport.default);
+    const configImport = await import(configFile);
+    const config = TokenRingAppConfigSchema.parse(configImport.default);
 
-  config.agents = {...agents, ...(config.agents ?? {})};
+    config.agents = {...agents, ...(config.agents ?? {})};
 
-  // TODO: Figure out a more elegant way to bundle SPA apps into a Single Executable
-  let packageDirectory = path.resolve(import.meta.dirname, "../");
-  if (packageDirectory.startsWith("/$bunfs")) {
-    packageDirectory = path.resolve(process.execPath, "../");
-  }
+    // TODO: Figure out a more elegant way to bundle SPA apps into a Single Executable
+    let packageDirectory = path.resolve(import.meta.dirname, "../");
+    if (packageDirectory.startsWith("/$bunfs")) {
+      packageDirectory = path.resolve(process.execPath, "../");
+    }
 
-  const app = new TokenRingApp(packageDirectory, config, defaultConfig);
+    const app = new TokenRingApp(packageDirectory, config, defaultConfig);
 
-  const pluginManager = new PluginManager(app);
+    const pluginManager = new PluginManager(app);
 
-  await pluginManager.installPlugins([
-    AgentPackage,
-    AudioPackage,
-    AIClientPackage,
-    CheckpointPackage,
-    AWSPackage,
-    ChatPackage,
-    ChatFrontendPackage,
-    CodeWatchPackage,
-    CodeBasePackage,
-    DatabasePackage,
-    DockerPackage,
-    DrizzleStoragePackage,
-    ChromePackage,
-    MySQLPackage,
-    ScraperAPIPackage,
-    ScriptingPackage,
-    SerperPackage,
-    TestingPackage,
-    FeedbackPackage,
-    FileIndexPackage,
-    FilesystemPackage,
-    GitPackage,
-    JavascriptPackage,
-    KubernetesPackage,
-    LinuxAudioPackage,
-    LocalFileSystemPackage,
-    MCPPackage,
-    MemoryPackage,
-    QueuePackage,
-    SandboxPackage,
-    SlackPackage,
-    TasksPackage,
-    TelegramPackage,
-    WebHostPackage,
-    //WebFrontendPackage,
-    WebSearchPackage,
-  ]);
+    await pluginManager.installPlugins([
+      AgentPackage,
+      AudioPackage,
+      AIClientPackage,
+      CheckpointPackage,
+      AWSPackage,
+      ChatPackage,
+      ChatFrontendPackage,
+      CodeWatchPackage,
+      CodeBasePackage,
+      DatabasePackage,
+      DockerPackage,
+      DrizzleStoragePackage,
+      ChromePackage,
+      MySQLPackage,
+      ScraperAPIPackage,
+      ScriptingPackage,
+      SerperPackage,
+      TestingPackage,
+      FeedbackPackage,
+      FileIndexPackage,
+      FilesystemPackage,
+      GitPackage,
+      JavascriptPackage,
+      KubernetesPackage,
+      LinuxAudioPackage,
+      LocalFileSystemPackage,
+      MCPPackage,
+      MemoryPackage,
+      QueuePackage,
+      SandboxPackage,
+      SlackPackage,
+      TasksPackage,
+      TelegramPackage,
+      ThinkingPackage,
+      WebHostPackage,
+      //WebFrontendPackage,
+      WebSearchPackage,
+    ]);
 
     if (ui === "ink") {
       await pluginManager.installPlugins([
         InkCLIPackage,
       ]);
-    } else {
+    } else if (ui === "inquirer") {
       await pluginManager.installPlugins([
         CLIPackage,
       ]);
+    } else {
+      console.log("App running in headless mode")
     }
 
-    await app.startServices();
+    await app.run();
   } catch (err) {
     console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
     process.exit(1);
