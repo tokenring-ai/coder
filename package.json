@@ -3,7 +3,7 @@
   "description": "TokenRing Coder Application",
   "version": "0.2.3",
   "devDependencies": {
-    "@inquirer/prompts": "^8.0.2",
+    "@inquirer/prompts": "^8.1.0",
     "@tokenring-ai/agent": "workspace:*",
     "@tokenring-ai/ai-client": "workspace:*",
     "@tokenring-ai/app": "workspace:*",
@@ -44,17 +44,17 @@
     "@tokenring-ai/utility": "workspace:*",
     "@tokenring-ai/web-host": "workspace:*",
     "@tokenring-ai/websearch": "workspace:*",
-    "@types/bun": "^1.3.4",
-    "bun-types": "^1.3.4",
+    "@types/bun": "catalog:",
+    "bun-types": "catalog:",
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
     "husky": "^9.1.7",
     "jsdom": "^27.3.0",
     "node-gyp": "^12.1.0",
     "trufflehog": "^0.0.5",
-    "typescript": "^5.9.3",
+    "typescript": "catalog:",
     "vitest": "^4.0.15",
-    "zod": "^4.1.13"
+    "zod": "catalog:"
   },
   "repository": {
     "type": "git",
