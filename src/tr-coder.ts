@@ -175,8 +175,10 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
         }
       } satisfies z.input<typeof AudioConfigSchema>,
       cli: {
-        banner: bannerNarrow,
-        bannerColor: "cyan"
+        bannerNarrow,
+        bannerWide,
+        bannerColor: "cyan",
+        bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
       } satisfies z.input<typeof CLIConfigSchema>,
 
       inkCLI: {
@@ -250,13 +252,9 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
     ]);
 
     if (ui === "ink") {
-      await pluginManager.installPlugins([
-        InkCLIPackage,
-      ]);
+      await pluginManager.installPlugins([InkCLIPackage]);
     } else if (ui === "inquirer") {
-      await pluginManager.installPlugins([
-        CLIPackage,
-      ]);
+      await pluginManager.installPlugins([CLIPackage]);
     } else {
       console.log("App running in headless mode")
     }
