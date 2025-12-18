@@ -44,6 +44,7 @@
     "@tokenring-ai/utility": "workspace:*",
     "@tokenring-ai/web-host": "workspace:*",
     "@tokenring-ai/websearch": "workspace:*",
+    "@tokenring-ai/vault": "workspace:*",
     "@types/bun": "catalog:",
     "bun-types": "catalog:",
     "chalk": "^5.6.2",
