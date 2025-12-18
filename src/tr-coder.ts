@@ -177,7 +177,6 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
       cli: {
         bannerNarrow,
         bannerWide,
-        bannerColor: "cyan",
         bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
       } satisfies z.input<typeof CLIConfigSchema>,
 

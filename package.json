@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/coder",
   "description": "TokenRing Coder Application",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "devDependencies": {
     "@inquirer/prompts": "^8.1.0",
     "@tokenring-ai/agent": "workspace:*",
