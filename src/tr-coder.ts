@@ -1,46 +1,52 @@
 #!/usr/bin/env node
 
-import AgentPackage from "@tokenring-ai/agent";
-import AIClientPackage from "@tokenring-ai/ai-client";
+import AgentPlugin from "@tokenring-ai/agent/plugin";
+import AIClientPlugin from "@tokenring-ai/ai-client/plugin";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
-import AudioPackage, {AudioConfigSchema} from "@tokenring-ai/audio";
-import AWSPackage from "@tokenring-ai/aws";
-import ChatPackage from "@tokenring-ai/chat";
-import ChatFrontendPackage from "@tokenring-ai/chat-frontend";
-import CheckpointPackage, {CheckpointPackageConfigSchema} from "@tokenring-ai/checkpoint";
-import ChromePackage from "@tokenring-ai/chrome";
-import CLIPackage, {CLIConfigSchema} from "@tokenring-ai/cli";
-import InkCLIPackage, {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
-import CodeWatchPackage from "@tokenring-ai/code-watch";
-import CodeBasePackage from "@tokenring-ai/codebase";
-import DatabasePackage from "@tokenring-ai/database";
-import DockerPackage from "@tokenring-ai/docker";
-import DrizzleStoragePackage from "@tokenring-ai/drizzle-storage";
-import FeedbackPackage from "@tokenring-ai/feedback";
-import FileIndexPackage from "@tokenring-ai/file-index";
-import FilesystemPackage, {FileSystemConfigSchema} from "@tokenring-ai/filesystem";
-import GitPackage from "@tokenring-ai/git";
-import JavascriptPackage from "@tokenring-ai/javascript";
-import KubernetesPackage from "@tokenring-ai/kubernetes";
-import LinuxAudioPackage from "@tokenring-ai/linux-audio";
-import LocalFileSystemPackage from "@tokenring-ai/local-filesystem";
-import MCPPackage from "@tokenring-ai/mcp";
-import MemoryPackage from "@tokenring-ai/memory";
-import MySQLPackage from "@tokenring-ai/mysql";
-import QueuePackage from "@tokenring-ai/queue";
-import SandboxPackage from "@tokenring-ai/sandbox";
-import ScraperAPIPackage from "@tokenring-ai/scraperapi";
-import ScriptingPackage from "@tokenring-ai/scripting";
-import SerperPackage from "@tokenring-ai/serper";
-import SlackPackage from "@tokenring-ai/slack";
-import TasksPackage from "@tokenring-ai/tasks";
-import TelegramPackage from "@tokenring-ai/telegram";
-import TestingPackage from "@tokenring-ai/testing";
-import ThinkingPackage from "@tokenring-ai/thinking"
-import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
-import WebHostPackage, {WebHostConfigSchema} from "@tokenring-ai/web-host";
-import WebSearchPackage from "@tokenring-ai/websearch";
+import AudioPlugin from "@tokenring-ai/audio/plugin";
+import {AudioConfigSchema} from "@tokenring-ai/audio";
+import AWSPlugin from "@tokenring-ai/aws/plugin";
+import ChatPlugin from "@tokenring-ai/chat/plugin";
+import ChatFrontendPlugin from "@tokenring-ai/chat-frontend/plugin";
+import CheckpointPlugin from "@tokenring-ai/checkpoint/plugin";
+import {CheckpointPluginConfigSchema} from "@tokenring-ai/checkpoint";
+import ChromePlugin from "@tokenring-ai/chrome/plugin";
+import CLIPlugin from "@tokenring-ai/cli/plugin";
+import {CLIConfigSchema} from "@tokenring-ai/cli";
+import InkCLIPlugin from "@tokenring-ai/cli-ink/plugin";
+import {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
+import CodeWatchPlugin from "@tokenring-ai/code-watch/plugin";
+import CodeBasePlugin from "@tokenring-ai/codebase/plugin";
+import DatabasePlugin from "@tokenring-ai/database/plugin";
+import DockerPlugin from "@tokenring-ai/docker/plugin";
+import DrizzleStoragePlugin from "@tokenring-ai/drizzle-storage/plugin";
+import FeedbackPlugin from "@tokenring-ai/feedback/plugin";
+import FileIndexPlugin from "@tokenring-ai/file-index/plugin";
+import FilesystemPlugin from "@tokenring-ai/filesystem/plugin";
+import {FileSystemConfigSchema} from "@tokenring-ai/filesystem";
+import GitPlugin from "@tokenring-ai/git/plugin";
+import JavascriptPlugin from "@tokenring-ai/javascript/plugin";
+import KubernetesPlugin from "@tokenring-ai/kubernetes/plugin";
+import LinuxAudioPlugin from "@tokenring-ai/linux-audio/plugin";
+import LocalFileSystemPlugin from "@tokenring-ai/local-filesystem/plugin";
+import MCPPlugin from "@tokenring-ai/mcp/plugin";
+import MemoryPlugin from "@tokenring-ai/memory/plugin";
+import MySQLPlugin from "@tokenring-ai/mysql/plugin";
+import QueuePlugin from "@tokenring-ai/queue/plugin";
+import SandboxPlugin from "@tokenring-ai/sandbox/plugin";
+import ScraperAPIPlugin from "@tokenring-ai/scraperapi/plugin";
+import ScriptingPlugin from "@tokenring-ai/scripting/plugin";
+import SerperPlugin from "@tokenring-ai/serper/plugin";
+import SlackPlugin from "@tokenring-ai/slack/plugin";
+import TasksPlugin from "@tokenring-ai/tasks/plugin";
+import TelegramPlugin from "@tokenring-ai/telegram/plugin";
+import TestingPlugin from "@tokenring-ai/testing/plugin";
+import ThinkingPlugin from "@tokenring-ai/thinking/plugin"
+import VaultPlugin from "@tokenring-ai/vault/plugin";
+import WebHostPlugin from "@tokenring-ai/web-host/plugin";
+import {WebHostConfigSchema} from "@tokenring-ai/web-host";
+import WebSearchPlugin from "@tokenring-ai/websearch/plugin";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "node:fs";
@@ -51,6 +57,7 @@ import agents from "./agents/index.ts";
 import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
 import bannerWide from "./banner.wide.txt" with {type: "text"};
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
+import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 
 // Interface definitions
 interface CommandOptions {
@@ -165,7 +172,7 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
             databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
           }
         }
-      } satisfies z.input<typeof CheckpointPackageConfigSchema>,
+      } satisfies z.input<typeof CheckpointPluginConfigSchema>,
       audio: {
         defaultProvider: "linux",
         providers: {
@@ -211,49 +218,50 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
     const pluginManager = new PluginManager(app);
 
     await pluginManager.installPlugins([
-      AgentPackage,
-      AudioPackage,
-      AIClientPackage,
-      CheckpointPackage,
-      AWSPackage,
-      ChatPackage,
-      ChatFrontendPackage,
-      CodeWatchPackage,
-      CodeBasePackage,
-      DatabasePackage,
-      DockerPackage,
-      DrizzleStoragePackage,
-      ChromePackage,
-      MySQLPackage,
-      ScraperAPIPackage,
-      ScriptingPackage,
-      SerperPackage,
-      TestingPackage,
-      FeedbackPackage,
-      FileIndexPackage,
-      FilesystemPackage,
-      GitPackage,
-      JavascriptPackage,
-      KubernetesPackage,
-      LinuxAudioPackage,
-      LocalFileSystemPackage,
-      MCPPackage,
-      MemoryPackage,
-      QueuePackage,
-      SandboxPackage,
-      SlackPackage,
-      TasksPackage,
-      TelegramPackage,
-      ThinkingPackage,
-      WebHostPackage,
-      //WebFrontendPackage,
-      WebSearchPackage,
+      AgentPlugin,
+      AudioPlugin,
+      AIClientPlugin,
+      CheckpointPlugin,
+      AWSPlugin,
+      ChatPlugin,
+      ChatFrontendPlugin,
+      CodeWatchPlugin,
+      CodeBasePlugin,
+      DatabasePlugin,
+      DockerPlugin,
+      DrizzleStoragePlugin,
+      ChromePlugin,
+      MySQLPlugin,
+      ScraperAPIPlugin,
+      ScriptingPlugin,
+      SerperPlugin,
+      TestingPlugin,
+      FeedbackPlugin,
+      FileIndexPlugin,
+      FilesystemPlugin,
+      GitPlugin,
+      JavascriptPlugin,
+      KubernetesPlugin,
+      LinuxAudioPlugin,
+      LocalFileSystemPlugin,
+      MCPPlugin,
+      MemoryPlugin,
+      QueuePlugin,
+      SandboxPlugin,
+      SlackPlugin,
+      TasksPlugin,
+      TelegramPlugin,
+      ThinkingPlugin,
+      WebHostPlugin,
+      //WebFrontendPlugin,
+      WebSearchPlugin,
+      VaultPlugin,
     ]);
 
     if (ui === "ink") {
-      await pluginManager.installPlugins([InkCLIPackage]);
+      await pluginManager.installPlugins([InkCLIPlugin]);
     } else if (ui === "inquirer") {
-      await pluginManager.installPlugins([CLIPackage]);
+      await pluginManager.installPlugins([CLIPlugin]);
     } else {
       console.log("App running in headless mode")
     }
