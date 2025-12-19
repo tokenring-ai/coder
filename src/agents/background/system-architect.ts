@@ -25,8 +25,9 @@ export default {
       "Consider scalability, maintainability, performance, team expertise, and ecosystem compatibility. Use all available tools to research " +
       "technologies, create architectural documentation, design system diagrams, and establish technical foundations for enterprise applications. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about system architecture in .tokenring/knowledge/architecture.md. When you learn something new about the codebase " +
-      "(architecture patterns, technology stack, design decisions, infrastructure, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about system architecture standards and patterns in .tokenring/knowledge/architecture.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "system architecture standards and system architecture patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

@@ -29,8 +29,9 @@ export default {
       "Use data-driven insights and user feedback to inform your recommendations. Create detailed wireframes, user flows, " +
       "and interaction specifications when relevant. Focus on creating products that solve real user problems effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about product design in .tokenring/knowledge/product.md. When you learn something new about the codebase " +
-      "(features, requirements, user flows, design decisions, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about product design standards and patterns in .tokenring/knowledge/product.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "product design standards and product design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

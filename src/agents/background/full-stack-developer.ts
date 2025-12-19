@@ -25,8 +25,9 @@ export default {
       "Use all available tools to examine existing code, implement new features, create reusable components, handle data flow, " +
       "and deliver complete working solutions. Focus on creating cohesive features that work seamlessly across the full stack. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about full-stack systems in .tokenring/knowledge/fullstack.md. When you learn something new about the codebase " +
-      "(features, integrations, data flow, components, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about full-stack standards and patterns in .tokenring/knowledge/fullstack.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "full-stack standards and full-stack patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

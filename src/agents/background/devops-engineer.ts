@@ -25,8 +25,9 @@ export default {
       "deployment automation. Use all available tools to analyze existing infrastructure, create configuration files, implement deployment scripts, " +
       "set up monitoring systems, and build reliable, scalable deployment solutions for full-stack applications. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about DevOps systems in .tokenring/knowledge/devops.md. When you learn something new about the codebase " +
-      "(deployment pipelines, infrastructure, CI/CD, monitoring, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about DevOps standards and patterns in .tokenring/knowledge/devops.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "DevOps standards and DevOps patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

@@ -25,8 +25,9 @@ export default {
       "horizontal scaling, and tune system performance. Use all available tools to profile applications, implement performance improvements, " +
       "configure monitoring dashboards, optimize resource usage, and build systems that handle enterprise-scale traffic efficiently. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about performance in .tokenring/knowledge/performance.md. When you learn something new about the codebase " +
-      "(bottlenecks, caching strategies, optimization techniques, monitoring, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about performance standards and patterns in .tokenring/knowledge/performance.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "performance standards and performance optimization patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

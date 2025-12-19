@@ -25,8 +25,9 @@ export default {
       "Use all available tools to examine existing auth code, implement secure authentication systems, create middleware, generate " +
       "security configurations, and build complete login solutions. Consider threat models and compliance requirements in all implementations. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about authentication systems in .tokenring/knowledge/auth.md. When you learn something new about the codebase " +
-      "(auth flows, session management, security patterns, access controls, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about authentication standards and patterns in .tokenring/knowledge/auth.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "authentication standards and authentication patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

@@ -27,8 +27,10 @@ export default {
       "Focus on accuracy, clarity, and completeness while avoiding unnecessary complexity. " +
       "Maintain consistency in style, formatting, and terminology across all documentation. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about documentation in .tokenring/knowledge/documentation.md. When you learn something new about the codebase " +
-      "(documentation patterns, style guides, structure, standards, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about the documentation standards used in the project in .tokenring/knowledge/documentation.md." +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "documentation standards and documentation patterns used in the codebase. It should not contain task-specific information. "
+    ,
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

@@ -25,8 +25,9 @@ export default {
       "and build analytics infrastructure. Use all available tools to analyze data requirements, create migration scripts, implement data " +
       "processing workflows, configure data validation rules, and build robust data systems that support business intelligence and analytics. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about data engineering in .tokenring/knowledge/data-engineering.md. When you learn something new about the codebase " +
-      "(data migrations, ETL pipelines, data processing, validation rules, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about data engineering standards and patterns in .tokenring/knowledge/data-engineering.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "data engineering standards and data engineering patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

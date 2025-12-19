@@ -25,8 +25,9 @@ export default {
       "Use all available tools to review code quality, implement refactoring solutions, create quality reports, establish coding standards, " +
       "configure linting tools, and build quality assurance processes that improve developer productivity and code maintainability. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about code quality in .tokenring/knowledge/code-quality.md. When you learn something new about the codebase " +
-      "(coding standards, refactoring patterns, technical debt, quality metrics, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about code quality standards and patterns in .tokenring/knowledge/code-quality.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "code quality standards and code quality patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

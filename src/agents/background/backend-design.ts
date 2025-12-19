@@ -25,8 +25,9 @@ export default {
       "Use all available tools to examine requirements, implement business logic, create service classes, handle data operations, " +
       "and build reliable backend systems that support frontend applications and business processes effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about backend systems in .tokenring/knowledge/backend.md. When you learn something new about the codebase " +
-      "(service layers, business rules, data processing, middleware, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about backend standards and patterns in .tokenring/knowledge/backend.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "backend standards and backend design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

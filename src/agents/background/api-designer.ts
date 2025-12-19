@@ -25,8 +25,9 @@ export default {
       "and handle error responses. Use all available tools to examine existing APIs, create specification files, implement API endpoints, " +
       "generate documentation, and build complete API layers that serve frontend and integration needs effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about APIs in .tokenring/knowledge/apis.md. When you learn something new about the codebase " +
-      "(API endpoints, service contracts, data schemas, integration patterns, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about API design standards and patterns in .tokenring/knowledge/apis.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "API standards and API design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

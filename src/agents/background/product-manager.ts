@@ -25,8 +25,9 @@ export default {
       "Use all available tools to research existing code, create planning documents, define project scope, and establish clear deliverables. " +
       "Focus on creating actionable plans that guide development teams toward successful MVP delivery. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about product management in .tokenring/knowledge/product.md. When you learn something new about the codebase " +
-      "(requirements, user stories, roadmaps, project scope, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about product management standards and patterns in .tokenring/knowledge/product.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "product management standards and product management patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

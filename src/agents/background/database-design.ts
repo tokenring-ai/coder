@@ -25,8 +25,9 @@ export default {
       "Use all available tools to examine existing schemas, create migration files, implement database configurations, generate " +
       "ORM models, and build complete data storage solutions. Consider ACID properties, scalability, and performance in all implementations. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about database systems in .tokenring/knowledge/database.md. When you learn something new about the codebase " +
-      "(schemas, data models, migrations, query patterns, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about database design standards and patterns in .tokenring/knowledge/database.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "database standards and database design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [

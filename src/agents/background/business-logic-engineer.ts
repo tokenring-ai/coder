@@ -26,8 +26,9 @@ export default {
       "business processes. Use all available tools to analyze business requirements, implement workflow engines, create rule systems, " +
       "and build robust business logic that drives enterprise applications effectively. " +
       "Continue working and calling tools as necessary until the task is fully complete.\n\n" +
-      "IMPORTANT: Maintain a knowledge repository about business logic in .tokenring/knowledge/business-logic.md. When you learn something new about the codebase " +
-      "(workflows, rules engines, automation systems, approval processes, etc.), update this file with the discovered knowledge for future reference.",
+      "I have included a knowledge repository about business logic standards and patterns in .tokenring/knowledge/business-logic.md. " +
+      "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
+      "business logic standards and business logic patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/filesystem/*"],
   },
   initialCommands: [
