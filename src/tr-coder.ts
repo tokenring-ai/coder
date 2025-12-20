@@ -34,7 +34,9 @@ import MCPPlugin from "@tokenring-ai/mcp/plugin";
 import MemoryPlugin from "@tokenring-ai/memory/plugin";
 import MySQLPlugin from "@tokenring-ai/mysql/plugin";
 import QueuePlugin from "@tokenring-ai/queue/plugin";
+import ResearchPlugin from "@tokenring-ai/research/plugin";
 import SandboxPlugin from "@tokenring-ai/sandbox/plugin";
+import SchedulerPlugin from "@tokenring-ai/scheduler/plugin";
 import ScraperAPIPlugin from "@tokenring-ai/scraperapi/plugin";
 import ScriptingPlugin from "@tokenring-ai/scripting/plugin";
 import SerperPlugin from "@tokenring-ai/serper/plugin";
@@ -47,6 +49,7 @@ import VaultPlugin from "@tokenring-ai/vault/plugin";
 import WebHostPlugin from "@tokenring-ai/web-host/plugin";
 import {WebHostConfigSchema} from "@tokenring-ai/web-host";
 import WebSearchPlugin from "@tokenring-ai/websearch/plugin";
+import WorkflowPlugin from "@tokenring-ai/workflow/plugin";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "node:fs";
@@ -219,23 +222,18 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
 
     await pluginManager.installPlugins([
       AgentPlugin,
-      AudioPlugin,
       AIClientPlugin,
-      CheckpointPlugin,
+      AudioPlugin,
       AWSPlugin,
-      ChatPlugin,
       ChatFrontendPlugin,
-      CodeWatchPlugin,
+      ChatPlugin,
+      CheckpointPlugin,
+      ChromePlugin,
       CodeBasePlugin,
+      CodeWatchPlugin,
       DatabasePlugin,
       DockerPlugin,
       DrizzleStoragePlugin,
-      ChromePlugin,
-      MySQLPlugin,
-      ScraperAPIPlugin,
-      ScriptingPlugin,
-      SerperPlugin,
-      TestingPlugin,
       FeedbackPlugin,
       FileIndexPlugin,
       FilesystemPlugin,
@@ -246,16 +244,23 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
       LocalFileSystemPlugin,
       MCPPlugin,
       MemoryPlugin,
+      MySQLPlugin,
+      ResearchPlugin,
       QueuePlugin,
       SandboxPlugin,
+      SchedulerPlugin,
+      ScraperAPIPlugin,
+      ScriptingPlugin,
+      SerperPlugin,
       SlackPlugin,
       TasksPlugin,
       TelegramPlugin,
+      TestingPlugin,
       ThinkingPlugin,
-      WebHostPlugin,
-      //WebFrontendPlugin,
-      WebSearchPlugin,
       VaultPlugin,
+      WebHostPlugin,
+      WebSearchPlugin,
+      WorkflowPlugin,
     ]);
 
     if (ui === "ink") {
