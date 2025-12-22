@@ -54,7 +54,7 @@
     "node-gyp": "^12.1.0",
     "trufflehog": "^0.0.5",
     "typescript": "catalog:",
-    "vitest": "^4.0.15",
+    "vitest": "catalog:",
     "zod": "catalog:"
   },
   "repository": {
@@ -76,7 +76,9 @@
     "prepack": "bun run build && cp -Lr frontend dist",
     "coder": "bun src/tr-coder.js --source ./",
     "build-container": "docker build -t tr-coder:latest -f docker/Dockerfile .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "type": "module"
 }
