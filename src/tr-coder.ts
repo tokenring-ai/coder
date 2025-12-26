@@ -62,6 +62,51 @@ import bannerWide from "./banner.wide.txt" with {type: "text"};
 import {initializeConfigDirectory} from "./initializeConfigDirectory.js";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 
+const plugins = [
+  AgentPlugin,
+  AIClientPlugin,
+  AudioPlugin,
+  AWSPlugin,
+  ChatFrontendPlugin,
+  ChatPlugin,
+  CLIPlugin,
+  CheckpointPlugin,
+  ChromePlugin,
+  CodeBasePlugin,
+  CodeWatchPlugin,
+  DatabasePlugin,
+  DockerPlugin,
+  DrizzleStoragePlugin,
+  FeedbackPlugin,
+  FileIndexPlugin,
+  FilesystemPlugin,
+  GitPlugin,
+  InkCLIPlugin,
+  JavascriptPlugin,
+  KubernetesPlugin,
+  LinuxAudioPlugin,
+  LocalFileSystemPlugin,
+  MCPPlugin,
+  MemoryPlugin,
+  MySQLPlugin,
+  ResearchPlugin,
+  QueuePlugin,
+  SandboxPlugin,
+  SchedulerPlugin,
+  ScraperAPIPlugin,
+  ScriptingPlugin,
+  SerperPlugin,
+  SlackPlugin,
+  TasksPlugin,
+  TelegramPlugin,
+  TestingPlugin,
+  ThinkingPlugin,
+  VaultPlugin,
+  WebHostPlugin,
+  WebSearchPlugin,
+  WorkflowPlugin,
+];
+
 // Interface definitions
 interface CommandOptions {
   source: string;
@@ -184,17 +229,20 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
           }
         }
       } satisfies z.input<typeof AudioConfigSchema>,
-      cli: {
-        bannerNarrow,
-        bannerWide,
-        bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-      } satisfies z.input<typeof CLIConfigSchema>,
-
-      inkCLI: {
-        bannerNarrow,
-        bannerWide,
-        bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-      } satisfies z.input<typeof InkCLIConfigSchema>,
+      ...(ui === 'inquirer' && {
+        cli: {
+          bannerNarrow,
+          bannerWide,
+          bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
+        } satisfies z.input<typeof CLIConfigSchema>
+      }),
+      ...(ui === 'ink' && {
+        inkCLI: {
+          bannerNarrow,
+          bannerWide,
+          bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
+        } satisfies z.input<typeof InkCLIConfigSchema>
+      }),
       ...(http && {
         webHost: {
           host: listenHost,
@@ -220,56 +268,7 @@ async function runApp({source, config: configFile, initialize, ui, http, httpPas
 
     const pluginManager = new PluginManager(app);
 
-    await pluginManager.installPlugins([
-      AgentPlugin,
-      AIClientPlugin,
-      AudioPlugin,
-      AWSPlugin,
-      ChatFrontendPlugin,
-      ChatPlugin,
-      CheckpointPlugin,
-      ChromePlugin,
-      CodeBasePlugin,
-      CodeWatchPlugin,
-      DatabasePlugin,
-      DockerPlugin,
-      DrizzleStoragePlugin,
-      FeedbackPlugin,
-      FileIndexPlugin,
-      FilesystemPlugin,
-      GitPlugin,
-      JavascriptPlugin,
-      KubernetesPlugin,
-      LinuxAudioPlugin,
-      LocalFileSystemPlugin,
-      MCPPlugin,
-      MemoryPlugin,
-      MySQLPlugin,
-      ResearchPlugin,
-      QueuePlugin,
-      SandboxPlugin,
-      SchedulerPlugin,
-      ScraperAPIPlugin,
-      ScriptingPlugin,
-      SerperPlugin,
-      SlackPlugin,
-      TasksPlugin,
-      TelegramPlugin,
-      TestingPlugin,
-      ThinkingPlugin,
-      VaultPlugin,
-      WebHostPlugin,
-      WebSearchPlugin,
-      WorkflowPlugin,
-    ]);
-
-    if (ui === "ink") {
-      await pluginManager.installPlugins([InkCLIPlugin]);
-    } else if (ui === "inquirer") {
-      await pluginManager.installPlugins([CLIPlugin]);
-    } else {
-      console.log("App running in headless mode")
-    }
+    await pluginManager.installPlugins(plugins)
 
     await app.run();
   } catch (err) {
