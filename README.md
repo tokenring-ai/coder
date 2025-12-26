@@ -169,7 +169,7 @@ bun run web
 > script
   var = projectVersion = "1.2.0"
   func = updateVersion() {
-    replaceInFile("package.json", /"version": "[^"]+"/, `"version": "${var}"`)
+    replaceInFile("package.json", /"version": "[^\"]+"/, `"version": "${var}"`)
     commit("Update version to ${var}")
   }
   call updateVersion()
@@ -495,6 +495,18 @@ export default {
       framework: "vitest",
       coverage: true
     }
+  },
+  
+  // Agent configuration
+  agents: {
+    teamLeader: {
+      name: "Multi-Agent Project Planner",
+      description: "Use this agent to orchestrate full-stack development projects"
+    },
+    interactiveCodeAgent: {
+      name: "Coding Agent",
+      description: "A general code assistant that directly executes development tasks"
+    }
   }
 };
 ```
@@ -792,22 +804,8 @@ The TokenRing Coder ecosystem consists of 45 specialized packages organized into
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🆘 Support
 
-- **Documentation**: Comprehensive guides in the `docs/` directory
-- **Package READMEs**: Detailed documentation for each package in `pkg/*/README.md`
-- **Issues**: Report bugs and request features on GitHub
-- **Community**: Join discussions in the repository discussions section
-- **Examples**: Sample implementations in the `examples/` directory
-
-## 🔗 Related Resources
-
-- [PACKAGES.md](PACKAGES.md) - Complete package index and architecture documentation
-- [docs/](docs/) - Detailed guides and tutorials
-- [examples/](examples/) - Sample implementations and use cases
-- [pkg/](pkg/) - Individual package documentation
-
----
+--- 
 
 **Ready to supercharge your coding workflow with AI? Explore the complete 45-package ecosystem and transform your development experience!** 🚀
 
