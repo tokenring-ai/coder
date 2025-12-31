@@ -28,7 +28,7 @@ export default {
       "I have included a knowledge repository about database design standards and patterns in .tokenring/knowledge/database.md. " +
       "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
       "database standards and database design patterns used in the codebase. It should not contain task-specific information.",
-    enabledTools: ["@tokenring-ai/filesystem/*"],
+    enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
   initialCommands: [
     "/file add .tokenring/knowledge/database.md"

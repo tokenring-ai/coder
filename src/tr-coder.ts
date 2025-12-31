@@ -80,6 +80,7 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
       chat: {
         defaultModels: [
           'llamacpp:*',
+          'zai:glm-4.7',
           'openrouter:openrouter/auto',
           'openai:gpt-5-mini',
           'anthropic:claude-4.5-haiku',

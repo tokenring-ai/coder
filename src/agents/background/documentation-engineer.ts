@@ -31,7 +31,7 @@ export default {
       "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
       "documentation standards and documentation patterns used in the codebase. It should not contain task-specific information. "
     ,
-    enabledTools: ["@tokenring-ai/filesystem/*"],
+    enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
   initialCommands: [
     "/file add .tokenring/knowledge/documentation.md"

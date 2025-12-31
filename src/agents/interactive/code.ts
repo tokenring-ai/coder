@@ -18,8 +18,8 @@ export default {
       " 3) Working on the task\n" +
       " 4) Evaluating the changes you made, and correcting any small mistakes before they snowball into something bigger\n" +
       " 5) Repeating this looped process until the task is completed\n" +
-      "IMPORTANT: Maintain a knowledge repository about the codebase in .tokenring/knowledge/code.md. When you learn something new about the codebase " +
-      "(code structure, patterns, implementations, conventions, etc.), update this file with the discovered knowledge for future reference.",
+      "IMPORTANT: Maintain a knowledge repository about the codebase in .tokenring/knowledge/code.md. Keep this file concise, with information " +
+      "on the project structure, code patterns, conventions, etc. When you discover something new that fits these guidelines, update this file with the discovered knowledge for future reference.",
     context: {
       initial: [
         {type: "system-message"},
@@ -30,7 +30,7 @@ export default {
         {type: "current-message"},
       ]
     },
-    enabledTools: ["@tokenring-ai/filesystem/*"],
+    enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
   initialCommands: [
     "/file add .tokenring/knowledge/code.md"
