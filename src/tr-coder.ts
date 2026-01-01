@@ -2,8 +2,8 @@
 
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import buildTokenRingAppConfig from "@tokenring-ai/app/buildTokenRingAppConfig";
-import {AudioConfigSchema} from "@tokenring-ai/audio";
-import {ChatClientConfigSchema} from "@tokenring-ai/chat/schema";
+import {AudioServiceConfigSchema} from "@tokenring-ai/audio";
+import {ChatServiceConfigSchema} from "@tokenring-ai/chat/schema";
 import {CheckpointConfigSchema} from "@tokenring-ai/checkpoint";
 import {CLIConfigSchema} from "@tokenring-ai/cli";
 import {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
@@ -90,9 +90,11 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
           'qwen:qwen3-coder-flash',
           '*'
         ]
-      } as z.input<typeof ChatClientConfigSchema>,
+      } as z.input<typeof ChatServiceConfigSchema>,
       filesystem: {
-        defaultProvider: "local",
+        agentDefaults: {
+          provider: "local",
+        },
         providers: {
           local: {
             type: "local",
@@ -107,13 +109,25 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
         }
       } satisfies z.input<typeof CheckpointConfigSchema>,
       audio: {
-        defaultProvider: "linux",
+        agentDefaults: {
+          provider: "linux",
+        },
         providers: {
           linux: {
             type: "linux"
           }
         }
-      } satisfies z.input<typeof AudioConfigSchema>,
+      } satisfies z.input<typeof AudioServiceConfigSchema>,
+      sandbox: {
+        agentDefaults: {
+          provider: "docker",
+        },
+        providers: {
+          docker: {
+            type: "docker"
+          }
+        }
+      },
       ...(ui === 'inquirer' && {
         cli: {
           bannerNarrow,
