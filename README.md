@@ -1,48 +1,48 @@
 # TokenRing Coder
 
-**An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development**
+**An AI-powered coding assistant with a comprehensive 42-package ecosystem for local development**
 
-TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 45 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
+TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 42 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
 
-## ✨ Features
+## Features
 
-### 🤖 AI & Language Model Support
+### AI and Language Model Support
 - **Multiple AI Providers**: OpenAI, Anthropic, Google, Groq, Cerebras, DeepSeek, and more
 - **Unified AI Client**: Chat, embeddings, and images via Vercel AI SDK
 - **Model Registry**: Dynamic model selection and configuration
 - **Agent Orchestration**: Multi-agent workflows with specialized roles
 
-### 💬 Communication & Collaboration
+### Communication and Collaboration
 - **Slack Integration**: Bot functionality and workspace management
 - **Telegram Integration**: Chat management and message handling
 - **Human Feedback Tools**: File reviews, React component previews, and interactive Q&A
 - **Real-time Communication**: WebSocket API for browser clients
 
-### 🎵 Audio & Media Capabilities
+### Audio and Media Capabilities
 - **Audio Framework**: Recording, playback, transcription, and text-to-speech
 - **Linux Audio**: Platform-specific implementation using naudiodon2
 - **Native Audio I/O**: PortAudio bindings for high-performance audio operations
 
-### 🌐 Web & External Services
+### Web and External Services
 - **Web Search**: Multiple providers (Serper.dev, ScraperAPI, Chrome automation)
-- **Wikipedia Integration**: Article search and content retrieval
+- **Research Tools**: Wikipedia integration and web research capabilities
 - **Browser Automation**: Puppeteer scripts for web interaction
 - **Web Scraping**: SERP results and page content fetching
 
-### 🗄️ Database & Storage
+### Database and Storage
 - **Multi-Database Support**: MySQL, SQLite, PostgreSQL via Drizzle ORM
 - **Database Abstraction**: SQL execution, schema inspection, and resource management
 - **AWS S3 Integration**: Cloud storage and content delivery network
 - **Checkpoint Persistence**: Agent state storage across sessions
 - **Task Queuing**: Sequential processing with checkpoint preservation
 
-### ☁️ Cloud & Infrastructure
+### Cloud and Infrastructure
 - **AWS Integration**: STS/S3 clients with authentication
 - **Docker Support**: Container management and sandbox execution
 - **Kubernetes**: Resource discovery and management across namespaces
 - **Sandbox Environment**: Isolated execution for security
 
-### 🔧 Advanced Development Tools
+### Advanced Development Tools
 - **Code Intelligence**: Semantic file indexing with Tree-sitter integration
 - **Code Watch**: AI comment-triggered modification detection
 - **JavaScript Tooling**: ESLint auto-fix, package management, script execution
@@ -50,27 +50,68 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 - **Testing Framework**: Agent testing with auto-repair hooks
 - **File System**: Abstract filesystem with ignore patterns and dirty tracking
 
-### 🚀 Workflow Automation
+### Workflow Automation
 - **Scripting Language**: Variables, functions, LLM integration, and command sequences
 - **Task Orchestration**: Multi-step workflows with user approval
 - **Batch Processing**: Named iterables system with /foreach command
 - **Memory Management**: Short-term memory and attention storage
+- **Workflow Engine**: Advanced task planning and execution
 
-### 🌍 Protocol Extensions
+### Protocol Extensions
 - **MCP Integration**: Model Context Protocol client for external server connectivity
 - **Web Hosting**: Fastify-based service with pluggable resources
 - **Frontend Interface**: Complete React frontend with CLI-style interaction
 
-### 🎯 Specialized Agents
-- **Interactive Agent**: Direct development assistance
-- **Team Leadership**: Full-stack project orchestration
-- **Development Specialists**: Frontend, backend, API, database design
-- **Quality Assurance**: Testing, code review, security assessment
-- **Infrastructure**: DevOps, performance, architecture design
+### Specialized Agents
+TokenRing Coder includes 21 specialized AI agents organized into two categories:
 
-## 🚀 Quick Start
+**Interactive Agents (2)**
+- **Coding Agent** - A general code assistant that directly executes development tasks
+- **Team Leader** - Orchestrates full-stack projects, coordinates specialists, manages workflow
 
-### Option 1: Run with npx (Easiest)
+**Background Specialists (19)**
+- **Product Manager** - Creates PRDs, defines user stories, plans feature roadmaps
+- **Product Design Engineer** - Product enhancement and comprehensive PRD creation
+- **System Architect** - Designs system architectures and selects technology stacks
+- **Full Stack Developer** - Implements complete features across frontend and backend
+- **Frontend Designer** - Creates React/Vue components, responsive layouts, state management
+- **Backend Designer** - Implements server-side logic, business rules, data processing
+- **API Designer** - Designs REST/GraphQL APIs, creates OpenAPI specifications
+- **Database Designer** - Designs schemas, implements migrations, optimizes queries
+- **Business Logic Engineer** - Implements workflows, rules engines, automation systems
+- **Data Engineer** - Creates ETL pipelines, data migrations, processing workflows
+- **Integration Engineer** - Implements third-party integrations, APIs, webhooks
+- **Auth Designer** - Designs authentication/authorization systems, OAuth/OIDC
+- **Test Engineer** - Creates unit/integration/E2E tests, test automation
+- **Code Quality Engineer** - Code reviews, refactoring, standards enforcement
+- **Security Review** - Security assessments, vulnerability remediation, OWASP compliance
+- **Performance Engineer** - Performance optimization, caching, monitoring, scalability
+- **DevOps Engineer** - CI/CD pipelines, Docker configs, infrastructure setup
+- **UI/UX Designer** - Creates wireframes, design systems, user flows
+- **Documentation Engineer** - Technical documentation, API docs, user guides
+
+## Quick Start
+
+### Option 1: Run with bun (Recommended)
+
+```bash
+# Clone and setup
+git clone https://github.com/tokenring-ai/monorepo.git
+cd monorepo
+bun install
+
+# Initialize your project
+bun run coder --source ./your-project --initialize
+
+# Set up API keys
+export OPENAI_API_KEY="your-key-here"
+export ANTHROPIC_API_KEY="your-key-here"
+
+# Start coding with AI
+bun run coder --source ./your-project
+```
+
+### Option 2: Run with npx
 
 ```bash
 # Initialize your project
@@ -84,7 +125,7 @@ export ANTHROPIC_API_KEY="your-key-here"
 npx @tokenring-ai/coder --source ./your-project
 ```
 
-### Option 2: Run with Docker
+### Option 3: Run with Docker
 
 ```bash
 # Pull from GitHub Container Registry
@@ -105,37 +146,17 @@ docker run -ti --rm \
   --source /repo
 ```
 
-### Option 3: Clone and Build from Source
-
-```bash
-# Clone and setup
-git clone https://github.com/tokenring-ai/coder.git tokenring-coder
-cd tokenring-coder
-git submodule update --init --recursive
-bun install
-
-# Initialize your project
-bun src/tr-coder.ts --source ./your-project --initialize
-
-# Set up API keys
-export OPENAI_API_KEY="your-key-here"
-export ANTHROPIC_API_KEY="your-key-here"
-
-# Start coding with AI
-bun src/tr-coder.ts --source ./your-project
-```
-
 ### Option 4: Web Interface
 
 ```bash
 # Start with web frontend
-bun run web
+bun run coder --web
 
 # Access at http://localhost:3000
 # Features real-time agent communication via WebSocket
 ```
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### Basic Chat
 
@@ -169,7 +190,7 @@ bun run web
 > script
   var = projectVersion = "1.2.0"
   func = updateVersion() {
-    replaceInFile("package.json", /"version": "[^\"]+"/, `"version": "${var}"`)
+    replaceInFile("package.json", /"version": "[^"]+"/, `"version": "${var}"`)
     commit("Update version to ${var}")
   }
   call updateVersion()
@@ -198,212 +219,198 @@ bun run web
 > Process audio files for podcast production
 ```
 
-## 🤖 Available Agents
+## Command Reference
 
-TokenRing Coder includes specialized AI agents for different development tasks:
+TokenRing Coder provides 47 commands organized into 17 categories:
 
-### Interactive Agent
-- **interactiveCodeAgent** - Interactive code assistant for direct development tasks
+### AI and Chat Commands
+| Command | Description |
+|---------|-------------|
+| `/tools` | List, enable, disable, or set enabled tools |
+| `/model` | Set or show the target model for chat |
+| `/compact` | Compact conversation context by summarizing |
+| `/chat` | Send a message to the chat service |
+| `/ai` | Update AI configuration settings |
 
-### Planning & Management
-- **teamLeader** - Orchestrates full-stack projects, coordinates specialists, manages workflow
-- **productManager** - Creates PRDs, defines user stories, plans feature roadmaps
-- **productDesignEngineer** - Product enhancement and comprehensive PRD creation
-- **systemArchitect** - Designs system architectures and selects technology stacks
+### Agent Control Commands
+| Command | Description |
+|---------|-------------|
+| `/work` | Runs the agent's work handler |
+| `/settings` | Show current chat settings |
+| `/reset` | Clear chat state and/or memory |
+| `/hooks` | List or manage registered hooks |
+| `/debug` | Toggle debug logging |
 
-### Development Specialists
-- **fullStackDeveloper** - Implements complete features across frontend and backend
-- **frontendDesign** - Creates React/Vue components, responsive layouts, state management
-- **backendDesign** - Implements server-side logic, business rules, data processing
-- **apiDesigner** - Designs REST/GraphQL APIs, creates OpenAPI specifications
-- **databaseDesign** - Designs schemas, implements migrations, optimizes queries
+### System Commands
+| Command | Description |
+|---------|-------------|
+| `/help` | Show help message |
+| `/exit` | Exit the current agent |
+| `/edit` | Open editor to write a prompt |
+| `/multi` | Opens an editor for multiline input |
 
-### Engineering Specialists
-- **businessLogicEngineer** - Implements workflows, rules engines, automation systems
-- **dataEngineer** - Creates ETL pipelines, data migrations, processing workflows
-- **integrationEngineer** - Implements third-party integrations, APIs, webhooks
-- **authDesign** - Designs authentication/authorization systems, OAuth/OIDC
+### Scripting Commands
+| Command | Description |
+|---------|-------------|
+| `/var` | Define or assign variables |
+| `/vars` | List all variables |
+| `/list` | Define or assign lists |
+| `/lists` | List all lists |
+| `/if` | Conditional execution |
+| `/for` | Iterate over lists |
+| `/while` | Execute commands while condition is truthy |
+| `/func` | Define functions |
+| `/funcs` | List all functions |
+| `/call` | Call a function |
+| `/echo` | Display text or variable value |
+| `/sleep` | Sleep for specified seconds |
+| `/prompt` | Prompt user for input |
+| `/confirm` | Prompt user for yes/no confirmation |
+| `/script` | Run predefined chat command scripts |
 
-### Quality & Operations
-- **testEngineer** - Creates unit/integration/E2E tests, test automation
-- **codeQualityEngineer** - Code reviews, refactoring, standards enforcement
-- **securityReview** - Security assessments, vulnerability remediation, OWASP compliance
-- **performanceEngineer** - Performance optimization, caching, monitoring, scalability
-- **devopsEngineer** - CI/CD pipelines, Docker configs, infrastructure setup
+### Git Operations
+| Command | Description |
+|---------|-------------|
+| `/git` | Git operations (commit, rollback, branch) |
 
-### Design & Documentation
-- **uiUxDesigner** - Creates wireframes, design systems, user flows
-- **documentationEngineer** - Technical documentation, API docs, user guides
+### File Operations
+| Command | Description |
+|---------|-------------|
+| `/file` | Manage files in the chat session |
 
-## 🏗️ Architecture
+### Search and Discovery
+| Command | Description |
+|---------|-------------|
+| `/search` | Search for text across files in the project |
 
-TokenRing Coder is built as a modular TypeScript monorepo with 45 specialized packages:
+### Testing Commands
+| Command | Description |
+|---------|-------------|
+| `/test` | Run all or specific tests |
+| `/repair` | Run tests and automatically fix failing ones |
 
-### Core Foundation
+### Queue Management
+| Command | Description |
+|---------|-------------|
+| `/queue` | Manage a queue of chat prompts |
+
+### State Management
+| Command | Description |
+|---------|-------------|
+| `/memory` | Manage memory items |
+| `/checkpoint` | Create or restore conversation checkpoints |
+| `/history` | Browse agent checkpoints |
+
+### Voice and Audio
+| Command | Description |
+|---------|-------------|
+| `/voice` | Voice operations (record, transcribe, speak, playback) |
+
+### Development
+| Command | Description |
+|---------|-------------|
+| `/sandbox` | Sandbox container operations |
+
+### External Services
+| Command | Description |
+|---------|-------------|
+| `/websearch` | Web search operations |
+
+### Workflow Control
+| Command | Description |
+|---------|-------------|
+| `/tasks` | Manage task list |
+
+### Data Processing
+| Command | Description |
+|---------|-------------|
+| `/iterable` | Manage named iterables |
+| `/foreach` | Run a prompt on each item in an iterable |
+
+### Code Analysis
+| Command | Description |
+|---------|-------------|
+| `/codebase` | Manage codebase resources in the chat session |
+
+### Cloud Services
+| Command | Description |
+|---------|-------------|
+| `/aws` | AWS commands for authentication and status |
+
+## Architecture
+
+TokenRing Coder is built as a modular TypeScript monorepo with 42 specialized packages:
+
+### Core Foundation (3 packages)
 - **@tokenring-ai/app**: Base application framework with service management and plugin architecture
 - **@tokenring-ai/agent**: Central orchestrator for AI agents with tools, commands, and state persistence
 - **@tokenring-ai/utility**: Shared utilities (cache, logging, shell escape) used across packages
 
-### AI & Language Models
+### AI and Language Models (2 packages)
 - **@tokenring-ai/ai-client**: Unified AI client for chat/embeddings/images via Vercel AI SDK
 - **@tokenring-ai/chat**: AI chat client with model configuration, tool management, and message history
 
-### Storage & Database
+### Storage and Database (7 packages)
 - **@tokenring-ai/database**: Abstract database layer with resource management and SQL execution
 - **@tokenring-ai/mysql**: MySQL integration with connection pooling and schema inspection
 - **@tokenring-ai/drizzle-storage**: Multi-database storage using Drizzle ORM (SQLite, MySQL, PostgreSQL)
 - **@tokenring-ai/checkpoint**: Checkpoint service for agent state persistence
 - **@tokenring-ai/queue**: Task queuing with checkpoint preservation for sequential processing
 - **@tokenring-ai/s3**: AWS S3 filesystem and CDN implementation
-- **@tokenring-ai/cdn**: Abstract CDN service for content delivery networks
+- **@tokenring-ai/memory**: Agent memory management and attention storage
 
-### Development Tools
+### Development Tools (8 packages)
 - **@tokenring-ai/testing**: Agent testing framework with auto-repair hooks and shell command resources
-- **@tokenring-ai/git**: Git operations with auto-commit functionality after tests
+- **@tokenring-ai/git**: Git operations with auto-commit functionality
 - **@tokenring-ai/javascript**: JavaScript development tools including ESLint, package management, and script execution
 - **@tokenring-ai/codebase**: Codebase injection into agent context via memories and resources
 - **@tokenring-ai/code-watch**: AI comment-triggered file modification detection and agent spawning
 - **@tokenring-ai/file-index**: Semantic file search and indexing with Tree-sitter integration
-- **@tokenring-ai/iterables**: Named iterables system for batch processing with /foreach command
 - **@tokenring-ai/scripting**: Scripting language with variables, functions, and LLM integration
 - **@tokenring-ai/tasks**: Task planning and multi-agent workflow orchestration
 
-### Web & External Services
+### Web and External Services (9 packages)
 - **@tokenring-ai/websearch**: Abstract web search interface with pluggable providers
 - **@tokenring-ai/serper**: Google search via Serper.dev API
 - **@tokenring-ai/scraperapi**: Web scraping and SERP results via ScraperAPI
 - **@tokenring-ai/chrome**: Puppeteer browser automation for web scraping and interaction
-- **@tokenring-ai/wikipedia**: Wikipedia API integration for article search and content retrieval
 - **@tokenring-ai/aws**: AWS integration with STS/S3 clients and authentication
 - **@tokenring-ai/docker**: Docker container management with sandbox provider
 - **@tokenring-ai/kubernetes**: Kubernetes resource discovery and management
 - **@tokenring-ai/sandbox**: Abstract sandbox interface for isolated execution
 - **@tokenring-ai/mcp**: Model Context Protocol client for external server integration
 
-### Communication & Collaboration
+### Communication and Collaboration (3 packages)
 - **@tokenring-ai/slack**: Slack bot integration for workspace communication
 - **@tokenring-ai/telegram**: Telegram bot integration for chat and message handling
 - **@tokenring-ai/feedback**: Human feedback tools for file reviews and React component previews
 
-### Audio & Media
+### Audio and Media (2 packages)
 - **@tokenring-ai/audio**: Abstract audio framework for recording, playback, and speech processing
 - **@tokenring-ai/linux-audio**: Linux-specific audio implementation using naudiodon2
-- **@tokenring-ai/naudiodon3**: Native PortAudio bindings for audio I/O operations
 
-### UI & Frontend
+### UI and Frontend (4 packages)
 - **@tokenring-ai/cli**: REPL service with interactive prompts and command processing
-- **@tokenring-ai/inquirer-command-prompt**: Command prompt with history and auto-completion
-- **@tokenring-ai/inquirer-tree-selector**: Tree-based selection interface for hierarchical navigation
+- **@tokenring-ai/cli-ink**: Ink-based CLI implementation
 - **@tokenring-ai/web-host**: Fastify-based web hosting service for static files and APIs
-- **@tokenring-ai/web-frontend**: Complete React frontend with CLI-style interface and agent management
-- **@tokenring-ai/agent-api**: WebSocket API for real-time agent communication and browser client integration
+- **@tokenring-ai/chat-frontend**: React frontend for chat interface
 
-### Filesystem & Storage
+### Filesystem and Storage (2 packages)
 - **@tokenring-ai/filesystem**: Abstract filesystem with read/write/search operations and ignore filters
 - **@tokenring-ai/local-filesystem**: Local disk filesystem implementation with file watching
 
-## 🔄 Advanced Workflows
+### Thinking and Workflow (2 packages)
+- **@tokenring-ai/thinking**: Advanced reasoning and planning capabilities
+- **@tokenring-ai/workflow**: Workflow engine for complex task execution
 
-### Multi-Agent Task Orchestration
+### Research and Vault (1 package)
+- **@tokenring-ai/research**: Research tools and capabilities
+- **@tokenring-ai/vault**: Secure storage for sensitive data
 
-The `@tokenring-ai/tasks` package enables complex multi-agent workflows:
+### Scheduler (1 package)
+- **@tokenring-ai/scheduler**: Task scheduling and automation
 
-```typescript
-const taskService = new TaskService(app);
-await taskService.executeTask({
-  description: "Implement e-commerce checkout system",
-  steps: [
-    { agent: "systemArchitect", action: "design architecture" },
-    { agent: "backendDesign", action: "create API endpoints" },
-    { agent: "frontendDesign", action: "build checkout UI" },
-    { agent: "testEngineer", action: "write integration tests" },
-    { agent: "devopsEngineer", action: "setup deployment pipeline" }
-  ]
-});
-```
-
-### Advanced Scripting and Automation
-
-The `@tokenring-ai/scripting` package provides a powerful scripting language:
-
-```typescript
-// Variables and functions
-> script
-  var = apiUrl = "https://api.example.com"
-  var = timeout = 5000
-  func = fetchData(endpoint) {
-    return fetch(${apiUrl}/${endpoint}, { timeout: ${timeout} })
-  }
-  
-  // Conditional logic
-  if (user.role === "admin") {
-    grantAccess()
-  }
-  
-  // Loops
-  for (let i = 0; i < 10; i++) {
-    log("Processing item ${i}")
-  }
-> end
-```
-
-### Database Integration and Migrations
-
-Multi-database support with Drizzle ORM:
-
-```typescript
-// SQLite for development
-const sqliteStorage = createSQLiteStorage('./dev.db')
-
-// MySQL for production
-const mysqlStorage = createMySQLStorage({
-  host: 'localhost',
-  user: 'admin',
-  password: 'password',
-  database: 'tokenring'
-})
-
-// PostgreSQL for cloud
-const postgresStorage = createPostgresStorage({
-  connectionString: 'postgresql://user:pass@host:port/db'
-})
-```
-
-### Cloud and Infrastructure Management
-
-Comprehensive cloud integration:
-
-```typescript
-// AWS S3 operations
-await s3.uploadFile('build/', 'dist/', 'my-app-v1.0.0.zip')
-await s3.createCDNDistribution('cdn.example.com')
-
-// Docker container management
-await docker.buildImage('Dockerfile', 'my-app:latest')
-await docker.runContainer('my-app:latest', { port: 3000 })
-
-// Kubernetes deployment
-await k8s.deploy('deployment.yaml', 'production')
-await k8s.scale('my-app', 3)
-```
-
-### Communication Platform Integration
-
-Seamless team communication:
-
-```typescript
-// Slack notifications
-await slack.postMessage('#dev-team', 'Deployment completed successfully')
-
-// Telegram alerts
-await telegram.sendGroup('dev-alerts', 'Critical issue detected in production')
-
-// Human feedback collection
-const feedback = await feedback.getFileReview('design-spec.pdf')
-await feedback.previewReactComponent(<Dashboard />)
-```
-
-## ⚙️ Configuration
+## Configuration
 
 Configuration is stored in `.tokenring/coder-config.mjs` in your project:
 
@@ -411,14 +418,14 @@ Configuration is stored in `.tokenring/coder-config.mjs` in your project:
 export default {
   // Default settings
   defaults: {
-    agent: "teamLeader",
+    agent: "interactiveCodeAgent",
     model: "gpt-4o",
     webHost: {
       port: 3000,
       enableWebSocket: true
     }
   },
-  
+
   // AI model configurations
   models: {
     openai: {
@@ -427,7 +434,7 @@ export default {
       baseURL: "https://api.openai.com/v1"
     },
     anthropic: {
-      displayName: "Anthropic", 
+      displayName: "Anthropic",
       apiKey: process.env.ANTHROPIC_API_KEY,
       baseURL: "https://api.anthropic.com"
     },
@@ -437,7 +444,7 @@ export default {
       baseURL: "https://api.groq.com/openai/v1"
     }
   },
-  
+
   // Database connections
   storage: {
     type: "drizzle",
@@ -453,7 +460,7 @@ export default {
       }
     }
   },
-  
+
   // Cloud services
   cloud: {
     aws: {
@@ -466,7 +473,7 @@ export default {
       cdnDomain: "cdn.myapp.com"
     }
   },
-  
+
   // Communication platforms
   communication: {
     slack: {
@@ -477,14 +484,14 @@ export default {
       botToken: process.env.TELEGRAM_BOT_TOKEN
     }
   },
-  
+
   // Audio settings
   audio: {
-    provider: "linux-audio",
+    provider: "linux",
     sampleRate: 44100,
     channels: 2
   },
-  
+
   // Development tools
   tools: {
     eslint: {
@@ -496,22 +503,22 @@ export default {
       coverage: true
     }
   },
-  
+
   // Agent configuration
   agents: {
-    teamLeader: {
-      name: "Multi-Agent Project Planner",
-      description: "Use this agent to orchestrate full-stack development projects"
-    },
     interactiveCodeAgent: {
       name: "Coding Agent",
       description: "A general code assistant that directly executes development tasks"
+    },
+    teamLeader: {
+      name: "Multi-Agent Project Planner",
+      description: "Use this agent to orchestrate full-stack development projects"
     }
   }
 };
 ```
 
-## 🐳 Docker Usage
+## Docker Usage
 
 ### Using Pre-built Image from GHCR
 
@@ -612,7 +619,7 @@ networks:
     driver: bridge
 ```
 
-## 🛠️ Development
+## Development
 
 ### Building the Project
 
@@ -639,149 +646,98 @@ bun run type-check
 bun run coder
 
 # Start web interface
-bun run web
+bun run coder --web
 
 # Run specific package tests
 cd pkg/database && bun test
 cd pkg/ai-client && bun test
 ```
 
-### Adding New Packages
+### Available Scripts
 
-```bash
-# Create new package directory
-mkdir -p pkg/my-new-package
+| Script | Description |
+|--------|-------------|
+| `bun run build` | Build the tr-coder binary |
+| `bun run coder` | Run coder with source from current directory |
+| `bun run build-container` | Build Docker container |
+| `bun run test` | Run all tests |
+| `bun run test:watch` | Run tests in watch mode |
+| `bun run test:coverage` | Run tests with coverage |
 
-# Initialize package structure
-cd pkg/my-new-package
-cat > package.json << EOF
-{
-  "name": "@tokenring-ai/my-new-package",
-  "version": "0.1.0",
-  "type": "module",
-  "exports": {
-    "./*": "./*.ts"
-  },
-  "dependencies": {
-    "@tokenring-ai/agent": "^0.1.0",
-    "@tokenring-ai/utility": "^0.1.0"
-  }
-}
-EOF
+## Package Ecosystem Overview
 
-# Create main module
-cat > index.ts << EOF
-import { TokenRingPackage } from '@tokenring-ai/agent';
-
-export const myNewPackage = new TokenRingPackage({
-  name: 'my-new-package',
-  version: '0.1.0',
-  description: 'My new TokenRing package',
-  tools: [],
-  commands: [],
-  services: []
-});
-
-export default myNewPackage;
-EOF
-
-# Create README
-cat > README.md << EOF
-# @tokenring-ai/my-new-package
-
-Description of my new package.
-
-## Installation
-
-\`\`\`bash
-bun add @tokenring-ai/my-new-package
-\`\`\`
-
-## Usage
-
-\`\`\`typescript
-import { myNewPackage } from '@tokenring-ai/my-new-package';
-\`\`\`
-EOF
-```
-
-### Development Workflow
-
-1. **Setup Environment**: Install dependencies and configure environment variables
-2. **Choose Development Mode**: CLI, web interface, or custom application
-3. **Configure Agents**: Select appropriate agents for your workflow
-4. **Use Development Tools**: Leverage code intelligence, testing, and debugging
-5. **Integrate Services**: Connect databases, cloud services, and communication platforms
-6. **Deploy and Monitor**: Use DevOps tools for deployment and monitoring
-
-## 📦 Package Ecosystem Overview
-
-The TokenRing Coder ecosystem consists of 45 specialized packages organized into functional categories:
+The TokenRing Coder ecosystem consists of 42 specialized packages organized into functional categories:
 
 ### Core Foundation (3 packages)
 - **app**: Application framework and service management
 - **agent**: Central orchestrator for AI agents
 - **utility**: Shared utilities and helper functions
 
-### AI & Language Models (2 packages)
+### AI and Language Models (2 packages)
 - **ai-client**: Unified AI client interface
 - **chat**: AI chat configuration and tool management
 
-### Storage & Database (7 packages)
+### Storage and Database (7 packages)
 - **database**: Abstract database layer
 - **mysql**: MySQL integration
 - **drizzle-storage**: Multi-database ORM support
 - **checkpoint**: Agent state persistence
 - **queue**: Task queuing system
 - **s3**: AWS S3 integration
-- **cdn**: Content delivery network abstraction
+- **memory**: Memory management and attention storage
 
-### Development Tools (9 packages)
+### Development Tools (8 packages)
 - **testing**: Agent testing framework
 - **git**: Version control integration
 - **javascript**: JavaScript tooling
 - **codebase**: Codebase context injection
 - **code-watch**: File modification detection
 - **file-index**: Semantic file search
-- **iterables**: Batch processing system
 - **scripting**: Scripting language
 - **tasks**: Workflow orchestration
 
-### Web & External Services (10 packages)
+### Web and External Services (9 packages)
 - **websearch**: Web search abstraction
 - **serper**: Google search provider
 - **scraperapi**: Web scraping service
 - **chrome**: Browser automation
-- **wikipedia**: Wikipedia integration
 - **aws**: AWS cloud services
 - **docker**: Container management
 - **kubernetes**: K8s integration
 - **sandbox**: Execution environment
 - **mcp**: Protocol extensions
 
-### Communication & Collaboration (3 packages)
+### Communication and Collaboration (3 packages)
 - **slack**: Slack bot integration
 - **telegram**: Telegram bot integration
 - **feedback**: Human feedback tools
 
-### Audio & Media (3 packages)
+### Audio and Media (2 packages)
 - **audio**: Audio processing framework
 - **linux-audio**: Linux audio implementation
-- **naudiodon3**: Native audio bindings
 
-### UI & Frontend (6 packages)
+### UI and Frontend (4 packages)
 - **cli**: Command line interface
-- **inquirer-command-prompt**: Interactive prompts
-- **inquirer-tree-selector**: Tree selection interface
+- **cli-ink**: Ink-based CLI implementation
 - **web-host**: Web server foundation
-- **web-frontend**: React frontend
-- **agent-api**: WebSocket API
+- **chat-frontend**: Chat interface frontend
 
-### Filesystem & Storage (2 packages)
+### Filesystem and Storage (2 packages)
 - **filesystem**: Abstract filesystem interface
 - **local-filesystem**: Local filesystem implementation
 
-## 🤝 Contributing
+### Thinking and Workflow (2 packages)
+- **thinking**: Advanced reasoning and planning capabilities
+- **workflow**: Workflow engine for complex task execution
+
+### Research and Vault (1 package)
+- **research**: Research tools and capabilities
+- **vault**: Secure storage for sensitive data
+
+### Scheduler (1 package)
+- **scheduler**: Task scheduling and automation
+
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -800,13 +756,10 @@ The TokenRing Coder ecosystem consists of 45 specialized packages organized into
 - Respect semantic versioning
 - Keep packages focused and modular
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
+---
 
---- 
-
-**Ready to supercharge your coding workflow with AI? Explore the complete 45-package ecosystem and transform your development experience!** 🚀
-
-*Built with ❤️ by the TokenRing AI team*
+**Ready to supercharge your coding workflow with AI? Explore the complete 42-package ecosystem and transform your development experience!**
