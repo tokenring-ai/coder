@@ -7,7 +7,7 @@ import {ChatServiceConfigSchema} from "@tokenring-ai/chat/schema";
 import {CheckpointConfigSchema} from "@tokenring-ai/checkpoint";
 import {CLIConfigSchema} from "@tokenring-ai/cli";
 import {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
-import {FileSystemConfigSchema} from "@tokenring-ai/filesystem";
+import {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import {WebHostConfigSchema} from "@tokenring-ai/web-host";
 import chalk from "chalk";
