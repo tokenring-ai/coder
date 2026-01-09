@@ -30,7 +30,7 @@ export default {
       "performance standards and performance optimization patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/performance.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/performance.md']
+  }
 } satisfies AgentConfig;

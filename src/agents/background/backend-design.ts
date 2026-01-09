@@ -30,7 +30,7 @@ export default {
       "backend standards and backend design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/backend.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/backend.md']
+  }
 } satisfies AgentConfig;

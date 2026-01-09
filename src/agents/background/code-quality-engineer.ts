@@ -30,7 +30,7 @@ export default {
       "code quality standards and code quality patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/code-quality.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/code-quality.md']
+  }
 } satisfies AgentConfig;

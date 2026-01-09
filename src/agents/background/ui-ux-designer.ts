@@ -30,7 +30,7 @@ export default {
       "UI/UX design standards and UI/UX design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/ui-ux.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/ui-ux.md']
+  }
 } satisfies AgentConfig;

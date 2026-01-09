@@ -32,7 +32,7 @@ export default {
     },
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/code.md"
-  ]
+  filesystem: {
+    selectedFiles: [".tokenring/knowledge/code.md"]
+  }
 } satisfies AgentConfig;

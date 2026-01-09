@@ -30,7 +30,7 @@ export default {
       "full-stack standards and full-stack patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/fullstack.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/fullstack.md']
+  }
 } satisfies AgentConfig;

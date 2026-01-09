@@ -30,7 +30,7 @@ export default {
       "data engineering standards and data engineering patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/data-engineering.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/data-engineering.md']
+  }
 } satisfies AgentConfig;

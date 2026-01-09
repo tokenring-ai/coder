@@ -30,7 +30,7 @@ export default {
       "DevOps standards and DevOps patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/devops.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/devops.md']
+  }
 } satisfies AgentConfig;

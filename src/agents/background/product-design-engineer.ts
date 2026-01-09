@@ -34,7 +34,7 @@ export default {
       "product design standards and product design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/product.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/product.md']
+  }
 } satisfies AgentConfig;

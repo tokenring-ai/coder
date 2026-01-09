@@ -30,7 +30,7 @@ export default {
       "API standards and API design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/apis.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/apis.md']
+  }
 } satisfies AgentConfig;

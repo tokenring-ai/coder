@@ -30,7 +30,7 @@ export default {
       "testing standards and testing patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/testing.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/testing.md']
+  }
 } satisfies AgentConfig;

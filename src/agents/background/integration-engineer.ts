@@ -30,7 +30,7 @@ export default {
       "integration standards and integration patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/integrations.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/integrations.md']
+  }
 } satisfies AgentConfig;

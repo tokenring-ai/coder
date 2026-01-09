@@ -31,7 +31,7 @@ export default {
       "frontend standards and frontend design patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/frontend.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/frontend.md']
+  }
 } satisfies AgentConfig;

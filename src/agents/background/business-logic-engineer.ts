@@ -31,7 +31,7 @@ export default {
       "business logic standards and business logic patterns used in the codebase. It should not contain task-specific information.",
     enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
   },
-  initialCommands: [
-    "/file add .tokenring/knowledge/business-logic.md"
-  ]
+  filesystem: {
+    selectedFiles: ['.tokenring/knowledge/business-logic.md']
+  }
 } satisfies AgentConfig;
