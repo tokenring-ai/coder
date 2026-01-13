@@ -1,4 +1,4 @@
-import {AgentConfig} from "@tokenring-ai/agent/types";
+import {AgentConfig} from "@tokenring-ai/agent/schema";
 
 export default {
   name: "Integration Engineer",

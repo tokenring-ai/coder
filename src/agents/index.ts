@@ -1,4 +1,4 @@
-import {AgentConfig} from "@tokenring-ai/agent/types";
+import {AgentConfig} from "@tokenring-ai/agent/schema";
 import apiDesigner from "./background/api-designer.ts";
 import authDesign from "./background/auth-design.ts";
 import backendDesign from "./background/backend-design.ts";

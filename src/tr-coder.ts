@@ -149,7 +149,8 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
           auth,
         } satisfies z.input<typeof WebHostConfigSchema>
       }),
-      agents
+      agents,
+      tasks: {}
     };
 
     // TODO: Figure out a more elegant way to bundle SPA apps into a Single Executable
