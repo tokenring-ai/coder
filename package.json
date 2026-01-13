@@ -3,7 +3,7 @@
   "description": "TokenRing Coder Application",
   "version": "0.2.8",
   "devDependencies": {
-    "@inquirer/prompts": "^8.1.0",
+    "@inquirer/prompts": "^8.2.0",
     "@tokenring-ai/agent": "workspace:*",
     "@tokenring-ai/ai-client": "workspace:*",
     "@tokenring-ai/app": "workspace:*",
@@ -50,7 +50,7 @@
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
     "husky": "^9.1.7",
-    "jsdom": "^27.3.0",
+    "jsdom": "^27.4.0",
     "node-gyp": "^12.1.0",
     "trufflehog": "^0.0.5",
     "typescript": "catalog:",
