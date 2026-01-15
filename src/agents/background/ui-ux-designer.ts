@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "UI/UX Designer",
   description: "Call this agent to design user interfaces, user experiences, and visual prototypes. Provide user requirements, business goals, or existing designs. The agent will create wireframes, design systems, user flows, accessibility guidelines, responsive layouts, and interactive prototypes. Best used for: UI mockups, user journey mapping, design systems, accessibility compliance, visual design, and user experience optimization.",
   category: "Design & Documentation",
-  type: "background",
-  visual: {
-    color: "cyan"
-  },
   chat: {
     context: {
       initial: [
@@ -33,4 +31,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/ui-ux.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

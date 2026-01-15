@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Multi-Agent Project Planner",
   description: "Use this agent to orchestrate full-stack development projects. This agent coordinates team members (agents) via task plans to deliver complete, production-ready applications.",
   category: "Interactive",
-  type: "interactive",
-  visual: {
-    color: "magenta",
-  },
   chat: {
     context: {
       initial: [
@@ -32,4 +30,4 @@ export default {
     enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*"],
   },
   callable: false
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig;

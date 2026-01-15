@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Auth System Designer",
   description: "Call this agent to design secure authentication and authorization systems. Provide user requirements, security constraints, or existing auth code. The agent will design login flows, implement session management, create password policies, integrate OAuth/OIDC, handle security tokens, and build complete auth systems. Best used for: login system implementation, access control design, security token handling, multi-factor authentication setup, and compliance-ready auth solutions.",
   category: "Engineering",
-  type: "background",
-  visual: {
-    color: "green",
-  },
   chat: {
     context: {
       initial: [
@@ -33,4 +31,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/auth.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

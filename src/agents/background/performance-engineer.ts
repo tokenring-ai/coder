@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Performance Engineer",
   description: "Call this agent to optimize application performance, scalability, and monitoring. Provide performance requirements, bottlenecks, or scaling challenges. The agent will implement caching strategies, optimize database queries, configure load balancing, set up monitoring, implement CDNs, and build high-performance systems. Best used for: performance optimization, scalability planning, monitoring setup, caching implementation, and system tuning.",
   category: "Quality & Operations",
-  type: "background",
-  visual: {
-    color: "red",
-  },
   chat: {
     context: {
       initial: [
@@ -33,4 +31,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/performance.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

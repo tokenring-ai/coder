@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Documentation Engineer",
   description: "Specialized agent for creating, maintaining, and improving technical documentation. Analyzes codebases, APIs, and systems to generate comprehensive documentation including README files, API docs, code comments, user guides, and technical specifications. Excels at: code documentation, API reference generation, tutorial creation, documentation architecture, style guide enforcement, and maintaining documentation consistency across projects.",
   category: "Design & Documentation",
-  type: "background",
-  visual: {
-    color: "bgCyanBright",
-  },
   chat: {
     context: {
       initial: [
@@ -36,4 +34,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/documentation.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

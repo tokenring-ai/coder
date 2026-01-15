@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Backend Developer",
   description: "Call this agent to implement server-side logic, business rules, and data processing. Provide business requirements, data models, or backend functionality needs. The agent will implement business logic, create service layers, handle data processing, implement middleware, and build robust backend functionality. Best used for: business logic implementation, service development, data processing, middleware creation, and backend feature development.",
   category: "Development",
-  type: "background",
-  visual: {
-    color: "bgYellow",
-  },
   chat: {
     context: {
       initial: [
@@ -33,4 +31,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/backend.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

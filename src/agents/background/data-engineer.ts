@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Data Engineer",
   description: "Call this agent to implement data migrations, ETL pipelines, and data processing systems. Provide data requirements, migration needs, or processing specifications. The agent will create database migrations, implement ETL processes, design data pipelines, handle data validation, set up data warehousing, and build data processing workflows. Best used for: data migrations, ETL implementation, data pipeline design, data validation, and analytics infrastructure.",
   category: "Engineering",
-  type: "background",
-  visual: {
-    color: "gray",
-  },
   chat: {
     context: {
       initial: [
@@ -33,4 +31,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/data-engineering.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Coding Agent",
   description: "A general code assistant that directly executes development tasks",
   category: "Interactive",
-  type: "interactive",
-  visual: {
-    color: "green",
-  },
   chat: {
     systemPrompt:
       "You are an honest, critical developer assistant in an interactive chat, with access to a variety of tools to update the users existing codebase and execute tasks the user has requested.\n" +
@@ -35,4 +33,4 @@ export default {
   filesystem: {
     selectedFiles: [".tokenring/knowledge/code.md"]
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;

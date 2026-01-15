@@ -1,13 +1,11 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
+import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Product Manager",
   description: "Call this agent to analyze requirements and create comprehensive project plans. Provide high-level goals, user needs, or business requirements. The agent will create PRDs, define user stories, plan feature roadmaps, break down tasks, and establish project scope and timelines. Best used for: project planning, requirements analysis, PRD creation, user story definition, and MVP scoping.",
   category: "Planning & Management",
-  type: "background",
-  visual: {
-    color: "blue",
-  },
   chat: {
     context: {
       initial: [
@@ -33,4 +31,4 @@ export default {
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/product.md']
   }
-} satisfies AgentConfig;
+} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;
