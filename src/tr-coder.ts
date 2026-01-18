@@ -18,6 +18,7 @@ import packageInfo from '../package.json' with {type: 'json'};
 import agents from "./agents/index.ts";
 import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
 import bannerWide from "./banner.wide.txt" with {type: "text"};
+import bannerCompact from "./banner.compact.txt" with {type: "text"};
 import {configSchema, plugins} from "./plugins.ts";
 
 // Interface definitions
@@ -130,9 +131,11 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
       },
       ...(ui === 'inquirer' && {
         cli: {
-          bannerNarrow,
-          bannerWide,
-          bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
+          chatBanner: `TokenRing Coder ${packageInfo.version}`,
+          screenBanner: `TokenRing Coder ${packageInfo.version}`,
+          loadingBannerWide: bannerWide,
+          loadingBannerNarrow: bannerNarrow,
+          loadingBannerCompact: bannerCompact,
         } satisfies z.input<typeof CLIConfigSchema>
       }),
       ...(ui === 'ink' && {

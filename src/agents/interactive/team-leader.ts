@@ -27,7 +27,7 @@ export default {
       "At a minimum, that requires providing the file name of a task plan with a list of key files providing information the agent needs to complete the task. " +
       "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
     maxSteps: 200,
-    enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*"],
+    enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*", "@tokenring-ai/feedback/askQuestions"],
   },
   callable: false
 } satisfies AgentConfig & ChatAgentConfig;
