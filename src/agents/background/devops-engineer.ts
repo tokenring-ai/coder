@@ -26,7 +26,7 @@ export default {
       "I have included a knowledge repository about DevOps standards and patterns in .tokenring/knowledge/devops.md. " +
       "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
       "DevOps standards and DevOps patterns used in the codebase. It should not contain task-specific information.",
-    enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
+    enabledTools: ["todo", "file_*", "terminal_*"],
   },
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/devops.md']

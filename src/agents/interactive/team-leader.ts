@@ -26,8 +26,8 @@ export default {
       "When dispatching agents, you need to provide very detailed information about the task, so that the agent does not get confused. " +
       "At a minimum, that requires providing the file name of a task plan with a list of key files providing information the agent needs to complete the task. " +
       "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
-    maxSteps: 200,
-    enabledTools: ["@tokenring-ai/filesystem/*","@tokenring-ai/tasks/*", "@tokenring-ai/feedback/askQuestions"],
+    //maxSteps: 200,
+    enabledTools: ["todo", "file_*", "terminal_*"],
   },
   callable: false
 } satisfies AgentConfig & ChatAgentConfig;

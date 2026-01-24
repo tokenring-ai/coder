@@ -26,7 +26,7 @@ export default {
       "I have included a knowledge repository about UI/UX design standards and patterns in .tokenring/knowledge/ui-ux.md. " +
       "If any important details are missing from this file, you may update it. At all points in time it should contain clear and concise information on the " +
       "UI/UX design standards and UI/UX design patterns used in the codebase. It should not contain task-specific information.",
-    enabledTools: ["@tokenring-ai/agent/todo", "@tokenring-ai/filesystem/*"],
+    enabledTools: ["todo", "file_*", "terminal_*"],
   },
   filesystem: {
     selectedFiles: ['.tokenring/knowledge/ui-ux.md']
