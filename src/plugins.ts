@@ -25,6 +25,7 @@ import MCPPlugin from "@tokenring-ai/mcp/plugin";
 import MemoryPlugin from "@tokenring-ai/memory/plugin";
 import MySQLPlugin from "@tokenring-ai/mysql/plugin";
 import QueuePlugin from "@tokenring-ai/queue/plugin";
+import RPCPlugin from "@tokenring-ai/rpc/plugin";
 import ResearchPlugin from "@tokenring-ai/research/plugin";
 import SandboxPlugin from "@tokenring-ai/sandbox/plugin";
 import SchedulerPlugin from "@tokenring-ai/scheduler/plugin";
@@ -70,6 +71,7 @@ export const plugins = [
   MemoryPlugin,
   MySQLPlugin,
   ResearchPlugin,
+  RPCPlugin,
   QueuePlugin,
   SandboxPlugin,
   SchedulerPlugin,
@@ -114,6 +116,7 @@ export const configSchema = z.object({
   ...MemoryPlugin.config.shape,
   ...MySQLPlugin.config.shape,
   ...ResearchPlugin.config.shape,
+  ...RPCPlugin.config.shape,
   ...QueuePlugin.config.shape,
   ...SandboxPlugin.config.shape,
   ...SchedulerPlugin.config.shape,

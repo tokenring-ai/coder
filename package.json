@@ -31,6 +31,7 @@
     "@tokenring-ai/memory": "workspace:*",
     "@tokenring-ai/mysql": "workspace:*",
     "@tokenring-ai/queue": "workspace:*",
+    "@tokenring-ai/rpc": "workspace:*",
     "@tokenring-ai/s3": "workspace:*",
     "@tokenring-ai/sandbox": "workspace:*",
     "@tokenring-ai/scraperapi": "workspace:*",
