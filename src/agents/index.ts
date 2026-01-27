@@ -1,4 +1,5 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
+import accessibilityEngineer from "./background/accessibility-engineer.ts";
 import apiDesigner from "./background/api-designer.ts";
 import authDesign from "./background/auth-design.ts";
 import backendDesign from "./background/backend-design.ts";
@@ -15,6 +16,7 @@ import performanceEngineer from "./background/performance-engineer.ts";
 import productDesignEngineer from "./background/product-design-engineer.ts";
 import productManager from "./background/product-manager.ts";
 import securityReview from "./background/security-review.ts";
+import seoEngineer from "./background/seo-engineer.ts";
 import systemArchitect from "./background/system-architect.ts";
 import teamLeader from "./interactive/team-leader.ts";
 import testEngineer from "./background/test-engineer.ts";
@@ -24,6 +26,7 @@ import interactiveCodeAgent from "./interactive/code.ts";
 
 export default {
   interactiveCodeAgent,
+  accessibilityEngineer,
   apiDesigner,
   authDesign,
   backendDesign,
@@ -40,6 +43,7 @@ export default {
   productDesignEngineer,
   productManager,
   securityReview,
+  seoEngineer,
   systemArchitect,
   teamLeader,
   testEngineer,
