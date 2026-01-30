@@ -8,8 +8,9 @@ import {CheckpointConfigSchema} from "@tokenring-ai/checkpoint";
 import {CLIConfigSchema} from "@tokenring-ai/cli";
 import {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
 import {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
+import type {TerminalConfigSchema} from "@tokenring-ai/terminal/schema";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
-import {WebHostConfigSchema} from "@tokenring-ai/web-host";
+import {WebHostConfigSchema} from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
 import {Command} from "commander";
 import path from "path";
@@ -98,11 +99,22 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
         },
         providers: {
           local: {
-            type: "local",
-            baseDirectory: workingDirectory,
+            type: "posix",
+            workingDirectory,
           }
         }
       } satisfies z.input<typeof FileSystemConfigSchema>,
+      terminal: {
+        agentDefaults: {
+          provider: "local",
+        },
+        providers: {
+          local: {
+            type: "posix",
+            workingDirectory,
+          }
+        }
+      } satisfies z.input<typeof TerminalConfigSchema>,
       checkpoint: {
         provider: {
           type: "sqlite",
@@ -176,9 +188,18 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
 
     await pluginManager.installPlugins(plugins)
 
-    await app.run();
+    try {
+      await app.run();
+    } catch (err) {
+      app.shutdown();
+      // Exit alternate screen, clear screen, and move cursor to top-left
+      process.stdout.write("\u001B[?1049l\u001B[2J\u001B[H\n\n");
+
+      console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
+    }
   } catch (err) {
+    // Exit alternate screen, clear screen, and move cursor to top-left
+    process.stdout.write("\u001B[?1049l\u001B[2J\u001B[H\n\n");
     console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
-    process.exit(1);
   }
 }

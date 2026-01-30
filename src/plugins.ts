@@ -20,7 +20,7 @@ import GitPlugin from "@tokenring-ai/git/plugin";
 import JavascriptPlugin from "@tokenring-ai/javascript/plugin";
 import KubernetesPlugin from "@tokenring-ai/kubernetes/plugin";
 import LinuxAudioPlugin from "@tokenring-ai/linux-audio/plugin";
-import LocalFileSystemPlugin from "@tokenring-ai/local-filesystem/plugin";
+import PosixSystemPlugin from "@tokenring-ai/posix-system/plugin";
 import MCPPlugin from "@tokenring-ai/mcp/plugin";
 import MemoryPlugin from "@tokenring-ai/memory/plugin";
 import MySQLPlugin from "@tokenring-ai/mysql/plugin";
@@ -35,6 +35,7 @@ import SerperPlugin from "@tokenring-ai/serper/plugin";
 import SlackPlugin from "@tokenring-ai/slack/plugin";
 import TasksPlugin from "@tokenring-ai/tasks/plugin";
 import TelegramPlugin from "@tokenring-ai/telegram/plugin";
+import TerminalPlugin from "@tokenring-ai/terminal/plugin";
 import TestingPlugin from "@tokenring-ai/testing/plugin";
 import ThinkingPlugin from "@tokenring-ai/thinking/plugin";
 import VaultPlugin from "@tokenring-ai/vault/plugin";
@@ -66,7 +67,7 @@ export const plugins = [
   JavascriptPlugin,
   KubernetesPlugin,
   LinuxAudioPlugin,
-  LocalFileSystemPlugin,
+  PosixSystemPlugin,
   MCPPlugin,
   MemoryPlugin,
   MySQLPlugin,
@@ -81,6 +82,7 @@ export const plugins = [
   SlackPlugin,
   TasksPlugin,
   TelegramPlugin,
+  TerminalPlugin,
   TestingPlugin,
   ThinkingPlugin,
   VaultPlugin,
@@ -111,7 +113,7 @@ export const configSchema = z.object({
   ...JavascriptPlugin.config.shape,
   ...KubernetesPlugin.config.shape,
   ...LinuxAudioPlugin.config.shape,
-  ...LocalFileSystemPlugin.config.shape,
+  ...PosixSystemPlugin.config.shape,
   ...MCPPlugin.config.shape,
   ...MemoryPlugin.config.shape,
   ...MySQLPlugin.config.shape,
@@ -126,6 +128,7 @@ export const configSchema = z.object({
   ...SlackPlugin.config.shape,
   ...TasksPlugin.config.shape,
   ...TelegramPlugin.config.shape,
+  ...TerminalPlugin.config.shape,
   ...TestingPlugin.config.shape,
   ...ThinkingPlugin.config.shape,
   ...VaultPlugin.config.shape,
