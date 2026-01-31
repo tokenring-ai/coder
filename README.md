@@ -1,8 +1,8 @@
 # TokenRing Coder
 
-**An AI-powered coding assistant with a comprehensive 42-package ecosystem for local development**
+**An AI-powered coding assistant with a comprehensive 44-package ecosystem for local development**
 
-TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 42 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
+TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 44 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
 
 ## Features
 
@@ -20,7 +20,7 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 
 ### Audio and Media Capabilities
 - **Audio Framework**: Recording, playback, transcription, and text-to-speech
-- **Linux Audio**: Platform-specific implementation using naudiodon2
+- **Linux Audio**: Platform-specific implementation using naudiodon3
 - **Native Audio I/O**: PortAudio bindings for high-performance audio operations
 
 ### Web and External Services
@@ -63,13 +63,13 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 - **Frontend Interface**: Complete React frontend with CLI-style interaction
 
 ### Specialized Agents
-TokenRing Coder includes 21 specialized AI agents organized into two categories:
+TokenRing Coder includes 23 specialized AI agents organized into two categories:
 
 **Interactive Agents (2)**
 - **Coding Agent** - A general code assistant that directly executes development tasks
 - **Team Leader** - Orchestrates full-stack projects, coordinates specialists, manages workflow
 
-**Background Specialists (19)**
+**Background Specialists (21)**
 - **Product Manager** - Creates PRDs, defines user stories, plans feature roadmaps
 - **Product Design Engineer** - Product enhancement and comprehensive PRD creation
 - **System Architect** - Designs system architectures and selects technology stacks
@@ -89,6 +89,8 @@ TokenRing Coder includes 21 specialized AI agents organized into two categories:
 - **DevOps Engineer** - CI/CD pipelines, Docker configs, infrastructure setup
 - **UI/UX Designer** - Creates wireframes, design systems, user flows
 - **Documentation Engineer** - Technical documentation, API docs, user guides
+- **Accessibility Engineer** - Ensures accessibility compliance and WCAG standards
+- **SEO Engineer** - Search engine optimization, meta tags, and search visibility
 
 ## Quick Start
 
@@ -154,6 +156,26 @@ bun run coder --web
 
 # Access at http://localhost:3000
 # Features real-time agent communication via WebSocket
+```
+
+### Option 5: Custom UI
+
+```bash
+# Run with custom UI (inquirer, ink, or none)
+bun run coder --ui inquirer  # Interactive CLI with inquirer
+bun run coder --ui ink      # Interactive CLI with ink
+bun run coder --ui none     # Background mode without UI
+```
+
+### Option 6: HTTP Server
+
+```bash
+# Start with HTTP server for remote access
+bun run coder --http 127.0.0.1:3000
+
+# Or with authentication
+bun run coder --http 127.0.0.1:3000 --httpPassword user:password
+bun run coder --http 127.0.0.1:3000 --httpBearer user:bearer-token
 ```
 
 ## Usage Examples
@@ -248,6 +270,7 @@ TokenRing Coder provides 47 commands organized into 17 categories:
 | `/exit` | Exit the current agent |
 | `/edit` | Open editor to write a prompt |
 | `/multi` | Opens an editor for multiline input |
+| `/quit` | Quit the current agent |
 
 ### Scripting Commands
 | Command | Description |
@@ -339,7 +362,7 @@ TokenRing Coder provides 47 commands organized into 17 categories:
 
 ## Architecture
 
-TokenRing Coder is built as a modular TypeScript monorepo with 42 specialized packages:
+TokenRing Coder is built as a modular TypeScript monorepo with 44 specialized packages:
 
 ### Core Foundation (3 packages)
 - **@tokenring-ai/app**: Base application framework with service management and plugin architecture
@@ -387,7 +410,7 @@ TokenRing Coder is built as a modular TypeScript monorepo with 42 specialized pa
 
 ### Audio and Media (2 packages)
 - **@tokenring-ai/audio**: Abstract audio framework for recording, playback, and speech processing
-- **@tokenring-ai/linux-audio**: Linux-specific audio implementation using naudiodon2
+- **@tokenring-ai/linux-audio**: Linux-specific audio implementation using naudiodon3
 
 ### UI and Frontend (4 packages)
 - **@tokenring-ai/cli**: REPL service with interactive prompts and command processing
@@ -410,6 +433,9 @@ TokenRing Coder is built as a modular TypeScript monorepo with 42 specialized pa
 ### Scheduler (1 package)
 - **@tokenring-ai/scheduler**: Task scheduling and automation
 
+### RPC (1 package)
+- **@tokenring-ai/rpc**: Remote procedure call infrastructure
+
 ## Configuration
 
 Configuration is stored in `.tokenring/coder-config.mjs` in your project:
@@ -419,11 +445,12 @@ export default {
   // Default settings
   defaults: {
     agent: "interactiveCodeAgent",
-    model: "gpt-4o",
+    model: "openai:gpt-4o",
     webHost: {
       port: 3000,
       enableWebSocket: true
-    }
+    },
+    ui: "inquirer" // or "ink" or "none"
   },
 
   // AI model configurations
@@ -666,7 +693,7 @@ cd pkg/ai-client && bun test
 
 ## Package Ecosystem Overview
 
-The TokenRing Coder ecosystem consists of 42 specialized packages organized into functional categories:
+The TokenRing Coder ecosystem consists of 44 specialized packages organized into functional categories:
 
 ### Core Foundation (3 packages)
 - **app**: Application framework and service management
@@ -737,6 +764,9 @@ The TokenRing Coder ecosystem consists of 42 specialized packages organized into
 ### Scheduler (1 package)
 - **scheduler**: Task scheduling and automation
 
+### RPC (1 package)
+- **rpc**: Remote procedure call infrastructure
+
 ## Contributing
 
 1. Fork the repository
@@ -762,4 +792,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Ready to supercharge your coding workflow with AI? Explore the complete 42-package ecosystem and transform your development experience!**
+**Ready to supercharge your coding workflow with AI? Explore the complete 44-package ecosystem and transform your development experience!**
