@@ -1,0 +1,20 @@
+{
+  "name": "@tokenring-ai/coder-linux-x64",
+  "version": "0.2.12",
+  "description": "TokenRing Coder - Linux x64 binary",
+  "license": "MIT",
+  "os": ["linux"],
+  "cpu": ["x64"],
+  "bin": {
+    "tr-coder": "coder-linux-x64"
+  },
+  "files": [
+    "coder-linux-x64",
+    "frontend"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tokenring-ai/monorepo",
+    "directory": "app/coder"
+  }
+}

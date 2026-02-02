@@ -63,17 +63,13 @@
     "directory": "app/coder"
   },
   "license": "MIT",
-  "bin": {
-    "tr-coder": "dist/tr-coder"
-  },
+  "bin": {},
+  "optionalDependencies": {},
   "files": [
-    "dist",
     "LICENSE",
     "README.md"
   ],
   "scripts": {
-    "build": "bun build --compile --sourcemap --outfile=dist/tr-coder src/tr-coder.ts",
-    "prepack": "bun run build && cp -Lr frontend dist",
     "coder": "bun src/tr-coder.js --source ./",
     "build-container": "docker build -t tr-coder:latest -f docker/Dockerfile .",
     "test": "vitest run",
