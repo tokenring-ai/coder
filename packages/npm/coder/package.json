@@ -1,14 +1,14 @@
 {
   "name": "@tokenring-ai/coder",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "description": "TokenRing Coder Application",
   "license": "MIT",
   "bin": {
     "tr-coder": "bin-wrapper.js"
   },
   "optionalDependencies": {
-    "@tokenring-ai/coder-darwin-arm64": "0.2.12",
-    "@tokenring-ai/coder-linux-x64": "0.2.12"
+    "@tokenring-ai/coder-darwin-arm64": "0.2.13",
+    "@tokenring-ai/coder-linux-x64": "0.2.13"
   },
   "files": [
     "bin-wrapper.js"

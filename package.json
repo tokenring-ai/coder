@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/coder",
   "description": "TokenRing Coder Application",
-  "version": "0.2.12",
+  "version": "0.2.13",
   "devDependencies": {
     "@tokenring-ai/agent": "workspace:*",
     "@tokenring-ai/ai-client": "workspace:*",
@@ -70,6 +70,8 @@
     "README.md"
   ],
   "scripts": {
+    "build": "bun build --compile --sourcemap --outfile=dist/tr-coder src/tr-coder.ts",
+    "prepack": "bun run build && cp -Lr frontend dist",
     "coder": "bun src/tr-coder.js --source ./",
     "build-container": "docker build -t tr-coder:latest -f docker/Dockerfile .",
     "test": "vitest run",
