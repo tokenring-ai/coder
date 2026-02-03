@@ -1,6 +1,6 @@
 {
   "name": "@tokenring-ai/coder-darwin-arm64",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "TokenRing Coder - macOS ARM64 binary",
   "license": "MIT",
   "os": ["darwin"],
