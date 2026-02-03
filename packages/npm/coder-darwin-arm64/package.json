@@ -9,6 +9,7 @@
     "tr-coder": "coder-macos-arm64"
   },
   "files": [
+    "libportaudio.dylib",
     "coder-macos-arm64",
     "frontend"
   ],
