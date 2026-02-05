@@ -7,7 +7,7 @@ const arch = process.arch;
 
 let binary;
 if (platform === 'darwin' && arch === 'arm64') {
-  binary = "./coder-darwin-arm64";
+  binary = "./coder-macos-arm64";
 } else if (platform === 'linux' && arch === 'x64') {
   binary = "./coder-linux-x64";
 } else {
