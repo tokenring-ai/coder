@@ -1,10 +1,10 @@
 {
   "name": "@tokenring-ai/coder",
-  "version": "0.2.21",
+  "version": "0.2.22",
   "description": "TokenRing Coder Application",
   "license": "MIT",
   "bin": {
-    "@tokenring-ai/coder": "coder.js"
+    "coder": "coder.js"
   },
   "files": [
    "coder.js",
