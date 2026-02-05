@@ -1,15 +1,17 @@
 {
   "name": "@tokenring-ai/coder",
-  "version": "0.2.20",
+  "version": "0.2.21",
   "description": "TokenRing Coder Application",
   "license": "MIT",
   "bin": {
-    "coder": "coder.js"
+    "@tokenring-ai/coder": "coder.js"
   },
   "files": [
    "coder.js",
    "coder-macos-arm64",
-   "coder-linux-x64"
+   "coder-linux-x64",
+   "libportaudio.dylib",
+   "frontend"
   ],
   "repository": {
     "type": "git",
