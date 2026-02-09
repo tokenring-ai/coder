@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/coder",
   "description": "TokenRing Coder Application",
-  "version": "0.2.23",
+  "version": "0.2.24",
   "devDependencies": {
     "@tokenring-ai/agent": "workspace:*",
     "@tokenring-ai/ai-client": "workspace:*",
@@ -12,7 +12,6 @@
     "@tokenring-ai/checkpoint": "workspace:*",
     "@tokenring-ai/chrome": "workspace:*",
     "@tokenring-ai/cli": "workspace:*",
-    "@tokenring-ai/cli-ink": "workspace:*",
     "@tokenring-ai/code-watch": "workspace:*",
     "@tokenring-ai/codebase": "workspace:*",
     "@tokenring-ai/database": "workspace:*",

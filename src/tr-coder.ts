@@ -6,7 +6,6 @@ import {AudioServiceConfigSchema} from "@tokenring-ai/audio";
 import {ChatServiceConfigSchema} from "@tokenring-ai/chat/schema";
 import {CheckpointConfigSchema} from "@tokenring-ai/checkpoint";
 import {CLIConfigSchema} from "@tokenring-ai/cli";
-import {InkCLIConfigSchema} from "@tokenring-ai/cli-ink";
 import {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
 import type {TerminalConfigSchema} from "@tokenring-ai/terminal/schema";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
@@ -29,7 +28,7 @@ interface CommandOptions {
   http?: string;
   httpPassword?: string;
   httpBearer?: string;
-  ui: "ink" | "inquirer" | "none";
+  ui: "opentui" | "ink" | "none";
 }
 
 // Create a new Commander program
@@ -39,7 +38,7 @@ program
   .name("tr-coder")
   .description("TokenRing Coder - AI-powered coding assistant")
   .version(packageInfo.version)
-  .option("--ui <inquirer|ink|none>", "Select the UI to use for the application", "inquirer")
+  .option("--ui <opentui|ink|none>", "Select the UI to use for the application", "opentui")
   .option("--workingDirectory <path>", "Path to the working directory to work in (default: cwd)", ".")
   .option("--dataDirectory <path>", "Path to the data directory to use to store data (knowledge, session database, etc.) (default: <workingDirectory>/.tokenring)", "")
   .option("--http [host:port]", "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified")
@@ -141,21 +140,15 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
           }
         }
       },
-      ...(ui === 'inquirer' && {
+      ...(ui !== 'none' && {
         cli: {
           chatBanner: `TokenRing Coder ${packageInfo.version}`,
           screenBanner: `TokenRing Coder ${packageInfo.version}`,
           loadingBannerWide: bannerWide,
           loadingBannerNarrow: bannerNarrow,
           loadingBannerCompact: bannerCompact,
+          uiFramework: ui,
         } satisfies z.input<typeof CLIConfigSchema>
-      }),
-      ...(ui === 'ink' && {
-        inkCLI: {
-          bannerNarrow,
-          bannerWide,
-          bannerCompact: `🤖 TokenRing Coder ${packageInfo.version} - https://tokenring.ai`
-        } satisfies z.input<typeof InkCLIConfigSchema>
       }),
       ...(http && {
         webHost: {

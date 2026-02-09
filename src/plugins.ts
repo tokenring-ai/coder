@@ -6,7 +6,6 @@ import ChatFrontendPlugin from "@tokenring-ai/chat-frontend/plugin";
 import ChatPlugin from "@tokenring-ai/chat/plugin";
 import CheckpointPlugin from "@tokenring-ai/checkpoint/plugin";
 import ChromePlugin from "@tokenring-ai/chrome/plugin";
-import InkCLIPlugin from "@tokenring-ai/cli-ink/plugin";
 import CLIPlugin from "@tokenring-ai/cli/plugin";
 import CodeWatchPlugin from "@tokenring-ai/code-watch/plugin";
 import CodeBasePlugin from "@tokenring-ai/codebase/plugin";
@@ -63,7 +62,6 @@ export const plugins = [
   FileIndexPlugin,
   FilesystemPlugin,
   GitPlugin,
-  InkCLIPlugin,
   JavascriptPlugin,
   KubernetesPlugin,
   LinuxAudioPlugin,
@@ -109,7 +107,6 @@ export const configSchema = z.object({
   ...FileIndexPlugin.config.shape,
   ...FilesystemPlugin.config.shape,
   ...GitPlugin.config.shape,
-  ...InkCLIPlugin.config.shape,
   ...JavascriptPlugin.config.shape,
   ...KubernetesPlugin.config.shape,
   ...LinuxAudioPlugin.config.shape,
