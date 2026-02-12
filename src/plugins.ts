@@ -12,6 +12,7 @@ import CodeBasePlugin from "@tokenring-ai/codebase/plugin";
 import DatabasePlugin from "@tokenring-ai/database/plugin";
 import DockerPlugin from "@tokenring-ai/docker/plugin";
 import DrizzleStoragePlugin from "@tokenring-ai/drizzle-storage/plugin";
+import EscalationPlugin from "@tokenring-ai/escalation/plugin";
 import FeedbackPlugin from "@tokenring-ai/feedback/plugin";
 import FileIndexPlugin from "@tokenring-ai/file-index/plugin";
 import FilesystemPlugin from "@tokenring-ai/filesystem/plugin";
@@ -58,6 +59,7 @@ export const plugins = [
   DatabasePlugin,
   DockerPlugin,
   DrizzleStoragePlugin,
+  EscalationPlugin,
   FeedbackPlugin,
   FileIndexPlugin,
   FilesystemPlugin,
@@ -103,6 +105,7 @@ export const configSchema = z.object({
   ...DatabasePlugin.config.shape,
   ...DockerPlugin.config.shape,
   ...DrizzleStoragePlugin.config.shape,
+  ...EscalationPlugin.config.shape,
   ...FeedbackPlugin.config.shape,
   ...FileIndexPlugin.config.shape,
   ...FilesystemPlugin.config.shape,
