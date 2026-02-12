@@ -29,6 +29,9 @@ interface CommandOptions {
   httpPassword?: string;
   httpBearer?: string;
   ui: "opentui" | "ink" | "none";
+  agent: string;
+  p: boolean;
+  args: string[];
 }
 
 // Create a new Commander program
@@ -44,18 +47,24 @@ program
   .option("--http [host:port]", "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified")
   .option("--httpPassword <user:password>", "Username and password for authentication with the webui (default: No auth required)")
   .option("--httpBearer <user:bearer>", "Username and bearer token for authentication with the webui (default: No auth required)")
+  .option("--agent <type>", "Agent type to start with", "interactiveCodeAgent")
+  .option("-p", "Enable shutdown when done")
+  .allowExcessArguments(true)
   .addHelpText(
     "after",
     `
 Examples:
   tr-coder
   tr-coder --workingDirectory ./my-app --dataDirectory ./my-data
+  tr-coder --agent teamLeader "Create a new React component"
+  tr-coder -p "Fix the bug in app.ts"
 `,
   )
   .action(runApp)
   .parse();
 
-async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, httpBearer}: CommandOptions): Promise<void> {
+async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, httpBearer, agent, p}: CommandOptions): Promise<void> {
+  const args = program.args;
   try {
     workingDirectory = path.resolve(workingDirectory);
     dataDirectory = path.resolve(dataDirectory || path.join(workingDirectory, "/.tokenring"));
@@ -148,6 +157,13 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
           loadingBannerNarrow: bannerNarrow,
           loadingBannerCompact: bannerCompact,
           uiFramework: ui,
+          ...(args.length > 0 && {
+            startAgent: {
+              type: agent,
+              prompt: args.join(' '),
+              shutdownWhenDone: p,
+            }
+          }),
         } satisfies z.input<typeof CLIConfigSchema>
       }),
       ...(http && {
