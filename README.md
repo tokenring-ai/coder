@@ -1,8 +1,8 @@
 # TokenRing Coder
 
-**An AI-powered coding assistant with a comprehensive 44-package ecosystem for local development**
+**An AI-powered coding assistant with a comprehensive 46-package ecosystem for local development**
 
-TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 44 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
+TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 46 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
 
 ## Features
 
@@ -13,6 +13,7 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 - **Agent Orchestration**: Multi-agent workflows with specialized roles
 
 ### Communication and Collaboration
+- **Escalation Service**: Multi-provider support with group broadcasting and communication channels
 - **Slack Integration**: Bot functionality and workspace management
 - **Telegram Integration**: Chat management and message handling
 - **Human Feedback Tools**: File reviews, React component previews, and interactive Q&A
@@ -161,8 +162,8 @@ bun run coder --web
 ### Option 5: Custom UI
 
 ```bash
-# Run with custom UI (inquirer, ink, or none)
-bun run coder --ui inquirer  # Interactive CLI with inquirer
+# Run with custom UI (opentui, ink, or none)
+bun run coder --ui opentui  # Interactive CLI with OpenTUI (default)
 bun run coder --ui ink      # Interactive CLI with ink
 bun run coder --ui none     # Background mode without UI
 ```
@@ -204,6 +205,7 @@ bun run coder --http 127.0.0.1:3000 --httpBearer user:bearer-token
 > Post this update to our Slack channel #development
 > Send a notification to Telegram group about the deployment
 > Ask for human feedback on the new UI design
+> Escalate to human expert via communication channel
 ```
 
 ### Advanced Scripting and Automation
@@ -362,7 +364,7 @@ TokenRing Coder provides 47 commands organized into 17 categories:
 
 ## Architecture
 
-TokenRing Coder is built as a modular TypeScript monorepo with 44 specialized packages:
+TokenRing Coder is built as a modular TypeScript monorepo with 46 specialized packages:
 
 ### Core Foundation (3 packages)
 - **@tokenring-ai/app**: Base application framework with service management and plugin architecture
@@ -392,7 +394,7 @@ TokenRing Coder is built as a modular TypeScript monorepo with 44 specialized pa
 - **@tokenring-ai/scripting**: Scripting language with variables, functions, and LLM integration
 - **@tokenring-ai/tasks**: Task planning and multi-agent workflow orchestration
 
-### Web and External Services (9 packages)
+### Web and External Services (10 packages)
 - **@tokenring-ai/websearch**: Abstract web search interface with pluggable providers
 - **@tokenring-ai/serper**: Google search via Serper.dev API
 - **@tokenring-ai/scraperapi**: Web scraping and SERP results via ScraperAPI
@@ -402,8 +404,10 @@ TokenRing Coder is built as a modular TypeScript monorepo with 44 specialized pa
 - **@tokenring-ai/kubernetes**: Kubernetes resource discovery and management
 - **@tokenring-ai/sandbox**: Abstract sandbox interface for isolated execution
 - **@tokenring-ai/mcp**: Model Context Protocol client for external server integration
+- **@tokenring-ai/web-host**: Fastify-based web hosting service for static files and APIs
 
-### Communication and Collaboration (3 packages)
+### Communication and Collaboration (4 packages)
+- **@tokenring-ai/escalation**: Escalation service with multi-provider support and group broadcasting
 - **@tokenring-ai/slack**: Slack bot integration for workspace communication
 - **@tokenring-ai/telegram**: Telegram bot integration for chat and message handling
 - **@tokenring-ai/feedback**: Human feedback tools for file reviews and React component previews
@@ -418,20 +422,19 @@ TokenRing Coder is built as a modular TypeScript monorepo with 44 specialized pa
 - **@tokenring-ai/web-host**: Fastify-based web hosting service for static files and APIs
 - **@tokenring-ai/chat-frontend**: React frontend for chat interface
 
-### Filesystem and Storage (2 packages)
+### Filesystem and Storage (3 packages)
 - **@tokenring-ai/filesystem**: Abstract filesystem with read/write/search operations and ignore filters
 - **@tokenring-ai/local-filesystem**: Local disk filesystem implementation with file watching
+- **@tokenring-ai/posix-system**: POSIX-compliant file system and terminal providers
 
-### Thinking and Workflow (2 packages)
+### Thinking and Workflow (3 packages)
 - **@tokenring-ai/thinking**: Advanced reasoning and planning capabilities
 - **@tokenring-ai/workflow**: Workflow engine for complex task execution
+- **@tokenring-ai/scheduler**: Task scheduling and automation
 
-### Research and Vault (1 package)
+### Research and Vault (2 packages)
 - **@tokenring-ai/research**: Research tools and capabilities
 - **@tokenring-ai/vault**: Secure storage for sensitive data
-
-### Scheduler (1 package)
-- **@tokenring-ai/scheduler**: Task scheduling and automation
 
 ### RPC (1 package)
 - **@tokenring-ai/rpc**: Remote procedure call infrastructure
@@ -450,7 +453,7 @@ export default {
       port: 3000,
       enableWebSocket: true
     },
-    ui: "inquirer" // or "ink" or "none"
+    ui: "opentui" // or "ink" or "none"
   },
 
   // AI model configurations
@@ -674,10 +677,6 @@ bun run coder
 
 # Start web interface
 bun run coder --web
-
-# Run specific package tests
-cd pkg/database && bun test
-cd pkg/ai-client && bun test
 ```
 
 ### Available Scripts
@@ -693,7 +692,7 @@ cd pkg/ai-client && bun test
 
 ## Package Ecosystem Overview
 
-The TokenRing Coder ecosystem consists of 44 specialized packages organized into functional categories:
+The TokenRing Coder ecosystem consists of 46 specialized packages organized into functional categories:
 
 ### Core Foundation (3 packages)
 - **app**: Application framework and service management
@@ -723,7 +722,7 @@ The TokenRing Coder ecosystem consists of 44 specialized packages organized into
 - **scripting**: Scripting language
 - **tasks**: Workflow orchestration
 
-### Web and External Services (9 packages)
+### Web and External Services (10 packages)
 - **websearch**: Web search abstraction
 - **serper**: Google search provider
 - **scraperapi**: Web scraping service
@@ -733,8 +732,10 @@ The TokenRing Coder ecosystem consists of 44 specialized packages organized into
 - **kubernetes**: K8s integration
 - **sandbox**: Execution environment
 - **mcp**: Protocol extensions
+- **web-host**: Web hosting service
 
-### Communication and Collaboration (3 packages)
+### Communication and Collaboration (4 packages)
+- **escalation**: Escalation service with communication channels
 - **slack**: Slack bot integration
 - **telegram**: Telegram bot integration
 - **feedback**: Human feedback tools
@@ -749,20 +750,19 @@ The TokenRing Coder ecosystem consists of 44 specialized packages organized into
 - **web-host**: Web server foundation
 - **chat-frontend**: Chat interface frontend
 
-### Filesystem and Storage (2 packages)
+### Filesystem and Storage (3 packages)
 - **filesystem**: Abstract filesystem interface
 - **local-filesystem**: Local filesystem implementation
+- **posix-system**: POSIX system utilities
 
-### Thinking and Workflow (2 packages)
+### Thinking and Workflow (3 packages)
 - **thinking**: Advanced reasoning and planning capabilities
 - **workflow**: Workflow engine for complex task execution
+- **scheduler**: Task scheduling and automation
 
-### Research and Vault (1 package)
+### Research and Vault (2 packages)
 - **research**: Research tools and capabilities
 - **vault**: Secure storage for sensitive data
-
-### Scheduler (1 package)
-- **scheduler**: Task scheduling and automation
 
 ### RPC (1 package)
 - **rpc**: Remote procedure call infrastructure
@@ -792,4 +792,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Ready to supercharge your coding workflow with AI? Explore the complete 44-package ecosystem and transform your development experience!**
+**Ready to supercharge your coding workflow with AI? Explore the complete 46-package ecosystem and transform your development experience!**
