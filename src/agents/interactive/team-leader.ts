@@ -1,6 +1,5 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
 import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
-import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
   name: "Multi-Agent Project Planner",
@@ -27,7 +26,8 @@ export default {
       "At a minimum, that requires providing the file name of a task plan with a list of key files providing information the agent needs to complete the task. " +
       "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
     //maxSteps: 200,
-    enabledTools: ["todo", "file_*", "terminal_*"],
+    enabledTools: ["todo", "agent_run", "file_*", "terminal_*"],
   },
+  allowedSubAgents: ["*"],
   callable: false
 } satisfies AgentConfig & ChatAgentConfig;
