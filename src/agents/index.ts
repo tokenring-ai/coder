@@ -1,51 +1,16 @@
 import {AgentConfig} from "@tokenring-ai/agent/schema";
-import accessibilityEngineer from "./background/accessibility-engineer.ts";
-import apiDesigner from "./background/api-designer.ts";
-import authDesign from "./background/auth-design.ts";
-import backendDesign from "./background/backend-design.ts";
-import businessLogicEngineer from "./background/business-logic-engineer.ts";
-import codeQualityEngineer from "./background/code-quality-engineer.ts";
-import dataEngineer from "./background/data-engineer.ts";
-import databaseDesign from "./background/database-design.ts";
-import devopsEngineer from "./background/devops-engineer.ts";
-import documentationEngineer from "./background/documentation-engineer.ts";
-import frontendDesign from "./background/frontend-design.ts";
-import fullStackDeveloper from "./background/full-stack-developer.ts";
-import integrationEngineer from "./background/integration-engineer.ts";
-import performanceEngineer from "./background/performance-engineer.ts";
-import productDesignEngineer from "./background/product-design-engineer.ts";
-import productManager from "./background/product-manager.ts";
-import securityReview from "./background/security-review.ts";
-import seoEngineer from "./background/seo-engineer.ts";
-import systemArchitect from "./background/system-architect.ts";
-import teamLeader from "./interactive/team-leader.ts";
-import testEngineer from "./background/test-engineer.ts";
-import uiUxDesigner from "./background/ui-ux-designer.ts";
+import designDocumentationAgents from "./specialized/design-documentation/index.ts"
+import developmentAgents from "./specialized/development/index.ts"
+import engineeringAgents from "./specialized/engineering/index.ts"
+import planningManagementAgents from "./specialized/planning-management/index.ts"
+import qualityOperationsAgents from "./specialized/quality-operations/index.ts"
+import interactiveAgents from "./interactive/index.ts"
 
-import interactiveCodeAgent from "./interactive/code.ts";
-
-export default {
-  interactiveCodeAgent,
-  accessibilityEngineer,
-  apiDesigner,
-  authDesign,
-  backendDesign,
-  businessLogicEngineer,
-  codeQualityEngineer,
-  dataEngineer,
-  databaseDesign,
-  documentationEngineer,
-  devopsEngineer,
-  frontendDesign,
-  fullStackDeveloper,
-  integrationEngineer,
-  performanceEngineer,
-  productDesignEngineer,
-  productManager,
-  securityReview,
-  seoEngineer,
-  systemArchitect,
-  teamLeader,
-  testEngineer,
-  uiUxDesigner,
-} satisfies Record<string, AgentConfig>;
+export default [
+  ...designDocumentationAgents,
+  ...developmentAgents,
+  ...engineeringAgents,
+  ...planningManagementAgents,
+  ...qualityOperationsAgents,
+  ...interactiveAgents,
+] satisfies AgentConfig[];

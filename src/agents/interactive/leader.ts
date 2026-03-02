@@ -2,9 +2,35 @@ import {AgentConfig} from "@tokenring-ai/agent/schema";
 import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 
 export default {
-  name: "Multi-Agent Project Planner",
+  agentType: "leader",
+  displayName: "Multi-Agent Project Planner",
   description: "Use this agent to orchestrate full-stack development projects. This agent coordinates team members (agents) via task plans to deliver complete, production-ready applications.",
   category: "Interactive",
+  command: {
+    description: "Orchestrate a complex project using multiple specialized agents",
+    help: `# /leader
+
+## Description
+Acts as a Technical Project Lead to coordinate full-stack development. It analyzes requirements, creates tasks, and delegates them to specialized agents (like developers, testers, and designers).
+
+The Leader:
+- Manages the end-to-end development workflow
+- Ensures architectural consistency
+- Integrates deliverables from multiple agents
+- Monitors progress until the project is production-ready
+
+## Usage
+/leader <project description or goal>
+
+## Examples
+/leader Build a full-stack Trello clone with React and Express
+/leader Implement a real-time chat feature using WebSockets
+/leader Refactor the entire authentication system to use OAuth2
+
+## Notes
+- This is a high-level orchestrator; it will call other agents to do the work.
+- It is best used for complex tasks that require multiple steps and different skill sets.`,
+  },
   chat: {
     context: {
       initial: [
@@ -24,10 +50,9 @@ export default {
       "checking as you go to confirm that tasks have been completed fully. For complex tasks, consider breaking them down into smaller subtasks and dispatching them to another team leader. " +
       "When dispatching agents, you need to provide very detailed information about the task, so that the agent does not get confused. " +
       "At a minimum, that requires providing the file name of a task plan with a list of key files providing information the agent needs to complete the task. " +
-      "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
-    //maxSteps: 200,
-    enabledTools: ["todo", "agent_run", "file_*", "terminal_*"],
-  },
-  allowedSubAgents: ["*"],
-  callable: false
-} satisfies AgentConfig & ChatAgentConfig;
+        "Continue working and running tools and agents as necessary until the task is fully complete, ensuring that every aspect of the project is completed to a very high standard.",
+      //maxSteps: 200,
+      enabledTools: ["todo", "agent_run", "file_*", "terminal_*"],
+    },
+    allowedSubAgents: ["*"],
+  } satisfies AgentConfig & ChatAgentConfig;

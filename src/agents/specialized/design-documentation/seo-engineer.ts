@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "SEO Engineer",
+  agentType: "seo-engineer",
+  displayName: "SEO Engineer",
   description: "Specialized agent for analyzing and optimizing frontend pages for search engine optimization. Ensures compliance with SEO best practices including: semantic HTML structure, proper meta tags (title, description, Open Graph, Twitter Cards), heading hierarchy (H1-H6), image alt attributes, canonical URLs, structured data/schema markup, XML sitemaps, robots.txt configuration, mobile responsiveness, page load performance, internal linking structure, URL optimization, and content accessibility for crawlers. Identifies SEO issues and provides actionable recommendations.",
   category: "Design & Documentation",
   chat: {

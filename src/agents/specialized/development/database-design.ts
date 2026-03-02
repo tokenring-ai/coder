@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Database Designer",
+  agentType: "database-design",
+  displayName: "Database Designer",
   description: "Call this agent to design database schemas and implement data storage solutions. Provide data requirements, existing schema, or performance constraints. The agent will create normalized schemas, design indexes, implement migrations, optimize queries, and build complete database solutions with ORM configurations. Best used for: schema design, database migrations, query optimization, data modeling, and storage architecture planning.",
   category: "Development",
   chat: {

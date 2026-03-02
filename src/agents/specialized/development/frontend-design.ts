@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Frontend Engineer",
+  agentType: "frontend-design",
+  displayName: "Frontend Engineer",
   description: "Call this agent to implement user interfaces, interactive components, and client-side functionality. Provide UI designs, wireframes, or frontend specifications. The agent will create React/Vue components, implement responsive layouts, handle state management, integrate with APIs, optimize performance, and build accessible user interfaces. Best used for: component implementation, responsive design, state management, API integration, performance optimization, and accessibility compliance.",
   category: "Development",
   chat: {

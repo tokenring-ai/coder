@@ -2,7 +2,8 @@ import { AgentConfig } from "@tokenring-ai/agent/schema";
 import { ChatAgentConfig } from "@tokenring-ai/chat/schema";
 
 export default {
-  name: "Code & Symbol Locator",
+  agentType: "code-symbol-locator",
+  displayName: "Code & Symbol Locator",
   description: "Specialized agent for finding code, files, symbols, and patterns across the codebase. Expert at locating specific logic, class definitions, and implementation details based on natural language queries.",
   category: "Development & Engineering",
   chat: {

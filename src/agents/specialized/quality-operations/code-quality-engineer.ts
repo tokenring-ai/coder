@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Code Quality Engineer",
+  agentType: "code-quality-engineer",
+  displayName: "Code Quality Engineer",
   description: "Call this agent to perform code quality reviews, refactoring, and implement quality standards. Provide code files, legacy systems, or quality requirements. The agent will review code quality, refactor legacy code, enforce coding standards, identify technical debt, implement quality gates, and modernize codebases. Best used for: code quality audits, refactoring projects, standards enforcement, technical debt reduction, and code modernization.",
   category: "Quality & Operations",
   chat: {

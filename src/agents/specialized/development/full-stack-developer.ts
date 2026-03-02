@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Full Stack Developer",
+  agentType: "full-stack-developer",
+  displayName: "Full Stack Developer",
   description: "Call this agent to implement complete features across frontend and backend. Provide feature specifications, user stories, or component requirements. The agent will implement full-stack features, integrate frontend with backend, handle data flow, create reusable components, and deliver complete working functionality. Best used for: feature implementation, component development, integration work, bug fixes, and end-to-end development tasks.",
   category: "Development",
   chat: {

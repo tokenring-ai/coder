@@ -56,7 +56,7 @@ program
 Examples:
   tr-coder
   tr-coder --workingDirectory ./my-app --dataDirectory ./my-data
-  tr-coder --agent teamLeader "Create a new React component"
+  tr-coder --agent leader "Create a new React component"
   tr-coder -p "Fix the bug in app.ts"
 `,
   )
@@ -173,7 +173,9 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
           auth,
         } satisfies z.input<typeof WebHostConfigSchema>
       }),
-      agents,
+      agents: {
+        app: agents
+      },
       tasks: {}
     };
 

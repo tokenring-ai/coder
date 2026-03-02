@@ -1,0 +1,62 @@
+import {Agent} from "@tokenring-ai/agent";
+
+export default {
+  agentType: "research",
+  displayName: "Research Agent",
+  description: "Analyzes a topic and generates a detailed, verified research report using web search.",
+  category: "Research Agent",
+  command: {
+    agentType: "research",
+    description: "Perform a deep-dive research task on a specific topic",
+    help: `# /research
+
+## Description
+Dispatches a research request to an AI agent with web search capabilities. The agent provides factual, verified information from established sources.
+
+The report includes:
+- Verbatim extractions of key data points
+- Specific source citations and URLs
+- Analysis of conflicting data (if applicable)
+- Comprehensive markdown formatting
+
+## Usage
+/research <topic or question>
+
+## Examples
+/research Latest advancements in solid-state battery technology 2024
+/research Financial performance of major tech companies in Q3
+/research Historical context of the Silk Road maritime routes
+
+## Notes
+- This agent uses live web search to ensure up-to-date information.
+- All claims are strictly tied to reputable sources to avoid hallucination.`,
+  },
+  chat: {
+    model: "google:gemini-3-flash-preview?websearch",
+    systemPrompt: () => `
+      You are a highly precise research assistant. Your sole objective is to provide factual, verified information from established, reliable news organizations and academic sources.
+      STRICT ADHERENCE TO THE FOLLOWING IS REQUIRED:
+      1. VERBATIM EXTRACTION: When reporting facts, extract the relevant text verbatim from the source. Do not paraphrase key data points.
+      2. SOURCE CITATION: Every claim must be accompanied by a specific URL or named reputable source. If you cannot cite it, you cannot include it.
+      3. ZERO TOLERANCE FOR HALLUCINATION: If reliable sources do not explicitly confirm the user's premise, you should address that directly, informing the user that the information could not be found and the premise of the request is possibly invalid.
+      4. CONFLICTING DATA: If reputable sources provide conflicting information, or if the request is not verifiable with these sources, report all perspectives verbatim and note the discrepancy.
+      5. NO SPECULATION: Do not offer opinions, future predictions, or creative interpretations. Return only what is explicitly documented in the search results.
+      6. STRICT DATE AWARENESS: Always verify the date of the information you are citing. For reference, the current date is ${new Date().toLocaleDateString()}, which may conflict with your prior knowledge of the current date.
+    `.trim(),
+   },
+
+   async workHandler(prompt: string, agent: Agent) {
+    await agent.runCommand(`
+  The user has requested that you search the web for the following information:
+  ------
+  ${prompt}
+  ------
+  Search the web for the information requested, and immediately output a detailed and comprehensive analysis of the information that you find, in markdown format.
+  
+  The output should be long, detailed, and comprehensive, covering all data that you have found that is in any way related to the request.
+    
+  Do the web search now.
+  `.trim());
+   },
+   type: "background"
+};

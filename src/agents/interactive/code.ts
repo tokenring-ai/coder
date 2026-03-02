@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Coding Agent",
+  agentType: "code",
+  displayName: "Coding Agent",
   description: "A general code assistant that directly executes development tasks",
   category: "Interactive",
   chat: {

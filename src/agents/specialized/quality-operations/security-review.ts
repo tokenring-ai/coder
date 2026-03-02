@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Security Reviewer",
+  agentType: "security-review",
+  displayName: "Security Reviewer",
   description: "Call this agent to perform security assessments and implement secure coding practices. Provide code files, system designs, or security requirements. The agent will identify vulnerabilities, implement security controls, create secure configurations, and build defense-in-depth solutions following OWASP guidelines. Best used for: security audits, vulnerability remediation, secure code implementation, compliance assessments, and penetration testing preparation.",
   category: "Quality & Operations",
   chat: {

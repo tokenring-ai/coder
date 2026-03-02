@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "Business Logic Engineer",
+  agentType: "business-logic-engineer",
+  displayName: "Business Logic Engineer",
   description: "Call this agent to implement complex business workflows, rules engines, and automation systems. Provide business requirements, workflow specifications, or rule definitions. The agent will create workflow engines, implement business rules, design approval processes, build automation systems, and handle complex business logic. Best used for: workflow implementation, rules engines, business process automation, approval systems, and complex domain logic.",
   category: "Engineering",
   chat: {

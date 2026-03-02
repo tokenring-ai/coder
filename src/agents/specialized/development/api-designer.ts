@@ -3,7 +3,8 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
 export default {
-  name: "API Designer",
+  agentType: "api-designer",
+  displayName: "API Designer",
   description: "Call this agent to design and implement REST/GraphQL APIs and service contracts. Provide data requirements, frontend needs, or existing API specs. The agent will design API endpoints, create OpenAPI specifications, implement request/response schemas, handle validation, and build complete API layers. Best used for: API specification, endpoint design, service contracts, API documentation, and backend service implementation.",
   category: "Development",
   chat: {
