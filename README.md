@@ -1,8 +1,8 @@
 # TokenRing Coder
 
-**An AI-powered coding assistant with a comprehensive 46-package ecosystem for local development**
+**An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development**
 
-TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 46 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
+TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 45 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
 
 ## Features
 
@@ -57,37 +57,57 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 - **Batch Processing**: Named iterables system with /foreach command
 - **Memory Management**: Short-term memory and attention storage
 - **Workflow Engine**: Advanced task planning and execution
+- **Scheduler**: Task scheduling and automation
 
 ### Protocol Extensions
 - **MCP Integration**: Model Context Protocol client for external server connectivity
 - **Web Hosting**: Fastify-based service with pluggable resources
 - **Frontend Interface**: Complete React frontend with CLI-style interaction
+- **RPC**: Remote procedure call infrastructure
+
+### Terminal and POSIX Support
+- **Terminal Service**: Interactive terminal sessions with output collection
+- **POSIX System**: POSIX-compliant file system and terminal providers
 
 ### Specialized Agents
-TokenRing Coder includes 23 specialized AI agents organized into two categories:
+TokenRing Coder includes 26 specialized AI agents organized into two categories:
 
-**Interactive Agents (2)**
+**Interactive Agents (5)**
 - **Coding Agent** - A general code assistant that directly executes development tasks
 - **Team Leader** - Orchestrates full-stack projects, coordinates specialists, manages workflow
+- **Planning Agent** - Creates detailed project plans and task breakdowns
+- **Swarm Agent** - Coordinates multiple agents working in parallel on complex tasks
+- **Research Agent** - Conducts research and gathers information from multiple sources
 
 **Background Specialists (21)**
+
+*Planning & Management (3)*
 - **Product Manager** - Creates PRDs, defines user stories, plans feature roadmaps
 - **Product Design Engineer** - Product enhancement and comprehensive PRD creation
 - **System Architect** - Designs system architectures and selects technology stacks
+
+*Development (6)*
 - **Full Stack Developer** - Implements complete features across frontend and backend
 - **Frontend Designer** - Creates React/Vue components, responsive layouts, state management
 - **Backend Designer** - Implements server-side logic, business rules, data processing
 - **API Designer** - Designs REST/GraphQL APIs, creates OpenAPI specifications
 - **Database Designer** - Designs schemas, implements migrations, optimizes queries
+- **Code Symbol Locator** - Finds and analyzes code symbols and references
+
+*Engineering (4)*
 - **Business Logic Engineer** - Implements workflows, rules engines, automation systems
 - **Data Engineer** - Creates ETL pipelines, data migrations, processing workflows
 - **Integration Engineer** - Implements third-party integrations, APIs, webhooks
 - **Auth Designer** - Designs authentication/authorization systems, OAuth/OIDC
+
+*Quality Operations (5)*
 - **Test Engineer** - Creates unit/integration/E2E tests, test automation
 - **Code Quality Engineer** - Code reviews, refactoring, standards enforcement
 - **Security Review** - Security assessments, vulnerability remediation, OWASP compliance
 - **Performance Engineer** - Performance optimization, caching, monitoring, scalability
 - **DevOps Engineer** - CI/CD pipelines, Docker configs, infrastructure setup
+
+*Design & Documentation (4)*
 - **UI/UX Designer** - Creates wireframes, design systems, user flows
 - **Documentation Engineer** - Technical documentation, API docs, user guides
 - **Accessibility Engineer** - Ensures accessibility compliance and WCAG standards
@@ -245,7 +265,7 @@ bun run coder --http 127.0.0.1:3000 --httpBearer user:bearer-token
 
 ## Command Reference
 
-TokenRing Coder provides 47 commands organized into 17 categories:
+TokenRing Coder provides 47 commands organized into 17 categories. See [COMMAND_REFERENCE.md](COMMAND_REFERENCE.md) for detailed documentation.
 
 ### AI and Chat Commands
 | Command | Description |
@@ -364,7 +384,7 @@ TokenRing Coder provides 47 commands organized into 17 categories:
 
 ## Architecture
 
-TokenRing Coder is built as a modular TypeScript monorepo with 46 specialized packages:
+TokenRing Coder is built as a modular TypeScript monorepo with 45 specialized packages:
 
 ### Core Foundation (3 packages)
 - **@tokenring-ai/app**: Base application framework with service management and plugin architecture
@@ -416,10 +436,9 @@ TokenRing Coder is built as a modular TypeScript monorepo with 46 specialized pa
 - **@tokenring-ai/audio**: Abstract audio framework for recording, playback, and speech processing
 - **@tokenring-ai/linux-audio**: Linux-specific audio implementation using naudiodon3
 
-### UI and Frontend (4 packages)
+### UI and Frontend (3 packages)
 - **@tokenring-ai/cli**: REPL service with interactive prompts and command processing
 - **@tokenring-ai/cli-ink**: Ink-based CLI implementation
-- **@tokenring-ai/web-host**: Fastify-based web hosting service for static files and APIs
 - **@tokenring-ai/chat-frontend**: React frontend for chat interface
 
 ### Filesystem and Storage (3 packages)
@@ -427,14 +446,17 @@ TokenRing Coder is built as a modular TypeScript monorepo with 46 specialized pa
 - **@tokenring-ai/local-filesystem**: Local disk filesystem implementation with file watching
 - **@tokenring-ai/posix-system**: POSIX-compliant file system and terminal providers
 
-### Thinking and Workflow (3 packages)
+### Thinking and Workflow (4 packages)
 - **@tokenring-ai/thinking**: Advanced reasoning and planning capabilities
 - **@tokenring-ai/workflow**: Workflow engine for complex task execution
 - **@tokenring-ai/scheduler**: Task scheduling and automation
-
-### Research and Vault (2 packages)
-- **@tokenring-ai/research**: Research tools and capabilities
 - **@tokenring-ai/vault**: Secure storage for sensitive data
+
+### Research (1 package)
+- **@tokenring-ai/research**: Research tools and capabilities
+
+### Terminal (1 package)
+- **@tokenring-ai/terminal**: Terminal service with session management and output collection
 
 ### RPC (1 package)
 - **@tokenring-ai/rpc**: Remote procedure call infrastructure
@@ -657,7 +679,7 @@ networks:
 # Install dependencies
 bun install
 
-# Build all packages
+# Build the tr-coder binary
 bun run build
 
 # Run tests
@@ -690,20 +712,20 @@ bun run coder --web
 | `bun run test:watch` | Run tests in watch mode |
 | `bun run test:coverage` | Run tests with coverage |
 
-## Package Ecosystem Overview
+### Package Ecosystem Overview
 
-The TokenRing Coder ecosystem consists of 46 specialized packages organized into functional categories:
+The TokenRing Coder ecosystem consists of 45 specialized packages organized into functional categories:
 
-### Core Foundation (3 packages)
+#### Core Foundation (3 packages)
 - **app**: Application framework and service management
 - **agent**: Central orchestrator for AI agents
 - **utility**: Shared utilities and helper functions
 
-### AI and Language Models (2 packages)
+#### AI and Language Models (2 packages)
 - **ai-client**: Unified AI client interface
 - **chat**: AI chat configuration and tool management
 
-### Storage and Database (7 packages)
+#### Storage and Database (7 packages)
 - **database**: Abstract database layer
 - **mysql**: MySQL integration
 - **drizzle-storage**: Multi-database ORM support
@@ -712,7 +734,7 @@ The TokenRing Coder ecosystem consists of 46 specialized packages organized into
 - **s3**: AWS S3 integration
 - **memory**: Memory management and attention storage
 
-### Development Tools (8 packages)
+#### Development Tools (8 packages)
 - **testing**: Agent testing framework
 - **git**: Version control integration
 - **javascript**: JavaScript tooling
@@ -722,7 +744,7 @@ The TokenRing Coder ecosystem consists of 46 specialized packages organized into
 - **scripting**: Scripting language
 - **tasks**: Workflow orchestration
 
-### Web and External Services (10 packages)
+#### Web and External Services (10 packages)
 - **websearch**: Web search abstraction
 - **serper**: Google search provider
 - **scraperapi**: Web scraping service
@@ -734,37 +756,39 @@ The TokenRing Coder ecosystem consists of 46 specialized packages organized into
 - **mcp**: Protocol extensions
 - **web-host**: Web hosting service
 
-### Communication and Collaboration (4 packages)
+#### Communication and Collaboration (4 packages)
 - **escalation**: Escalation service with communication channels
 - **slack**: Slack bot integration
 - **telegram**: Telegram bot integration
 - **feedback**: Human feedback tools
 
-### Audio and Media (2 packages)
+#### Audio and Media (2 packages)
 - **audio**: Audio processing framework
 - **linux-audio**: Linux audio implementation
 
-### UI and Frontend (4 packages)
+#### UI and Frontend (3 packages)
 - **cli**: Command line interface
 - **cli-ink**: Ink-based CLI implementation
-- **web-host**: Web server foundation
 - **chat-frontend**: Chat interface frontend
 
-### Filesystem and Storage (3 packages)
+#### Filesystem and Storage (3 packages)
 - **filesystem**: Abstract filesystem interface
 - **local-filesystem**: Local filesystem implementation
 - **posix-system**: POSIX system utilities
 
-### Thinking and Workflow (3 packages)
-- **thinking**: Advanced reasoning and planning capabilities
-- **workflow**: Workflow engine for complex task execution
+#### Thinking and Workflow (4 packages)
+- **thinking**: Advanced reasoning and planning
+- **workflow**: Workflow engine for complex tasks
 - **scheduler**: Task scheduling and automation
+- **vault**: Secure storage
 
-### Research and Vault (2 packages)
+#### Research (1 package)
 - **research**: Research tools and capabilities
-- **vault**: Secure storage for sensitive data
 
-### RPC (1 package)
+#### Terminal (1 package)
+- **terminal**: Terminal service with session management
+
+#### RPC (1 package)
 - **rpc**: Remote procedure call infrastructure
 
 ## Contributing
@@ -792,4 +816,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Ready to supercharge your coding workflow with AI? Explore the complete 46-package ecosystem and transform your development experience!**
+**Ready to supercharge your coding workflow with AI? Explore the complete 45-package ecosystem and transform your development experience!**
