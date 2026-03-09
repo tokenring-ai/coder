@@ -1,8 +1,8 @@
 # TokenRing Coder
 
-**An AI-powered coding assistant with a comprehensive 45-package ecosystem for local development**
+**An AI-powered coding assistant with a comprehensive 46-package ecosystem for local development**
 
-TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 45 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
+TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes 46 specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
 
 ## Features
 
@@ -33,12 +33,13 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 ### Database and Storage
 - **Multi-Database Support**: MySQL, SQLite, PostgreSQL via Drizzle ORM
 - **Database Abstraction**: SQL execution, schema inspection, and resource management
-- **AWS S3 Integration**: Cloud storage and content delivery network
 - **Checkpoint Persistence**: Agent state storage across sessions
 - **Task Queuing**: Sequential processing with checkpoint preservation
+- **Memory Management**: Short-term memory and attention storage
 
 ### Cloud and Infrastructure
 - **AWS Integration**: STS/S3 clients with authentication
+- **S3 Storage**: Cloud filesystem and CDN providers for AWS S3
 - **Docker Support**: Container management and sandbox execution
 - **Kubernetes**: Resource discovery and management across namespaces
 - **Sandbox Environment**: Isolated execution for security
@@ -55,7 +56,6 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 - **Scripting Language**: Variables, functions, LLM integration, and command sequences
 - **Task Orchestration**: Multi-step workflows with user approval
 - **Batch Processing**: Named iterables system with /foreach command
-- **Memory Management**: Short-term memory and attention storage
 - **Workflow Engine**: Advanced task planning and execution
 - **Scheduler**: Task scheduling and automation
 
@@ -70,7 +70,7 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 - **POSIX System**: POSIX-compliant file system and terminal providers
 
 ### Specialized Agents
-TokenRing Coder includes 26 specialized AI agents organized into two categories:
+TokenRing Coder includes 27 specialized AI agents organized into two categories:
 
 **Interactive Agents (5)**
 - **Coding Agent** - A general code assistant that directly executes development tasks
@@ -79,7 +79,7 @@ TokenRing Coder includes 26 specialized AI agents organized into two categories:
 - **Swarm Agent** - Coordinates multiple agents working in parallel on complex tasks
 - **Research Agent** - Conducts research and gathers information from multiple sources
 
-**Background Specialists (21)**
+**Background Specialists (22)**
 
 *Planning & Management (3)*
 - **Product Manager** - Creates PRDs, defines user stories, plans feature roadmaps
@@ -250,7 +250,6 @@ bun run coder --http 127.0.0.1:3000 --httpBearer user:bearer-token
 
 ```
 > Connect to MySQL database and create users table
-> Upload static assets to S3 CDN
 > Deploy container to Kubernetes cluster
 > Run backup script and store checkpoint in database
 ```
@@ -384,7 +383,7 @@ TokenRing Coder provides 47 commands organized into 17 categories. See [COMMAND_
 
 ## Architecture
 
-TokenRing Coder is built as a modular TypeScript monorepo with 45 specialized packages:
+TokenRing Coder is built as a modular TypeScript monorepo with 46 specialized packages:
 
 ### Core Foundation (3 packages)
 - **@tokenring-ai/app**: Base application framework with service management and plugin architecture
@@ -395,13 +394,12 @@ TokenRing Coder is built as a modular TypeScript monorepo with 45 specialized pa
 - **@tokenring-ai/ai-client**: Unified AI client for chat/embeddings/images via Vercel AI SDK
 - **@tokenring-ai/chat**: AI chat client with model configuration, tool management, and message history
 
-### Storage and Database (7 packages)
+### Storage and Database (6 packages)
 - **@tokenring-ai/database**: Abstract database layer with resource management and SQL execution
 - **@tokenring-ai/mysql**: MySQL integration with connection pooling and schema inspection
 - **@tokenring-ai/drizzle-storage**: Multi-database storage using Drizzle ORM (SQLite, MySQL, PostgreSQL)
 - **@tokenring-ai/checkpoint**: Checkpoint service for agent state persistence
 - **@tokenring-ai/queue**: Task queuing with checkpoint preservation for sequential processing
-- **@tokenring-ai/s3**: AWS S3 filesystem and CDN implementation
 - **@tokenring-ai/memory**: Agent memory management and attention storage
 
 ### Development Tools (8 packages)
@@ -414,12 +412,13 @@ TokenRing Coder is built as a modular TypeScript monorepo with 45 specialized pa
 - **@tokenring-ai/scripting**: Scripting language with variables, functions, and LLM integration
 - **@tokenring-ai/tasks**: Task planning and multi-agent workflow orchestration
 
-### Web and External Services (10 packages)
+### Web and External Services (11 packages)
 - **@tokenring-ai/websearch**: Abstract web search interface with pluggable providers
 - **@tokenring-ai/serper**: Google search via Serper.dev API
 - **@tokenring-ai/scraperapi**: Web scraping and SERP results via ScraperAPI
 - **@tokenring-ai/chrome**: Puppeteer browser automation for web scraping and interaction
 - **@tokenring-ai/aws**: AWS integration with STS/S3 clients and authentication
+- **@tokenring-ai/s3**: S3 filesystem and CDN providers for cloud storage and content delivery
 - **@tokenring-ai/docker**: Docker container management with sandbox provider
 - **@tokenring-ai/kubernetes**: Kubernetes resource discovery and management
 - **@tokenring-ai/sandbox**: Abstract sandbox interface for isolated execution
@@ -438,8 +437,8 @@ TokenRing Coder is built as a modular TypeScript monorepo with 45 specialized pa
 
 ### UI and Frontend (3 packages)
 - **@tokenring-ai/cli**: REPL service with interactive prompts and command processing
+- **@tokenring-ai/chat-frontend**: React-based web interface for TokenRing agents with CLI-style chat
 - **@tokenring-ai/cli-ink**: Ink-based CLI implementation
-- **@tokenring-ai/chat-frontend**: React frontend for chat interface
 
 ### Filesystem and Storage (3 packages)
 - **@tokenring-ai/filesystem**: Abstract filesystem with read/write/search operations and ignore filters
@@ -519,10 +518,6 @@ export default {
       region: "us-east-1",
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    },
-    s3: {
-      bucket: "my-app-assets",
-      cdnDomain: "cdn.myapp.com"
     }
   },
 
@@ -714,7 +709,7 @@ bun run coder --web
 
 ### Package Ecosystem Overview
 
-The TokenRing Coder ecosystem consists of 45 specialized packages organized into functional categories:
+The TokenRing Coder ecosystem consists of 46 specialized packages organized into functional categories:
 
 #### Core Foundation (3 packages)
 - **app**: Application framework and service management
@@ -725,13 +720,12 @@ The TokenRing Coder ecosystem consists of 45 specialized packages organized into
 - **ai-client**: Unified AI client interface
 - **chat**: AI chat configuration and tool management
 
-#### Storage and Database (7 packages)
+#### Storage and Database (6 packages)
 - **database**: Abstract database layer
 - **mysql**: MySQL integration
 - **drizzle-storage**: Multi-database ORM support
 - **checkpoint**: Agent state persistence
 - **queue**: Task queuing system
-- **s3**: AWS S3 integration
 - **memory**: Memory management and attention storage
 
 #### Development Tools (8 packages)
@@ -744,12 +738,13 @@ The TokenRing Coder ecosystem consists of 45 specialized packages organized into
 - **scripting**: Scripting language
 - **tasks**: Workflow orchestration
 
-#### Web and External Services (10 packages)
+#### Web and External Services (11 packages)
 - **websearch**: Web search abstraction
 - **serper**: Google search provider
 - **scraperapi**: Web scraping service
 - **chrome**: Browser automation
 - **aws**: AWS cloud services
+- **s3**: S3 filesystem and CDN providers
 - **docker**: Container management
 - **kubernetes**: K8s integration
 - **sandbox**: Execution environment
@@ -768,8 +763,8 @@ The TokenRing Coder ecosystem consists of 45 specialized packages organized into
 
 #### UI and Frontend (3 packages)
 - **cli**: Command line interface
+- **chat-frontend**: React web interface for chat
 - **cli-ink**: Ink-based CLI implementation
-- **chat-frontend**: Chat interface frontend
 
 #### Filesystem and Storage (3 packages)
 - **filesystem**: Abstract filesystem interface
@@ -816,4 +811,4 @@ MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Ready to supercharge your coding workflow with AI? Explore the complete 45-package ecosystem and transform your development experience!**
+**Ready to supercharge your coding workflow with AI? Explore the complete 46-package ecosystem and transform your development experience!**

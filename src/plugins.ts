@@ -1,5 +1,6 @@
 import AgentPlugin from "@tokenring-ai/agent/plugin";
 import AIClientPlugin from "@tokenring-ai/ai-client/plugin";
+import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
 import AudioPlugin from "@tokenring-ai/audio/plugin";
 import AWSPlugin from "@tokenring-ai/aws/plugin";
 import ChatFrontendPlugin from "@tokenring-ai/chat-frontend/plugin";
@@ -91,6 +92,7 @@ export const plugins = [
   WorkflowPlugin,
 ];
 export const configSchema = z.object({
+  ...TokenRingAppConfigSchema.shape,
   ...AgentPlugin.config.shape,
   ...AIClientPlugin.config.shape,
   ...AudioPlugin.config.shape,
