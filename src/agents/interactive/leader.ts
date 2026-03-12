@@ -38,7 +38,6 @@ The Leader:
         // Task plan not needed for this agent, as it is the agent creating the task plan.
         {type: "tool-context"},
         {type: "search-files"},
-        {type: "selected-files"},
         {type: "current-message"},
       ],
     },

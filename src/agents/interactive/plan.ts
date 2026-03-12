@@ -40,7 +40,6 @@ The plan includes:
         {type: "system-message"},
         {type: "tool-context"},
         {type: "search-files"},
-        {type: "selected-files"},
         {type: "current-message"},
       ],
     },

@@ -167,6 +167,14 @@ async function runApp({workingDirectory, dataDirectory, ui, http, httpPassword, 
           }
         }
       },
+      lifecycle: {
+        agentDefaults: {
+          enabledHooks: [
+            "autoCheckpoint",
+            "clearReadFiles"
+          ],
+        }
+      },
       ...(ui !== 'none' && {
         cli: {
           chatBanner: `TokenRing Coder ${packageInfo.version}`,

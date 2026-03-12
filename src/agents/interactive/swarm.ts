@@ -53,7 +53,6 @@ This agent:
         {type: "tool-context"},
         {type: "available-agents"},
         {type: "search-files"},
-        {type: "selected-files"},
         {type: "current-message"},
       ],
     },

@@ -18,11 +18,14 @@ import FeedbackPlugin from "@tokenring-ai/feedback/plugin";
 import FileIndexPlugin from "@tokenring-ai/file-index/plugin";
 import FilesystemPlugin from "@tokenring-ai/filesystem/plugin";
 import GitPlugin from "@tokenring-ai/git/plugin";
+import GithubPlugin from "@tokenring-ai/github/plugin";
 import JavascriptPlugin from "@tokenring-ai/javascript/plugin";
 import KubernetesPlugin from "@tokenring-ai/kubernetes/plugin";
+import LifecyclePlugin from "@tokenring-ai/lifecycle/plugin";
 import LinuxAudioPlugin from "@tokenring-ai/linux-audio/plugin";
 import PosixSystemPlugin from "@tokenring-ai/posix-system/plugin";
 import MCPPlugin from "@tokenring-ai/mcp/plugin";
+import MetricsPlugin from "@tokenring-ai/metrics/plugin";
 import MemoryPlugin from "@tokenring-ai/memory/plugin";
 import MySQLPlugin from "@tokenring-ai/mysql/plugin";
 import QueuePlugin from "@tokenring-ai/queue/plugin";
@@ -33,6 +36,7 @@ import SchedulerPlugin from "@tokenring-ai/scheduler/plugin";
 import ScraperAPIPlugin from "@tokenring-ai/scraperapi/plugin";
 import ScriptingPlugin from "@tokenring-ai/scripting/plugin";
 import SerperPlugin from "@tokenring-ai/serper/plugin";
+import SkillsPlugin from "@tokenring-ai/skills/plugin";
 import SlackPlugin from "@tokenring-ai/slack/plugin";
 import TasksPlugin from "@tokenring-ai/tasks/plugin";
 import TelegramPlugin from "@tokenring-ai/telegram/plugin";
@@ -65,12 +69,15 @@ export const plugins = [
   FileIndexPlugin,
   FilesystemPlugin,
   GitPlugin,
+  GithubPlugin,
   JavascriptPlugin,
   KubernetesPlugin,
+  LifecyclePlugin,
   LinuxAudioPlugin,
   PosixSystemPlugin,
   MCPPlugin,
   MemoryPlugin,
+  MetricsPlugin,
   MySQLPlugin,
   ResearchPlugin,
   RPCPlugin,
@@ -81,6 +88,7 @@ export const plugins = [
   ScriptingPlugin,
   SerperPlugin,
   SlackPlugin,
+  SkillsPlugin,
   TasksPlugin,
   TelegramPlugin,
   TerminalPlugin,
@@ -112,10 +120,13 @@ export const configSchema = z.object({
   ...FileIndexPlugin.config.shape,
   ...FilesystemPlugin.config.shape,
   ...GitPlugin.config.shape,
+  ...GithubPlugin.config.shape,
   ...JavascriptPlugin.config.shape,
   ...KubernetesPlugin.config.shape,
+  ...LifecyclePlugin.config.shape,
   ...LinuxAudioPlugin.config.shape,
   ...PosixSystemPlugin.config.shape,
+  ...MetricsPlugin.config.shape,
   ...MCPPlugin.config.shape,
   ...MemoryPlugin.config.shape,
   ...MySQLPlugin.config.shape,
@@ -127,6 +138,7 @@ export const configSchema = z.object({
   ...ScraperAPIPlugin.config.shape,
   ...ScriptingPlugin.config.shape,
   ...SerperPlugin.config.shape,
+  ...SkillsPlugin.config.shape,
   ...SlackPlugin.config.shape,
   ...TasksPlugin.config.shape,
   ...TelegramPlugin.config.shape,
