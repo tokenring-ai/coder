@@ -115,65 +115,62 @@ TokenRing Coder includes 27 specialized AI agents organized into two categories:
 
 ## Quick Start
 
-### Option 1: Run with bun (Recommended)
+### Environment Variables
+
+At least one AI provider key is required:
 
 ```bash
-# Clone and setup
-git clone https://github.com/tokenring-ai/monorepo.git
-cd monorepo
-bun install
+export OPENAI_API_KEY=sk-...              # OpenAI
+export ANTHROPIC_API_KEY=sk-ant-...      # Anthropic
+export GOOGLE_GENERATIVE_AI_API_KEY=...  # Google Gemini
+export GROQ_API_KEY=gsk_...              # Groq
+export CEREBRAS_API_KEY=...              # Cerebras
+export DEEPSEEK_API_KEY=...              # DeepSeek
+export XAI_API_KEY=...                   # xAI
+export OPENROUTER_API_KEY=...            # OpenRouter
 
-# Initialize your project
-bun run coder --source ./your-project --initialize
-
-# Set up API keys
-export OPENAI_API_KEY="your-key-here"
-export ANTHROPIC_API_KEY="your-key-here"
-
-# Start coding with AI
-bun run coder --source ./your-project
+# Optional: web search
+export SERPER_API_KEY=...
 ```
 
-### Option 2: Run with npx
+### Option 1: Run with npx (Recommended)
+
+The package is published to npm with the `next` tag on every version release:
 
 ```bash
-# Initialize your project
-npx @tokenring-ai/coder --source ./your-project --initialize
+npx @tokenring-ai/coder@next
 
-# Set up API keys
-export OPENAI_API_KEY="your-key-here"
-export ANTHROPIC_API_KEY="your-key-here"
+# Run against a specific directory
+npx @tokenring-ai/coder@next --workingDirectory ./your-project
+```
 
-# Start coding with AI
-npx @tokenring-ai/coder --source ./your-project
+### Option 2: Run with bun (from source)
+
+```bash
+git clone https://github.com/tokenring-ai/monorepo.git
+cd monorepo
+git submodule update --init --recursive
+bun install
+
+bun run coder
 ```
 
 ### Option 3: Run with Docker
 
 ```bash
-# Pull from GitHub Container Registry
-docker pull ghcr.io/tokenring-ai/tokenring-coder:latest
+docker pull ghcr.io/tokenring-ai/coder:latest
 
-# Initialize your project
-docker run -ti --rm \
-  -v ./your-project:/repo:rw \
-  ghcr.io/tokenring-ai/tokenring-coder:latest \
-  --source /repo --initialize
-
-# Start coding with AI
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
-  -e ANTHROPIC_API_KEY \
-  ghcr.io/tokenring-ai/tokenring-coder:latest \
-  --source /repo
+  ghcr.io/tokenring-ai/coder:latest
 ```
 
 ### Option 4: Web Interface
 
 ```bash
-# Start with web frontend
-bun run coder --web
+# Start with HTTP server and web frontend
+bun run coder --http 127.0.0.1:3000
 
 # Access at http://localhost:3000
 # Features real-time agent communication via WebSocket
@@ -199,187 +196,51 @@ bun run coder --http 127.0.0.1:3000 --httpPassword user:password
 bun run coder --http 127.0.0.1:3000 --httpBearer user:bearer-token
 ```
 
-## Usage Examples
+## Command Line Options
 
-### Basic Chat
-
-```
-> Help me refactor this function to be more readable
-> Add error handling to the user authentication code
-> Write unit tests for the payment processing module
+```bash
+tr-coder [options] [prompt]
 ```
 
-### Advanced Multi-Agent Workflows
+### Options
 
+- `--ui <opentui|ink|none>`: Select the UI to use (default: `opentui`)
+- `--workingDirectory <path>`: Working directory (default: cwd)
+- `--dataDirectory <path>`: Data directory for session database, knowledge, etc. (default: `<workingDirectory>/.tokenring`)
+- `--agent <type>`: Agent type to start with (default: `code`)
+- `--acp`: Start in ACP mode over stdin/stdout
+- `--http [host:port]`: Start an HTTP server (default host: `127.0.0.1`, random port)
+- `--httpPassword <user:password>`: Basic auth for the web UI
+- `--httpBearer <user:bearer>`: Bearer token auth for the web UI
+- `-p`: Shutdown when the initial prompt is done
+
+### Examples
+
+```bash
+# Interactive mode (default)
+tr-coder
+
+# Run against a specific directory
+tr-coder --workingDirectory ./my-app
+
+# Start with a specific agent
+tr-coder --agent leader
+
+# Run a one-shot prompt and exit
+tr-coder -p "Fix the bug in app.ts"
+
+# Start with a prompt using the team leader agent
+tr-coder --agent leader "Create a new React component"
+
+# Start HTTP server with web UI
+tr-coder --http 127.0.0.1:3000
+
+# ACP mode (stdin/stdout)
+tr-coder --acp --workingDirectory ./my-app
+
+# Headless mode
+tr-coder --ui none
 ```
-> @teamLeader Create a new user dashboard feature with React frontend and Node.js backend
-> @frontendDesign Implement responsive components with state management
-> @backendDesign Create REST API endpoints with authentication
-> @testEngineer Add comprehensive tests for the new feature
-> @devopsEngineer Set up CI/CD pipeline and deployment configuration
-```
-
-### Communication Platform Integration
-
-```
-> Post this update to our Slack channel #development
-> Send a notification to Telegram group about the deployment
-> Ask for human feedback on the new UI design
-> Escalate to human expert via communication channel
-```
-
-### Advanced Scripting and Automation
-
-```
-> script
-  var = projectVersion = "1.2.0"
-  func = updateVersion() {
-    replaceInFile("package.json", /"version": "[^"]+"/, `"version": "${var}"`)
-    commit("Update version to ${var}")
-  }
-  call updateVersion()
-> end
-
-> foreach file in "src/**/*.ts" do
-  eslint --fix ${file}
-  test ${file}
-> end
-```
-
-### Database and Cloud Operations
-
-```
-> Connect to MySQL database and create users table
-> Deploy container to Kubernetes cluster
-> Run backup script and store checkpoint in database
-```
-
-### Audio and Media Processing
-
-```
-> Record audio meeting notes and transcribe to text
-> Convert documentation to speech for accessibility
-> Process audio files for podcast production
-```
-
-## Command Reference
-
-TokenRing Coder provides 47 commands organized into 17 categories. See [COMMAND_REFERENCE.md](COMMAND_REFERENCE.md) for detailed documentation.
-
-### AI and Chat Commands
-| Command | Description |
-|---------|-------------|
-| `/tools` | List, enable, disable, or set enabled tools |
-| `/model` | Set or show the target model for chat |
-| `/compact` | Compact conversation context by summarizing |
-| `/chat` | Send a message to the chat service |
-| `/ai` | Update AI configuration settings |
-
-### Agent Control Commands
-| Command | Description |
-|---------|-------------|
-| `/work` | Runs the agent's work handler |
-| `/settings` | Show current chat settings |
-| `/reset` | Clear chat state and/or memory |
-| `/hooks` | List or manage registered hooks |
-| `/debug` | Toggle debug logging |
-
-### System Commands
-| Command | Description |
-|---------|-------------|
-| `/help` | Show help message |
-| `/exit` | Exit the current agent |
-| `/edit` | Open editor to write a prompt |
-| `/multi` | Opens an editor for multiline input |
-| `/quit` | Quit the current agent |
-
-### Scripting Commands
-| Command | Description |
-|---------|-------------|
-| `/var` | Define or assign variables |
-| `/vars` | List all variables |
-| `/list` | Define or assign lists |
-| `/lists` | List all lists |
-| `/if` | Conditional execution |
-| `/for` | Iterate over lists |
-| `/while` | Execute commands while condition is truthy |
-| `/func` | Define functions |
-| `/funcs` | List all functions |
-| `/call` | Call a function |
-| `/echo` | Display text or variable value |
-| `/sleep` | Sleep for specified seconds |
-| `/prompt` | Prompt user for input |
-| `/confirm` | Prompt user for yes/no confirmation |
-| `/script` | Run predefined chat command scripts |
-
-### Git Operations
-| Command | Description |
-|---------|-------------|
-| `/git` | Git operations (commit, rollback, branch) |
-
-### File Operations
-| Command | Description |
-|---------|-------------|
-| `/file` | Manage files in the chat session |
-
-### Search and Discovery
-| Command | Description |
-|---------|-------------|
-| `/search` | Search for text across files in the project |
-
-### Testing Commands
-| Command | Description |
-|---------|-------------|
-| `/test` | Run all or specific tests |
-| `/repair` | Run tests and automatically fix failing ones |
-
-### Queue Management
-| Command | Description |
-|---------|-------------|
-| `/queue` | Manage a queue of chat prompts |
-
-### State Management
-| Command | Description |
-|---------|-------------|
-| `/memory` | Manage memory items |
-| `/checkpoint` | Create or restore conversation checkpoints |
-| `/history` | Browse agent checkpoints |
-
-### Voice and Audio
-| Command | Description |
-|---------|-------------|
-| `/voice` | Voice operations (record, transcribe, speak, playback) |
-
-### Development
-| Command | Description |
-|---------|-------------|
-| `/sandbox` | Sandbox container operations |
-
-### External Services
-| Command | Description |
-|---------|-------------|
-| `/websearch` | Web search operations |
-
-### Workflow Control
-| Command | Description |
-|---------|-------------|
-| `/tasks` | Manage task list |
-
-### Data Processing
-| Command | Description |
-|---------|-------------|
-| `/iterable` | Manage named iterables |
-| `/foreach` | Run a prompt on each item in an iterable |
-
-### Code Analysis
-| Command | Description |
-|---------|-------------|
-| `/codebase` | Manage codebase resources in the chat session |
-
-### Cloud Services
-| Command | Description |
-|---------|-------------|
-| `/aws` | AWS commands for authentication and status |
 
 ## Architecture
 
@@ -462,107 +323,36 @@ TokenRing Coder is built as a modular TypeScript monorepo with 46 specialized pa
 
 ## Configuration
 
-Configuration is stored in `.tokenring/coder-config.mjs` in your project:
+Configuration is loaded from `.tokenring/coder-config.mjs` in your working directory. The file uses the same schema as the plugin config. A minimal example:
 
 ```javascript
 export default {
-  // Default settings
-  defaults: {
-    agent: "interactiveCodeAgent",
-    model: "openai:gpt-4o",
-    webHost: {
-      port: 3000,
-      enableWebSocket: true
-    },
-    ui: "opentui" // or "ink" or "none"
+  ai: {
+    autoConfigure: true, // auto-detect providers from env vars
   },
-
-  // AI model configurations
-  models: {
-    openai: {
-      displayName: "OpenAI",
-      apiKey: process.env.OPENAI_API_KEY,
-      baseURL: "https://api.openai.com/v1"
-    },
-    anthropic: {
-      displayName: "Anthropic",
-      apiKey: process.env.ANTHROPIC_API_KEY,
-      baseURL: "https://api.anthropic.com"
-    },
-    groq: {
-      displayName: "Groq",
-      apiKey: process.env.GROQ_API_KEY,
-      baseURL: "https://api.groq.com/openai/v1"
-    }
-  },
-
-  // Database connections
-  storage: {
-    type: "drizzle",
+  filesystem: {
     providers: {
-      sqlite: {
-        file: "./data/tokenring.db"
-      },
-      mysql: {
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-      }
-    }
-  },
-
-  // Cloud services
-  cloud: {
-    aws: {
-      region: "us-east-1",
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-    }
-  },
-
-  // Communication platforms
-  communication: {
-    slack: {
-      botToken: process.env.SLACK_BOT_TOKEN,
-      signingSecret: process.env.SLACK_SIGNING_SECRET
-    },
-    telegram: {
-      botToken: process.env.TELEGRAM_BOT_TOKEN
-    }
-  },
-
-  // Audio settings
-  audio: {
-    provider: "linux",
-    sampleRate: 44100,
-    channels: 2
-  },
-
-  // Development tools
-  tools: {
-    eslint: {
-      config: ".eslintrc.js",
-      autoFix: true
-    },
-    testing: {
-      framework: "vitest",
-      coverage: true
-    }
-  },
-
-  // Agent configuration
-  agents: {
-    interactiveCodeAgent: {
-      name: "Coding Agent",
-      description: "A general code assistant that directly executes development tasks"
-    },
-    teamLeader: {
-      name: "Multi-Agent Project Planner",
-      description: "Use this agent to orchestrate full-stack development projects"
+      local: { type: "posix" }
     }
   }
 };
+```
+
+### Default AI Models
+
+The app tries models in this order, using the first available:
+
+```
+llamacpp:*                    Local LlamaCpp
+zai:glm-5                   zAI
+openrouter:openrouter/auto    OpenRouter auto-routing
+openai:gpt-5-mini             OpenAI
+anthropic:claude-4.5-haiku    Anthropic
+google:gemini-3-flash-preview Google
+xai:grok-code-fast-1          xAI
+deepseek:deepseek-chat        DeepSeek
+qwen:qwen3-coder-flash        Qwen
+*                             Any available model
 ```
 
 ## Docker Usage
@@ -570,34 +360,28 @@ export default {
 ### Using Pre-built Image from GHCR
 
 ```bash
-# Pull latest image
-docker pull ghcr.io/tokenring-ai/tokenring-coder:latest
+docker pull ghcr.io/tokenring-ai/coder:latest
 
 # Run with your project mounted
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
-  -v ~/.tokenring:/root/.tokenring:ro \
   -e OPENAI_API_KEY \
   -e ANTHROPIC_API_KEY \
-  -e AWS_ACCESS_KEY_ID \
-  -e AWS_SECRET_ACCESS_KEY \
-  -e SLACK_BOT_TOKEN \
-  -e TELEGRAM_BOT_TOKEN \
-  ghcr.io/tokenring-ai/tokenring-coder:latest \
-  --source /repo
+  ghcr.io/tokenring-ai/coder:latest
 
 # Run with web interface
 docker run -ti --rm \
   -p 3000:3000 \
   -v ./your-project:/repo:rw \
-  ghcr.io/tokenring-ai/tokenring-coder:latest \
-  --web
+  -e OPENAI_API_KEY \
+  ghcr.io/tokenring-ai/coder:latest \
+  --http 0.0.0.0:3000
 ```
 
 ### Building Custom Image
 
 ```dockerfile
-FROM ghcr.io/tokenring-ai/tokenring-coder:latest
+FROM ghcr.io/tokenring-ai/coder:latest
 
 # Install additional dependencies
 RUN apt-get update && apt-get install -y \
@@ -619,51 +403,16 @@ EXPOSE 3000
 version: '3.8'
 services:
   tokenring-coder:
-    image: ghcr.io/tokenring-ai/tokenring-coder:latest
+    image: ghcr.io/tokenring-ai/coder:latest
     container_name: tokenring-coder
     ports:
       - "3000:3000"
     volumes:
       - ./your-project:/repo:rw
-      - ~/.tokenring:/root/.tokenring:ro
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN}
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
-    networks:
-      - tokenring-network
-
-  # Optional: MySQL database
-  mysql:
-    image: mysql:8.0
-    container_name: tokenring-mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=tokenring
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - tokenring-network
-
-  # Optional: Redis for caching
-  redis:
-    image: redis:7-alpine
-    container_name: tokenring-redis
-    volumes:
-      - redis-data:/data
-    networks:
-      - tokenring-network
-
-volumes:
-  mysql-data:
-  redis-data:
-
-networks:
-  tokenring-network:
-    driver: bridge
+    command: ["--http", "0.0.0.0:3000"]
 ```
 
 ## Development
@@ -671,29 +420,10 @@ networks:
 ### Building the Project
 
 ```bash
-# Install dependencies
 bun install
-
-# Build the tr-coder binary
-bun run build
-
-# Run tests
-bun run test
-
-# Format code
-bun run biome
-
-# Lint code
-bun run lint
-
-# Type check
-bun run type-check
-
-# Start development server
-bun run coder
-
-# Start web interface
-bun run coder --web
+bun run build      # type-check
+bun run test       # run tests
+bun run coder      # run locally
 ```
 
 ### Available Scripts
