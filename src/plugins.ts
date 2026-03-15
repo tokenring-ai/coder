@@ -1,3 +1,4 @@
+import ACPPlugin from "@tokenring-ai/acp/plugin";
 import AgentPlugin from "@tokenring-ai/agent/plugin";
 import AIClientPlugin from "@tokenring-ai/ai-client/plugin";
 import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
@@ -50,6 +51,7 @@ import WorkflowPlugin from "@tokenring-ai/workflow/plugin";
 import {z} from "zod";
 
 export const plugins = [
+  ACPPlugin,
   AgentPlugin,
   AIClientPlugin,
   AudioPlugin,
@@ -101,6 +103,7 @@ export const plugins = [
 ];
 export const configSchema = z.object({
   ...TokenRingAppConfigSchema.shape,
+  ...ACPPlugin.config.shape,
   ...AgentPlugin.config.shape,
   ...AIClientPlugin.config.shape,
   ...AudioPlugin.config.shape,

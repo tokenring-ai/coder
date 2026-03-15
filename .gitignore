@@ -2,9 +2,7 @@
 
 /awscliv2.sig
 build
-/.claude/
 coverage
-*.db
 dist
 .DS_Store
 .env
@@ -21,4 +19,3 @@ node_modules
 out/
 *.pem
 *.sqlite
-/.zencoder/
