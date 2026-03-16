@@ -3,10 +3,8 @@
 import {ACPConfigSchema} from "@tokenring-ai/acp";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import buildTokenRingAppConfig from "@tokenring-ai/app/buildTokenRingAppConfig";
-import type {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
 import {AudioServiceConfigSchema} from "@tokenring-ai/audio";
 import {ChatServiceConfigSchema} from "@tokenring-ai/chat/schema";
-import {CheckpointConfigSchema} from "@tokenring-ai/checkpoint";
 import {CLIConfigSchema} from "@tokenring-ai/cli";
 import type {DrizzleStorageConfigSchema} from "@tokenring-ai/drizzle-storage/schema";
 import {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
@@ -15,6 +13,7 @@ import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import {WebHostConfigSchema} from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
 import {Command} from "commander";
+import fs from "fs";
 import path from "path";
 import {z} from "zod";
 import packageInfo from '../package.json' with {type: 'json'};
@@ -24,10 +23,11 @@ import bannerWide from "./banner.wide.txt" with {type: "text"};
 import bannerCompact from "./banner.compact.txt" with {type: "text"};
 import {configSchema, plugins} from "./plugins.ts";
 import { hostname } from "os";
+import os from 'os';
 
 // Interface definitions
 interface CommandOptions {
-  workingDirectory: string;
+  projectDirectory: string;
   dataDirectory: string;
   acp: boolean;
   http?: string;
@@ -47,8 +47,8 @@ program
   .description("TokenRing Coder - AI-powered coding assistant")
   .version(packageInfo.version)
   .option("--ui <opentui|ink|none>", "Select the UI to use for the application", "opentui")
-  .option("--workingDirectory <path>", "Path to the working directory to work in (default: cwd)", ".")
-  .option("--dataDirectory <path>", "Path to the data directory to use to store data (knowledge, session database, etc.) (default: <workingDirectory>/.tokenring)", "")
+  .option("--projectDirectory <path>", "Path to the working directory to work in (default: cwd)", ".")
+  .option("--dataDirectory <path>", "Path to the data directory to use to store data (knowledge, session database, etc.) (default: <projectDirectory>/.tokenring)", "")
   .option("--acp", "Start the app in ACP mode over stdin/stdout")
   .option("--http [host:port]", "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified")
   .option("--httpPassword <user:password>", "Username and password for authentication with the webui (default: No auth required)")
@@ -61,8 +61,8 @@ program
     `
 Examples:
   tr-coder
-  tr-coder --workingDirectory ./my-app --dataDirectory ./my-data
-  tr-coder --acp --workingDirectory ./my-app
+  tr-coder --projectDirectory ./my-app --dataDirectory ./my-data
+  tr-coder --acp --projectDirectory ./my-app
   tr-coder --agent leader "Create a new React component"
   tr-coder -p "Fix the bug in app.ts"
 `,
@@ -70,15 +70,19 @@ Examples:
   .action(runApp)
   .parse();
 
-async function runApp({workingDirectory, dataDirectory, acp, ui, http, httpPassword, httpBearer, agent, p}: CommandOptions): Promise<void> {
+async function runApp({projectDirectory, dataDirectory, acp, ui, http, httpPassword, httpBearer, agent, p}: CommandOptions): Promise<void> {
   const args = program.args;
   try {
     if (acp && args.length > 0) {
       throw new Error("ACP mode does not support positional startup prompts");
     }
 
-    workingDirectory = path.resolve(workingDirectory);
-    dataDirectory = path.resolve(dataDirectory || path.join(workingDirectory, "/.tokenring"));
+    projectDirectory = path.resolve(projectDirectory);
+    dataDirectory = path.resolve(dataDirectory || path.join(projectDirectory, "/.tokenring"));
+    const configDirectory = path.join(os.homedir(),"/.tokenring");
+    if (! fs.existsSync(configDirectory)) {
+      fs.mkdirSync(configDirectory, {recursive: true});
+    }
 
     let auth: z.infer<typeof WebHostConfigSchema>["auth"] = undefined;
     if (httpPassword) {
@@ -110,10 +114,15 @@ async function runApp({workingDirectory, dataDirectory, acp, ui, http, httpPassw
       app: {
         configSchema,
         configFileName: 'coder-config',
-        hostname: hostname(),
-        packageDirectory,
-        workingDirectory,
         dataDirectory,
+      },
+      checkpoint: {
+        app: {
+          projectDirectory,
+        },
+      },
+      chatFrontend: {
+        spaDirectory: path.resolve(packageDirectory,"frontend/chat")
       },
       chat: {
         defaultModels: [
@@ -132,7 +141,7 @@ async function runApp({workingDirectory, dataDirectory, acp, ui, http, httpPassw
       filesystem: {
         agentDefaults: {
           provider: "local",
-          workingDirectory,
+          workingDirectory: projectDirectory,
         },
         providers: {
           local: {
@@ -143,7 +152,7 @@ async function runApp({workingDirectory, dataDirectory, acp, ui, http, httpPassw
       terminal: {
         agentDefaults: {
           provider: "local",
-          workingDirectory,
+          workingDirectory: projectDirectory,
         },
         providers: {
           local: {
@@ -153,8 +162,16 @@ async function runApp({workingDirectory, dataDirectory, acp, ui, http, httpPassw
       } satisfies z.input<typeof TerminalConfigSchema>,
       drizzleStorage: {
         type: "sqlite",
-        databasePath: path.resolve(dataDirectory, "./coder-database.sqlite"),
+        databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
       } satisfies z.input<typeof DrizzleStorageConfigSchema>,
+      lifecycle: {
+        agentDefaults: {
+          enabledHooks: [
+            "autoCheckpoint",
+            "clearReadFiles"
+          ],
+        }
+      },
       audio: {
         agentDefaults: {
           provider: "linux",
@@ -173,14 +190,6 @@ async function runApp({workingDirectory, dataDirectory, acp, ui, http, httpPassw
           docker: {
             type: "docker"
           }
-        }
-      },
-      lifecycle: {
-        agentDefaults: {
-          enabledHooks: [
-            "autoCheckpoint",
-            "clearReadFiles"
-          ],
         }
       },
       ...(acp && {

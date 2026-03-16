@@ -141,7 +141,7 @@ The package is published to npm with the `next` tag on every version release:
 npx @tokenring-ai/coder@next
 
 # Run against a specific directory
-npx @tokenring-ai/coder@next --workingDirectory ./your-project
+npx @tokenring-ai/coder@next --projectDirectory ./your-project
 ```
 
 ### Option 2: Run with bun (from source)
@@ -205,8 +205,8 @@ tr-coder [options] [prompt]
 ### Options
 
 - `--ui <opentui|ink|none>`: Select the UI to use (default: `opentui`)
-- `--workingDirectory <path>`: Working directory (default: cwd)
-- `--dataDirectory <path>`: Data directory for session database, knowledge, etc. (default: `<workingDirectory>/.tokenring`)
+- `--projectDirectory <path>`: Working directory (default: cwd)
+- `--dataDirectory <path>`: Data directory for session database, knowledge, etc. (default: `<projectDirectory>/.tokenring`)
 - `--agent <type>`: Agent type to start with (default: `code`)
 - `--acp`: Start in ACP mode over stdin/stdout
 - `--http [host:port]`: Start an HTTP server (default host: `127.0.0.1`, random port)
@@ -221,7 +221,7 @@ tr-coder [options] [prompt]
 tr-coder
 
 # Run against a specific directory
-tr-coder --workingDirectory ./my-app
+tr-coder --projectDirectory ./my-app
 
 # Start with a specific agent
 tr-coder --agent leader
@@ -236,7 +236,7 @@ tr-coder --agent leader "Create a new React component"
 tr-coder --http 127.0.0.1:3000
 
 # ACP mode (stdin/stdout)
-tr-coder --acp --workingDirectory ./my-app
+tr-coder --acp --projectDirectory ./my-app
 
 # Headless mode
 tr-coder --ui none
