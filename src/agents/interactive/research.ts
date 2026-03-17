@@ -8,10 +8,7 @@ export default {
   command: {
     agentType: "research",
     description: "Perform a deep-dive research task on a specific topic",
-    help: `# /research
-
-## Description
-Dispatches a research request to an AI agent with web search capabilities. The agent provides factual, verified information from established sources.
+    help: `Dispatches a research request to an AI agent with web search capabilities. The agent provides factual, verified information from established sources.
 
 The report includes:
 - Verbatim extractions of key data points

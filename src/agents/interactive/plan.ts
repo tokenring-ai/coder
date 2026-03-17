@@ -9,10 +9,7 @@ export default {
   category: "Interactive",
   command: {
     description: "Generate an implementation plan for a task",
-    help: `# /plan
-
-## Description
-Analyzes a task and generates a detailed implementation plan without executing it.
+    help: `Analyzes a task and generates a detailed implementation plan without executing it.
 
 The plan includes:
 - Task breakdown into manageable steps

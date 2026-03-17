@@ -9,10 +9,7 @@ export default {
   category: "Interactive",
   command: {
     description: "Run a swarm of agents in parallel to complete a task",
-    help: `# /swarm
-
-## Description
-Orchestrates multiple agents in parallel to execute complex tasks efficiently.
+    help: `Orchestrates multiple agents in parallel to execute complex tasks efficiently.
 
 This agent:
 1. Analyzes the task requirements

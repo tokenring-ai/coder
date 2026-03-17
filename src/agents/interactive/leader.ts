@@ -8,10 +8,7 @@ export default {
   category: "Interactive",
   command: {
     description: "Orchestrate a complex project using multiple specialized agents",
-    help: `# /leader
-
-## Description
-Acts as a Technical Project Lead to coordinate full-stack development. It analyzes requirements, creates tasks, and delegates them to specialized agents (like developers, testers, and designers).
+    help: `Acts as a Technical Project Lead to coordinate full-stack development. It analyzes requirements, creates tasks, and delegates them to specialized agents (like developers, testers, and designers).
 
 The Leader:
 - Manages the end-to-end development workflow
