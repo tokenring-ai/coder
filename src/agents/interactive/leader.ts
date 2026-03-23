@@ -3,7 +3,7 @@ import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 
 export default {
   agentType: "leader",
-  displayName: "Multi-Agent Project Planner",
+  displayName: "Team Leader",
   description: "Use this agent to orchestrate full-stack development projects. This agent coordinates team members (agents) via task plans to deliver complete, production-ready applications.",
   category: "Interactive",
   command: {
