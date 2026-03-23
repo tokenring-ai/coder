@@ -167,7 +167,9 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, httpPassw
         agentDefaults: {
           enabledHooks: [
             "autoCheckpoint",
-            "clearReadFiles"
+            "clearReadFiles",
+            "todoCompletionCheck",
+            "injectSubagentResults",
           ],
         }
       },

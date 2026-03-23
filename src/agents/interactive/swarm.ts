@@ -1,4 +1,4 @@
-import {AgentConfig} from "@tokenring-ai/agent/schema";
+import {AgentConfig, SubAgentConfig} from "@tokenring-ai/agent/schema";
 import {ChatAgentConfig} from "@tokenring-ai/chat/schema";
 import {FileSystemAgentConfig} from "@tokenring-ai/filesystem/schema";
 
@@ -73,5 +73,8 @@ This agent:
   },
   filesystem: {
     selectedFiles: [".tokenring/knowledge/code.md"]
+  },
+  subAgent: {
+    allowedSubAgents: ["*"],
   }
-} satisfies AgentConfig & ChatAgentConfig & FileSystemAgentConfig;
+} satisfies AgentConfig & SubAgentConfig & ChatAgentConfig & FileSystemAgentConfig;
