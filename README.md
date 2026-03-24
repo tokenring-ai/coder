@@ -135,13 +135,13 @@ export SERPER_API_KEY=...
 
 ### Option 1: Run with npx (Recommended)
 
-The package is published to npm with the `next` tag on every version release:
+The package is published to npm with the `latest` tag on every version release:
 
 ```bash
-npx @tokenring-ai/coder@next
+npx @tokenring-ai/coder
 
 # Run against a specific directory
-npx @tokenring-ai/coder@next --projectDirectory ./your-project
+npx @tokenring-ai/coder --projectDirectory ./your-project
 ```
 
 ### Option 2: Run with bun (from source)

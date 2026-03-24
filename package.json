@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/coder",
   "description": "TokenRing Coder Application",
-  "version": "0.2.38",
+  "version": "0.2.39",
   "devDependencies": {
     "@tokenring-ai/acp": "workspace:*",
     "@tokenring-ai/agent": "workspace:*",
@@ -10,6 +10,7 @@
     "@tokenring-ai/audio": "workspace:*",
     "@tokenring-ai/aws": "workspace:*",
     "@tokenring-ai/chat": "workspace:*",
+    "@tokenring-ai/chat-frontend": "workspace:*",
     "@tokenring-ai/checkpoint": "workspace:*",
     "@tokenring-ai/chrome": "workspace:*",
     "@tokenring-ai/cli": "workspace:*",
