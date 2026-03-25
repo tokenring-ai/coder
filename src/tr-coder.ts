@@ -14,15 +14,15 @@ import type {WebHostConfigSchema} from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
 import {Command} from "commander";
 import fs from "fs";
+import os from 'os';
 import path from "path";
 import {z} from "zod";
 import packageInfo from '../package.json' with {type: 'json'};
 import agents from "./agents/index.ts";
+import bannerCompact from "./banner.compact.txt" with {type: "text"};
 import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
 import bannerWide from "./banner.wide.txt" with {type: "text"};
-import bannerCompact from "./banner.compact.txt" with {type: "text"};
 import {configSchema, plugins} from "./plugins.ts";
-import os from 'os';
 
 // Interface definitions
 interface CommandOptions {
@@ -30,9 +30,8 @@ interface CommandOptions {
   dataDirectory: string;
   acp: boolean;
   http?: string;
-  httpPassword?: string;
-  httpBearer?: string;
-  ui: "opentui" | "ink" | "none";
+  auth: boolean;
+  ui: "cli" | "none";
   agent: string;
   p: boolean;
   args: string[];
@@ -45,13 +44,12 @@ program
   .name("tr-coder")
   .description("TokenRing Coder - AI-powered coding assistant")
   .version(packageInfo.version)
-  .option("--ui <opentui|ink|none>", "Select the UI to use for the application", "opentui")
+  .option("--ui <cli|none>", "Select the UI to use for the application", "cli")
   .option("--projectDirectory <path>", "Path to the working directory to work in (default: cwd)", ".")
   .option("--dataDirectory <path>", "Path to the data directory to use to store data (knowledge, session database, etc.) (default: <projectDirectory>/.tokenring)", "")
   .option("--acp", "Start the app in ACP mode over stdin/stdout")
   .option("--http [host:port]", "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified")
-  .option("--httpPassword <user:password>", "Username and password for authentication with the webui (default: No auth required)")
-  .option("--httpBearer <user:bearer>", "Username and bearer token for authentication with the webui (default: No auth required)")
+  .option("--auth", "Require authentication for the webui (tokens must be provided via TR_AUTH_PASSWORD or TR_AUTH_BEARER environment variables)")
   .option("--agent <type>", "Agent type to start with", "code")
   .option("-p", "Enable shutdown when done")
   .allowExcessArguments(true)
@@ -69,7 +67,7 @@ Examples:
   .action(runApp)
   .parse();
 
-async function runApp({projectDirectory, dataDirectory, acp, ui, http, httpPassword, httpBearer, agent, p}: CommandOptions): Promise<void> {
+async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, agent, p}: CommandOptions): Promise<void> {
   const args = program.args;
   try {
     if (acp && args.length > 0) {
@@ -83,14 +81,47 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, httpPassw
       fs.mkdirSync(configDirectory, {recursive: true});
     }
 
-    let auth: z.infer<typeof WebHostConfigSchema>["auth"] = undefined;
-    if (httpPassword) {
-      const [username, password] = httpPassword.split(":");
-      ((auth ??= {users: {}}).users[username] ??= {}).password = password;
-    }
-    if (httpBearer) {
-      const [username, bearerToken] = httpBearer.split(":");
-      ((auth ??= {users: {}}).users[username] ??= {}).bearerToken = bearerToken;
+    // Handle authentication via environment variables
+    let webAuth: z.infer<typeof WebHostConfigSchema>["auth"] = undefined;
+
+    if (auth) {
+      // Read auth tokens from environment variables
+      const authPassword = process.env.TR_AUTH_PASSWORD;
+      const authBearer = process.env.TR_AUTH_BEARER;
+
+      // Validate that at least one auth method is provided
+      if (!authPassword && !authBearer) {
+        console.error("Error: Authentication requested but no auth tokens provided.");
+        console.error("Please set TR_AUTH_PASSWORD or TR_AUTH_BEARER environment variable(s).");
+        process.exit(1);
+      }
+
+      // Build auth configuration from environment variables
+      if (authPassword) {
+        const [username, password] = authPassword.split(":");
+        if (!username || !password) {
+          console.error("Error: Invalid TR_AUTH_PASSWORD format. Expected format: 'username:password'");
+          process.exit(1);
+        }
+        if (password.length < 8) {
+          console.error("Error: Password must be at least 8 characters long.");
+          process.exit(1);
+        }
+        ((webAuth ??= {users: {}}).users[username] ??= {}).password = password;
+      }
+
+      if (authBearer) {
+        const [username, bearerToken] = authBearer.split(":");
+        if (!username || !bearerToken) {
+          console.error("Error: Invalid TR_AUTH_BEARER format. Expected format: 'username:token'");
+          process.exit(1);
+        }
+        if (bearerToken.length < 8) {
+          console.error("Error: Bearer token must be at least 8 characters long.");
+          process.exit(1);
+        }
+        ((webAuth ??= {users: {}}).users[username] ??= {}).bearerToken = bearerToken;
+      }
     }
 
     const [listenHost, listenPortStr] = http?.split?.(":") ?? ['127.0.0.1', ''];
@@ -206,7 +237,6 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, httpPassw
           loadingBannerWide: bannerWide,
           loadingBannerNarrow: bannerNarrow,
           loadingBannerCompact: bannerCompact,
-          uiFramework: ui,
           ...(args.length > 0 && {
             startAgent: {
               type: agent,
@@ -220,7 +250,7 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, httpPassw
         webHost: {
           host: listenHost,
           ...(listenPort && {port: listenPort}),
-          auth,
+          auth: webAuth,
         } satisfies z.input<typeof WebHostConfigSchema>
       }),
       agents: {
