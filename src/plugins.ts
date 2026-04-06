@@ -1,7 +1,7 @@
 import ACPPlugin from "@tokenring-ai/acp/plugin";
 import AgentPlugin from "@tokenring-ai/agent/plugin";
 import AIClientPlugin from "@tokenring-ai/ai-client/plugin";
-import {TokenRingAppConfigSchema} from "@tokenring-ai/app/TokenRingApp";
+import {TokenRingAppConfigSchema} from "@tokenring-ai/app/schema";
 import AudioPlugin from "@tokenring-ai/audio/plugin";
 import AWSPlugin from "@tokenring-ai/aws/plugin";
 import ChatFrontendPlugin from "@tokenring-ai/chat-frontend/plugin";
@@ -9,11 +9,13 @@ import ChatPlugin from "@tokenring-ai/chat/plugin";
 import CheckpointPlugin from "@tokenring-ai/checkpoint/plugin";
 import ChromePlugin from "@tokenring-ai/chrome/plugin";
 import CLIPlugin from "@tokenring-ai/cli/plugin";
+import CloudQuotePlugin from "@tokenring-ai/cloudquote/plugin";
 import CodeWatchPlugin from "@tokenring-ai/code-watch/plugin";
 import CodeBasePlugin from "@tokenring-ai/codebase/plugin";
 import DatabasePlugin from "@tokenring-ai/database/plugin";
 import DockerPlugin from "@tokenring-ai/docker/plugin";
 import DrizzleStoragePlugin from "@tokenring-ai/drizzle-storage/plugin";
+import EmailPlugin from "@tokenring-ai/email/plugin";
 import EscalationPlugin from "@tokenring-ai/escalation/plugin";
 import FeedbackPlugin from "@tokenring-ai/feedback/plugin";
 import FileIndexPlugin from "@tokenring-ai/file-index/plugin";
@@ -24,14 +26,15 @@ import JavascriptPlugin from "@tokenring-ai/javascript/plugin";
 import KubernetesPlugin from "@tokenring-ai/kubernetes/plugin";
 import LifecyclePlugin from "@tokenring-ai/lifecycle/plugin";
 import LinuxAudioPlugin from "@tokenring-ai/linux-audio/plugin";
-import PosixSystemPlugin from "@tokenring-ai/posix-system/plugin";
 import MCPPlugin from "@tokenring-ai/mcp/plugin";
-import MetricsPlugin from "@tokenring-ai/metrics/plugin";
 import MemoryPlugin from "@tokenring-ai/memory/plugin";
+import MetricsPlugin from "@tokenring-ai/metrics/plugin";
 import MySQLPlugin from "@tokenring-ai/mysql/plugin";
+import NewsRPMPlugin from "@tokenring-ai/newsrpm/plugin";
+import PosixSystemPlugin from "@tokenring-ai/posix-system/plugin";
 import QueuePlugin from "@tokenring-ai/queue/plugin";
-import RPCPlugin from "@tokenring-ai/rpc/plugin";
 import ResearchPlugin from "@tokenring-ai/research/plugin";
+import RPCPlugin from "@tokenring-ai/rpc/plugin";
 import SandboxPlugin from "@tokenring-ai/sandbox/plugin";
 import SchedulerPlugin from "@tokenring-ai/scheduler/plugin";
 import ScraperAPIPlugin from "@tokenring-ai/scraperapi/plugin";
@@ -44,6 +47,7 @@ import TelegramPlugin from "@tokenring-ai/telegram/plugin";
 import TerminalPlugin from "@tokenring-ai/terminal/plugin";
 import TestingPlugin from "@tokenring-ai/testing/plugin";
 import ThinkingPlugin from "@tokenring-ai/thinking/plugin";
+import TodoPlugin from "@tokenring-ai/todo/plugin";
 import VaultPlugin from "@tokenring-ai/vault/plugin";
 import WebHostPlugin from "@tokenring-ai/web-host/plugin";
 import WebSearchPlugin from "@tokenring-ai/websearch/plugin";
@@ -59,6 +63,7 @@ export const plugins = [
   ChatFrontendPlugin,
   ChatPlugin,
   CLIPlugin,
+  CloudQuotePlugin,
   CheckpointPlugin,
   ChromePlugin,
   CodeBasePlugin,
@@ -66,6 +71,7 @@ export const plugins = [
   DatabasePlugin,
   DockerPlugin,
   DrizzleStoragePlugin,
+  EmailPlugin,
   EscalationPlugin,
   FeedbackPlugin,
   FileIndexPlugin,
@@ -81,6 +87,7 @@ export const plugins = [
   MemoryPlugin,
   MetricsPlugin,
   MySQLPlugin,
+  NewsRPMPlugin,
   ResearchPlugin,
   RPCPlugin,
   QueuePlugin,
@@ -96,6 +103,7 @@ export const plugins = [
   TerminalPlugin,
   TestingPlugin,
   ThinkingPlugin,
+  TodoPlugin,
   VaultPlugin,
   WebHostPlugin,
   WebSearchPlugin,
@@ -111,6 +119,7 @@ export const configSchema = z.object({
   ...ChatFrontendPlugin.config.shape,
   ...ChatPlugin.config.shape,
   ...CLIPlugin.config.shape,
+  ...CloudQuotePlugin.config.shape,
   ...CheckpointPlugin.config.shape,
   ...ChromePlugin.config.shape,
   ...CodeBasePlugin.config.shape,
@@ -133,6 +142,7 @@ export const configSchema = z.object({
   ...MCPPlugin.config.shape,
   ...MemoryPlugin.config.shape,
   ...MySQLPlugin.config.shape,
+  ...NewsRPMPlugin.config.shape,
   ...ResearchPlugin.config.shape,
   ...RPCPlugin.config.shape,
   ...QueuePlugin.config.shape,
@@ -148,6 +158,7 @@ export const configSchema = z.object({
   ...TerminalPlugin.config.shape,
   ...TestingPlugin.config.shape,
   ...ThinkingPlugin.config.shape,
+  ...TodoPlugin.config.shape,
   ...VaultPlugin.config.shape,
   ...WebHostPlugin.config.shape,
   ...WebSearchPlugin.config.shape,
