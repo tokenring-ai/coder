@@ -22,6 +22,7 @@ import FileIndexPlugin from "@tokenring-ai/file-index/plugin";
 import FilesystemPlugin from "@tokenring-ai/filesystem/plugin";
 import GitPlugin from "@tokenring-ai/git/plugin";
 import GithubPlugin from "@tokenring-ai/github/plugin";
+import ImageGenerationPlugin from "@tokenring-ai/image-generation/plugin";
 import JavascriptPlugin from "@tokenring-ai/javascript/plugin";
 import KubernetesPlugin from "@tokenring-ai/kubernetes/plugin";
 import LifecyclePlugin from "@tokenring-ai/lifecycle/plugin";
@@ -78,6 +79,7 @@ export const plugins = [
   FilesystemPlugin,
   GitPlugin,
   GithubPlugin,
+  ImageGenerationPlugin,
   JavascriptPlugin,
   KubernetesPlugin,
   LifecyclePlugin,
@@ -133,6 +135,7 @@ export const configSchema = z.object({
   ...FilesystemPlugin.config.shape,
   ...GitPlugin.config.shape,
   ...GithubPlugin.config.shape,
+  ...ImageGenerationPlugin.config.shape,
   ...JavascriptPlugin.config.shape,
   ...KubernetesPlugin.config.shape,
   ...LifecyclePlugin.config.shape,

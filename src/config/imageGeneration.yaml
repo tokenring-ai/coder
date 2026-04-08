@@ -1,0 +1,4 @@
+imageGeneration:
+  defaultModels:
+    - "openai:gpt-image-1-mini-medium"
+    - "*"

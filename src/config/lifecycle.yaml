@@ -1,0 +1,7 @@
+lifecycle:
+  agentDefaults:
+    enabledHooks:
+      - autoCheckpoint
+      - clearReadFiles
+      - todoCompletionCheck
+      - injectSubagentResults

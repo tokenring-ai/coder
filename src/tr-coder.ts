@@ -3,12 +3,12 @@
 import {ACPConfigSchema} from "@tokenring-ai/acp";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import buildTokenRingAppConfig from "@tokenring-ai/app/buildTokenRingAppConfig";
-import type {AudioServiceConfigSchema} from "@tokenring-ai/audio";
-import type {ChatServiceConfigSchema} from "@tokenring-ai/chat/schema";
 import type {CLIConfigSchema} from "@tokenring-ai/cli";
 import type {DrizzleStorageConfigSchema} from "@tokenring-ai/drizzle-storage/schema";
 import type {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
+import {ImageGenerationServiceConfigSchema} from "@tokenring-ai/image-generation/schema";
 import type {TerminalConfigSchema} from "@tokenring-ai/terminal/schema";
+import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import type {WebHostConfigSchema} from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
@@ -18,10 +18,10 @@ import os from 'os';
 import path from "path";
 import {z} from "zod";
 import packageInfo from '../package.json' with {type: 'json'};
-import agents from "./agents/index.ts";
 import bannerCompact from "./banner.compact.txt" with {type: "text"};
 import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
 import bannerWide from "./banner.wide.txt" with {type: "text"};
+import config from "./config/index.ts";
 import {configSchema, plugins} from "./plugins.ts";
 
 // Interface definitions
@@ -38,7 +38,7 @@ interface CommandOptions {
   args: string[];
 }
 
-const homeDir = process.env.HOME || '/home/' + process.env.USER || '/root';
+const homeDirectory = process.env.HOME || '/home/' + process.env.USER || '/root';
 
 // Create a new Commander program
 const program = new Command();
@@ -145,7 +145,10 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
     const defaultConfig = {
       app: {
         configSchema,
-        configFileName: 'coder-config',
+        configDirectories: [
+          path.join(homeDirectory, 'configs'),
+          path.join(dataDirectory, 'configs'),
+        ],
         dataDirectory,
       },
       checkpoint: {
@@ -156,20 +159,11 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
       chatFrontend: {
         spaDirectory: path.resolve(packageDirectory,"frontend/chat")
       },
-      chat: {
-        defaultModels: [
-          'llamacpp:*',
-          'zai:glm-5',
-          'openrouter:openrouter/auto',
-          'openai:gpt-5-mini',
-          'anthropic:claude-4.5-haiku',
-          'google:gemini-3-flash-preview',
-          'xai:grok-code-fast-1',
-          'deepseek:deepseek-chat',
-          'qwen:qwen3-coder-flash',
-          '*'
-        ]
-      } as z.input<typeof ChatServiceConfigSchema>,
+      imageGeneration: {
+        agentDefaults: {
+          outputDirectory: path.join(dataDirectory, 'image-library')
+        }
+      },
       filesystem: {
         agentDefaults: {
           provider: "posix",
@@ -186,34 +180,6 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
         type: "sqlite",
         databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
       } satisfies z.input<typeof DrizzleStorageConfigSchema>,
-      lifecycle: {
-        agentDefaults: {
-          enabledHooks: [
-            "autoCheckpoint",
-            "clearReadFiles",
-            "todoCompletionCheck",
-            "injectSubagentResults",
-          ],
-        }
-      },
-      linuxAudio: {
-        accounts: {
-          linux: {},
-        },
-      },
-      audio: {
-        agentDefaults: {
-          provider: "linux",
-        },
-      } satisfies z.input<typeof AudioServiceConfigSchema>,
-      docker: {
-        sandbox: true,
-      },
-      sandbox: {
-        agentDefaults: {
-          provider: "docker",
-        },
-      },
       ...(acp && {
         acp: {
           transport: "stdio",
@@ -242,18 +208,18 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
         auth: webAuth,
         autoStart: !!http
       } satisfies z.input<typeof WebHostConfigSchema>,
-      agents: {
-        app: agents
-      },
       ...(vault && {
         vault: {
-          vaultFile: typeof vault === 'string' ? vault : `${homeDir}/.tokenring/secrets.vault`,
+          vaultFile: typeof vault === 'string' ? vault : `${homeDirectory}/.tokenring/secrets.vault`,
         }
       }),
-      tasks: {},
-    } satisfies z.input<typeof configSchema>;
+    } satisfies Partial<z.input<typeof configSchema>>;
 
-    const appConfig = await buildTokenRingAppConfig<typeof configSchema>(defaultConfig);
+    const mergedConfig = deepMerge(defaultConfig, config);
+    const parsedConfig = configSchema.parse(mergedConfig);
+
+    const appConfig = await buildTokenRingAppConfig<typeof configSchema>(parsedConfig);
+
     const app = new TokenRingApp(appConfig);
 
     const pluginManager = new PluginManager(app);

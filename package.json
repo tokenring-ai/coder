@@ -28,6 +28,7 @@
     "@tokenring-ai/filesystem": "workspace:*",
     "@tokenring-ai/git": "workspace:*",
     "@tokenring-ai/github": "workspace:*",
+    "@tokenring-ai/image-generation": "workspace:*",
     "@tokenring-ai/javascript": "workspace:*",
     "@tokenring-ai/kubernetes": "workspace:*",
     "@tokenring-ai/lifecycle": "workspace:*",
