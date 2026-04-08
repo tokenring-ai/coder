@@ -21,8 +21,10 @@ agents:
 
         Focus on accuracy and providing context around the found snippets so the user understands how the code fits into the larger system. Continue using tools until you have definitively found the requested information.
       enabledTools:
-        - file_search
-        - terminal_*
+        - file_read
+        - file_grep
+        - file_glob
+        - terminal_bash
     callable:
       commands:
         coding_explore:

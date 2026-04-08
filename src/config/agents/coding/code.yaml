@@ -25,9 +25,9 @@ agents:
         - file_*
         - terminal_*
         - coding_explore
-      subAgent:
-        allowedSubAgents:
-          - coding_explore
+    subAgent:
+      allowedSubAgents:
+        - coding_explore
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/code.md
