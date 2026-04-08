@@ -6,7 +6,6 @@ import buildTokenRingAppConfig from "@tokenring-ai/app/buildTokenRingAppConfig";
 import type {CLIConfigSchema} from "@tokenring-ai/cli";
 import type {DrizzleStorageConfigSchema} from "@tokenring-ai/drizzle-storage/schema";
 import type {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
-import {ImageGenerationServiceConfigSchema} from "@tokenring-ai/image-generation/schema";
 import type {TerminalConfigSchema} from "@tokenring-ai/terminal/schema";
 import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";

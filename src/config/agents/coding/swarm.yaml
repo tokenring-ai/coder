@@ -3,35 +3,11 @@ agents:
     displayName: Swarm Agent
     description: Orchestrates multiple agents in parallel to execute complex tasks. Analyzes requirements, breaks down work into parallel tasks, and uses the tasks_run tool to execute them simultaneously.
     category: Coding
-    command:
-      description: Run a swarm of agents in parallel to complete a task
-      help: |
-        Orchestrates multiple agents in parallel to execute complex tasks efficiently.
-
-        This agent:
-        1. Analyzes the task requirements
-        2. Identifies independent work streams that can run in parallel
-        3. Creates a task plan with multiple agents
-        4. Executes all tasks simultaneously using the tasks_run tool
-
-        ## Usage
-        /swarm <task description>
-
-        ## Examples
-        /swarm Add user authentication with login, signup, and password reset
-        /swarm Create a complete CRUD API for products with tests
-        /swarm Implement the checkout flow including cart, payment, and confirmation
-
-        ## Notes
-        - Tasks are executed in parallel for maximum efficiency
-        - You will be asked to approve the task plan before execution
-        - Use /plan if you only want to see the plan without executing
     chat:
       context:
         initial:
           - type: system-message
           - type: tool-context
-          - type: available-agents
           - type: search-files
           - type: current-message
       systemPrompt: |
@@ -60,6 +36,8 @@ agents:
       enabledTools:
         - todo
         - tasks_run
+        - coding_*
+        - research_*
         - file_*
         - terminal_*
     filesystem:
@@ -68,3 +46,37 @@ agents:
     subAgent:
       allowedSubAgents:
         - "*"
+    callable:
+      commands:
+        swarm:
+          description: Run a swarm of agents in parallel to complete a task
+          help: |
+            Orchestrates multiple agents in parallel to execute complex tasks efficiently.
+  
+            This agent:
+            1. Analyzes the task requirements
+            2. Identifies independent work streams that can run in parallel
+            3. Creates a task plan with multiple agents
+            4. Executes all tasks simultaneously using the tasks_run tool
+  
+            ## Usage
+            /swarm <task description>
+  
+            ## Examples
+            /swarm Add user authentication with login, signup, and password reset
+            /swarm Create a complete CRUD API for products with tests
+            /swarm Implement the checkout flow including cart, payment, and confirmation
+  
+            ## Notes
+            - Tasks are executed in parallel for maximum efficiency
+            - You will be asked to approve the task plan before execution
+            - Use /plan if you only want to see the plan without executing
+          steps:
+            - |
+              The user has requested that you orchestrate the following task using a swarm of parallel agents:
+              ------
+              {{ prompt }}
+              ------
+              Analyze the requirements, identify independent work streams, create a task plan, and execute all tasks in parallel using the tasks_run tool.
+  
+              Continue monitoring progress and spawning additional tasks as needed until the overall objective is fully complete.

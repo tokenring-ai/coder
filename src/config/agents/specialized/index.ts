@@ -7,11 +7,11 @@ import authDesign from "./auth-design.yaml" with {type: "yaml"};
 import backendDesign from "./backend-design.yaml" with {type: "yaml"};
 import businessLogicEngineer from "./business-logic-engineer.yaml" with {type: "yaml"};
 import codeQualityEngineer from "./code-quality-engineer.yaml" with {type: "yaml"};
-import codeSymbolLocator from "./code-symbol-locator.yaml" with {type: "yaml"};
 import dataEngineer from "./data-engineer.yaml" with {type: "yaml"};
 import databaseDesign from "./database-design.yaml" with {type: "yaml"};
 import devopsEngineer from "./devops-engineer.yaml" with {type: "yaml"};
 import documentationEngineer from "./documentation-engineer.yaml" with {type: "yaml"};
+import explore from "./code-explorer.yaml" with {type: "yaml"};
 import frontendDesign from "./frontend-design.yaml" with {type: "yaml"};
 import fullStackDeveloper from "./full-stack-developer.yaml" with {type: "yaml"};
 import integrationEngineer from "./integration-engineer.yaml" with {type: "yaml"};
@@ -31,11 +31,11 @@ export default deepMerge(
   backendDesign,
   businessLogicEngineer,
   codeQualityEngineer,
-  codeSymbolLocator,
   databaseDesign,
   dataEngineer,
   devopsEngineer,
   documentationEngineer,
+  explore,
   frontendDesign,
   fullStackDeveloper,
   integrationEngineer,

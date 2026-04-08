@@ -7,7 +7,6 @@ agents:
       context:
         initial:
           - type: system-message
-          - type: task-plan
           - type: tool-context
           - type: search-files
           - type: current-message
@@ -28,3 +27,56 @@ agents:
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/performance.md
+    callable:
+      tools:
+        coding_performance:
+          description: Runs a specialized performance engineering agent to identify bottlenecks and improve speed, scale, and runtime efficiency.
+          displayName: Coding Agents/Performance Engineer
+          inputArguments:
+            task_summary:
+              description: A concise summary of the performance task, the bottleneck or scaling issue involved, and the measurable outcome required.
+            instructions:
+              description: Specific step-by-step instructions for the performance engineer, including what to profile, optimize, measure, verify, and document.
+            relevant_surface_area:
+              description: The relevant endpoints, queries, components, jobs, caches, infrastructure, metrics, traces, and code paths that must be reviewed or changed.
+            performance_requirements:
+              description: The required latency, throughput, concurrency, memory, startup, rendering, caching, or scalability targets the solution must satisfy.
+            constraints:
+              description: Technical, architectural, infrastructure, cost, reliability, or product constraints the performance engineer must preserve.
+            known_issues_and_risks:
+              description: Existing bottlenecks, hot paths, capacity concerns, measurement gaps, regressions to avoid, and tradeoffs that must be considered.
+            non_goals:
+              description: Explicitly list what is out of scope so the agent does not turn a focused optimization into a large rewrite.
+            completion_criteria:
+              description: The concrete checklist that defines done, including target metrics, benchmark or profiling expectations, regression checks, and required verification steps.
+          steps:
+            - |
+              You have been assigned a performance engineering task. Please review the details below and execute the necessary actions:
+
+              ### Task Summary
+              {{ task_summary }}
+
+              ### Instructions
+              {{ instructions }}
+
+              ### Relevant Surface Area
+              {{ relevant_surface_area }}
+
+              ### Performance Requirements
+              {{ performance_requirements }}
+
+              ### Constraints
+              {{ constraints }}
+
+              ### Known Issues And Risks
+              {{ known_issues_and_risks }}
+
+              ### Non-Goals
+              {{ non_goals }}
+
+              ### Completion Criteria
+              {{ completion_criteria }}
+              ------
+
+              Follow the instructions carefully and use the todo tool if it helps organize the work.
+              Once the task is complete, return a detailed report that lists changed files and summarizes the work completed in each file.

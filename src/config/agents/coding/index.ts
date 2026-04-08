@@ -3,7 +3,7 @@ import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 import code from "./code.yaml" with {type: "yaml"};
 import leader from "./leader.yaml" with {type: "yaml"};
 import plan from "./plan.yaml" with {type: "yaml"};
-import research from "./research.yaml" with {type: "yaml"};
+import webResearch from "./web-research.yaml" with {type: "yaml"};
 import swarm from "./swarm.yaml" with {type: "yaml"};
 
 export default deepMerge(
@@ -11,5 +11,5 @@ export default deepMerge(
   leader,
   plan,
   swarm,
-  research,
+  webResearch,
 ) satisfies AgentPackageConfig["agents"]
