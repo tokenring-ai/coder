@@ -29,9 +29,9 @@ agents:
       enabledTools:
         - todo
         - file_*
-        - terminal_*
+        - shell_*
         - coding_explore
-    subAgent:
+    tasks:
       allowedSubAgents:
         - coding_explore
     filesystem:

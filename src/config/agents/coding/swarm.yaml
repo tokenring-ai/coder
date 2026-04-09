@@ -39,11 +39,11 @@ agents:
         - coding_*
         - research_*
         - file_*
-        - terminal_*
+        - shell_*
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/code.md
-    subAgent:
+    tasks:
       allowedSubAgents:
         - "*"
     callable:

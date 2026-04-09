@@ -23,8 +23,8 @@ agents:
         - todo
         - coding_*
         - file_*
-        - terminal_*
-    subAgent:
+        - shell_*
+    tasks:
       allowedSubAgents:
         - "*"
     callable:

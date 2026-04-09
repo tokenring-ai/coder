@@ -23,7 +23,7 @@ agents:
       enabledTools:
         - todo
         - file_*
-        - terminal_*
+        - shell_*
         - chrome_scrapePageMetadata
     filesystem:
       selectedFiles:

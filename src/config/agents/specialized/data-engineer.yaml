@@ -23,7 +23,7 @@ agents:
       enabledTools:
         - todo
         - file_*
-        - terminal_*
+        - shell_*
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/data-engineering.md
