@@ -1,4 +1,4 @@
-import {type AgentPackageConfig} from "@tokenring-ai/agent/schema";
+import type {AgentPackageConfig} from "@tokenring-ai/agent/schema";
 import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 import code from "./code.yaml" with {type: "yaml"};
 import leader from "./leader.yaml" with {type: "yaml"};

@@ -1,4 +1,4 @@
-import {type AgentPackageConfig} from "@tokenring-ai/agent/schema";
+import type {AgentPackageConfig} from "@tokenring-ai/agent/schema";
 import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 
 import accessibilityEngineer from "./accessibility-engineer.yaml" with {type: "yaml"};

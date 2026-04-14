@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import {ACPConfigSchema} from "@tokenring-ai/acp";
+import type {ACPConfigSchema} from "@tokenring-ai/acp";
 import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
 import buildTokenRingAppConfig from "@tokenring-ai/app/buildTokenRingAppConfig";
 import type {CLIConfigSchema} from "@tokenring-ai/cli";
@@ -12,10 +12,10 @@ import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import type {WebHostConfigSchema} from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
 import {Command} from "commander";
-import fs from "fs";
-import os from 'os';
-import path from "path";
-import {z} from "zod";
+import fs from "node:fs";
+import os from 'node:os';
+import path from "node:path";
+import type {z} from "zod";
 import packageInfo from '../package.json' with {type: 'json'};
 import bannerCompact from "./banner.compact.txt" with {type: "text"};
 import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
@@ -128,7 +128,7 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
     }
 
     const [listenHost, listenPortStr] = http?.split?.(":") ?? ['127.0.0.1', ''];
-    let listenPort = listenPortStr ? parseInt(listenPortStr) : undefined;
+    const listenPort = listenPortStr ? parseInt(listenPortStr) : undefined;
     if (listenPort && isNaN(listenPort)) {
       console.error(`Invalid port number: ${listenPort}`);
       process.exit(1);
@@ -149,6 +149,7 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
           path.join(dataDirectory, 'configs'),
         ],
         dataDirectory,
+        printLogs: ui === 'none' && !acp
       },
       checkpoint: {
         app: {
@@ -217,7 +218,7 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
     const mergedConfig = deepMerge(defaultConfig, config);
     const parsedConfig = configSchema.parse(mergedConfig);
 
-    const appConfig = await buildTokenRingAppConfig<typeof configSchema>(parsedConfig);
+    const appConfig = buildTokenRingAppConfig<typeof configSchema>(parsedConfig);
 
     const app = new TokenRingApp(appConfig);
 
@@ -226,7 +227,7 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
     await pluginManager.installPlugins(plugins);
 
     await app.run();
-  } catch (err) {
+  } catch (err: unknown) {
     process.stdout.write("\u001B[2J\u001B[H\n\n");
     console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
   }

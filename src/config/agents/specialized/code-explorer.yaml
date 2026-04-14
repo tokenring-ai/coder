@@ -24,7 +24,7 @@ agents:
         - file_read
         - file_grep
         - file_glob
-        - terminal_bash
+        - shell_bash
     callable:
       commands:
         coding_explore:

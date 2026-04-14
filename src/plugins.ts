@@ -27,6 +27,7 @@ import JavascriptPlugin from "@tokenring-ai/javascript/plugin";
 import KubernetesPlugin from "@tokenring-ai/kubernetes/plugin";
 import LifecyclePlugin from "@tokenring-ai/lifecycle/plugin";
 import LinuxAudioPlugin from "@tokenring-ai/linux-audio/plugin";
+import MarkdownPlugin from "@tokenring-ai/markdown/plugin";
 import MCPPlugin from "@tokenring-ai/mcp/plugin";
 import MemoryPlugin from "@tokenring-ai/memory/plugin";
 import MetricsPlugin from "@tokenring-ai/metrics/plugin";
@@ -49,6 +50,7 @@ import TerminalPlugin from "@tokenring-ai/terminal/plugin";
 import TestingPlugin from "@tokenring-ai/testing/plugin";
 import ThinkingPlugin from "@tokenring-ai/thinking/plugin";
 import TodoPlugin from "@tokenring-ai/todo/plugin";
+import TypescriptPlugin from "@tokenring-ai/typescript/plugin";
 import VaultPlugin from "@tokenring-ai/vault/plugin";
 import WebHostPlugin from "@tokenring-ai/web-host/plugin";
 import WebSearchPlugin from "@tokenring-ai/websearch/plugin";
@@ -85,6 +87,7 @@ export const plugins = [
   LifecyclePlugin,
   LinuxAudioPlugin,
   PosixSystemPlugin,
+  MarkdownPlugin,
   MCPPlugin,
   MemoryPlugin,
   MetricsPlugin,
@@ -106,6 +109,7 @@ export const plugins = [
   TestingPlugin,
   ThinkingPlugin,
   TodoPlugin,
+  TypescriptPlugin,
   VaultPlugin,
   WebHostPlugin,
   WebSearchPlugin,
@@ -141,6 +145,7 @@ export const configSchema = z.object({
   ...LifecyclePlugin.config.shape,
   ...LinuxAudioPlugin.config.shape,
   ...PosixSystemPlugin.config.shape,
+  ...MarkdownPlugin.config.shape,
   ...MetricsPlugin.config.shape,
   ...MCPPlugin.config.shape,
   ...MemoryPlugin.config.shape,
@@ -162,6 +167,7 @@ export const configSchema = z.object({
   ...TestingPlugin.config.shape,
   ...ThinkingPlugin.config.shape,
   ...TodoPlugin.config.shape,
+  ...TypescriptPlugin.config.shape,
   ...VaultPlugin.config.shape,
   ...WebHostPlugin.config.shape,
   ...WebSearchPlugin.config.shape,
