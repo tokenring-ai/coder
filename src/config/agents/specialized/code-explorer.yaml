@@ -25,66 +25,67 @@ agents:
         - file_grep
         - file_glob
         - shell_bash
-    callable:
-      commands:
-        coding_explore:
-          description: Deeply explore the codebase to map out logic, symbols, and architectural patterns
-          help: |
-            Acts as a Code Discovery Specialist to navigate and explain complex codebases. It locates specific implementations, tracks down symbol definitions, and identifies patterns across the entire project.
-    
-            The Explorer:
-            - Locates specific logic, class definitions, and implementation details
-            - Maps out relationships between different components
-            - Finds code snippets based on natural language descriptions
-            - Identifies architectural patterns and redundant implementations
-    
-            ## Usage
-            /explore <search query or description of the logic/symbol>
-    
-            ## Examples
-            /explore How is the authentication middleware implemented?
-            /explore Find all instances where the `useAuth` hook is used.
-            /explore Where are the API route definitions for the billing module?
-            /explore Locate the interface definition for the `User` object.
-    
-            ## Notes
-            - Use this for "where" and "how" questions regarding the existing codebase.
-            - It uses advanced file search and terminal tools to provide precise locations and snippets.
-          steps:
-            - |
-              The user has requested that you explore the codebase for the following information:
-              ------
-              {{ prompt }}
-              ------
-              Deeply explore the codebase for the information requested using your available search and terminal tools.
-              
-              Immediately output a detailed and comprehensive analysis of the code, symbols, and patterns you find in markdown format.
-              
-              The output should be long, detailed, and comprehensive, including file paths, relevant code snippets, and an explanation of how the discovered elements interact within the system.
-              
-              Begin your codebase exploration now.
-      tools:
-        coding_explore:
-          description: Deeply explore the codebase to map out logic, symbols, and architectural patterns. Returns filenames, patterns, and code snippets.
-          displayName: Agent/Code Explorer
-          inputArguments:
-            prompt:
-              description: A two paragraph description of the logic, symbol, file, patterns, etc. you want to explore.
-            context:
-              description: The context of the conversation, including any previous messages.
-          steps:
-            - |
-              The user has requested that you explore the codebase for the following information:
-              ------
-              {{ prompt }}
-              
-              Important context:
-              {{ context }}
-              ------
-              Deeply explore the codebase for the information requested using your available tools.
-              
-              Then immediately output a detailed and comprehensive analysis of the code, symbols, and patterns you find in markdown format.
-              
-              The output should be long, detailed, and comprehensive, including file paths, relevant code snippets, and an explanation of how the discovered elements interact within the system.
-              
-              Begin your codebase exploration now.
+commands:
+  coding_explore:
+    agentType: code-explorer
+    description: Deeply explore the codebase to map out logic, symbols, and architectural patterns
+    help: |
+      Acts as a Code Discovery Specialist to navigate and explain complex codebases. It locates specific implementations, tracks down symbol definitions, and identifies patterns across the entire project.
+
+      The Explorer:
+      - Locates specific logic, class definitions, and implementation details
+      - Maps out relationships between different components
+      - Finds code snippets based on natural language descriptions
+      - Identifies architectural patterns and redundant implementations
+
+      ## Usage
+      /explore <search query or description of the logic/symbol>
+
+      ## Examples
+      /explore How is the authentication middleware implemented?
+      /explore Find all instances where the `useAuth` hook is used.
+      /explore Where are the API route definitions for the billing module?
+      /explore Locate the interface definition for the `User` object.
+
+      ## Notes
+      - Use this for "where" and "how" questions regarding the existing codebase.
+      - It uses advanced file search and terminal tools to provide precise locations and snippets.
+    steps:
+      - |
+        The user has requested that you explore the codebase for the following information:
+        ------
+        {{ prompt }}
+        ------
+        Deeply explore the codebase for the information requested using your available search and terminal tools.
+        
+        Immediately output a detailed and comprehensive analysis of the code, symbols, and patterns you find in markdown format.
+        
+        The output should be long, detailed, and comprehensive, including file paths, relevant code snippets, and an explanation of how the discovered elements interact within the system.
+        
+        Begin your codebase exploration now.
+tools:
+  coding_explore:
+    agentType: code-explorer
+    description: Deeply explore the codebase to map out logic, symbols, and architectural patterns. Returns filenames, patterns, and code snippets.
+    displayName: Coding Agents/Code Explorer
+    inputArguments:
+      prompt:
+        description: A two paragraph description of the logic, symbol, file, patterns, etc. you want to explore.
+      context:
+        description: The context of the conversation, including any previous messages.
+    steps:
+      - |
+        The user has requested that you explore the codebase for the following information:
+        ------
+        {{ prompt }}
+        
+        Important context:
+        {{ context }}
+        ------
+        Deeply explore the codebase for the information requested using your available tools.
+        
+        Then immediately output a detailed and comprehensive analysis of the code, symbols, and patterns you find in markdown format.
+        
+        The output should be long, detailed, and comprehensive, including file paths, relevant code snippets, and an explanation of how the discovered elements interact within the system.
+        
+        Begin your codebase exploration now.

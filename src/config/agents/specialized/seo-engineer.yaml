@@ -28,56 +28,56 @@ agents:
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/seo.md
-    callable:
-      tools:
-        coding_seo:
-          description: Runs a specialized SEO agent to improve crawlability, metadata, structured content, and search visibility.
-          displayName: Coding Agents/SEO Engineer
-          inputArguments:
-            task_summary:
-              description: A concise summary of the SEO task, the pages or content involved, and the search visibility outcome required.
-            instructions:
-              description: Specific step-by-step instructions for the SEO engineer, including what to audit, optimize, implement, verify, and document.
-            relevant_surface_area:
-              description: The relevant routes, templates, metadata definitions, sitemap or robots files, structured data, content sections, and supporting code that must be reviewed or changed.
-            seo_requirements:
-              description: The required metadata, heading structure, canonical behavior, schema markup, internal linking, performance, and crawlability expectations the solution must satisfy.
-            constraints:
-              description: Technical, CMS, branding, content, localization, platform, or release constraints the SEO engineer must preserve.
-            known_issues_and_risks:
-              description: Existing indexing problems, metadata inconsistencies, duplicate-content risks, crawl blockers, and regressions to avoid.
-            non_goals:
-              description: Explicitly list what is out of scope so the agent does not broaden into unrelated content strategy or redesign work.
-            completion_criteria:
-              description: The concrete checklist that defines done, including metadata completeness, structured-data coverage, technical SEO validation, and required verification steps.
-          steps:
-            - |
-              You have been assigned an SEO engineering task. Please review the details below and execute the necessary actions:
+tools:
+  coding_seo:
+    agentType: seo-engineer
+    description: Runs a specialized SEO agent to improve crawlability, metadata, structured content, and search visibility.
+    displayName: Coding Agents/SEO Engineer
+    inputArguments:
+      task_summary:
+        description: A concise summary of the SEO task, the pages or content involved, and the search visibility outcome required.
+      instructions:
+        description: Specific step-by-step instructions for the SEO engineer, including what to audit, optimize, implement, verify, and document.
+      relevant_surface_area:
+        description: The relevant routes, templates, metadata definitions, sitemap or robots files, structured data, content sections, and supporting code that must be reviewed or changed.
+      seo_requirements:
+        description: The required metadata, heading structure, canonical behavior, schema markup, internal linking, performance, and crawlability expectations the solution must satisfy.
+      constraints:
+        description: Technical, CMS, branding, content, localization, platform, or release constraints the SEO engineer must preserve.
+      known_issues_and_risks:
+        description: Existing indexing problems, metadata inconsistencies, duplicate-content risks, crawl blockers, and regressions to avoid.
+      non_goals:
+        description: Explicitly list what is out of scope so the agent does not broaden into unrelated content strategy or redesign work.
+      completion_criteria:
+        description: The concrete checklist that defines done, including metadata completeness, structured-data coverage, technical SEO validation, and required verification steps.
+    steps:
+      - |
+        You have been assigned an SEO engineering task. Please review the details below and execute the necessary actions:
 
-              ### Task Summary
-              {{ task_summary }}
+        ### Task Summary
+        {{ task_summary }}
 
-              ### Instructions
-              {{ instructions }}
+        ### Instructions
+        {{ instructions }}
 
-              ### Relevant Surface Area
-              {{ relevant_surface_area }}
+        ### Relevant Surface Area
+        {{ relevant_surface_area }}
 
-              ### SEO Requirements
-              {{ seo_requirements }}
+        ### SEO Requirements
+        {{ seo_requirements }}
 
-              ### Constraints
-              {{ constraints }}
+        ### Constraints
+        {{ constraints }}
 
-              ### Known Issues And Risks
-              {{ known_issues_and_risks }}
+        ### Known Issues And Risks
+        {{ known_issues_and_risks }}
 
-              ### Non-Goals
-              {{ non_goals }}
+        ### Non-Goals
+        {{ non_goals }}
 
-              ### Completion Criteria
-              {{ completion_criteria }}
-              ------
+        ### Completion Criteria
+        {{ completion_criteria }}
+        ------
 
-              Follow the instructions carefully and use the todo tool if it helps organize the work.
-              Once the task is complete, return a detailed report that lists changed files and summarizes the work completed in each file.
+        Follow the instructions carefully and use the todo tool if it helps organize the work.
+        Once the task is complete, return a detailed report that lists changed files and summarizes the work completed in each file.

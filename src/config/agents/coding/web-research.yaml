@@ -1,5 +1,5 @@
 agents:
-  research:
+  web-research:
     displayName: Web Research
     description: Analyzes a topic and generates a detailed, verified research report using web search.
     category: Research
@@ -15,57 +15,58 @@ agents:
         6. STRICT DATE AWARENESS: Always verify the date of the information you are citing.
       enabledTools:
         - websearch_*
-    callable:
-      commands:
-        research_web:
-          description: Perform a deep-dive research task on a specific topic
-          help: |
-            Dispatches a research request to an AI agent with web search capabilities. The agent provides factual, verified information from established sources.
-  
-            The report includes:
-            - Verbatim extractions of key data points
-            - Specific source citations and URLs
-            - Analysis of conflicting data (if applicable)
-            - Comprehensive markdown formatting
-  
-            ## Usage
-            /research <topic or question>
-  
-            ## Examples
-            /research Latest advancements in solid-state battery technology 2024
-            /research Financial performance of major tech companies in Q3
-            /research Historical context of the Silk Road maritime routes
-  
-            ## Notes
-            - This agent uses live web search to ensure up-to-date information.
-            - All claims are strictly tied to reputable sources to avoid hallucination.
-          steps:
-            - |
-              The user has requested a deep-dive research report on the following topic:
-              ------
-              {{ prompt }}
-              ------
-              Use web search to gather factual, verified information from reputable sources. Extract key data points verbatim, cite all sources with URLs, and output a comprehensive markdown report.
-  
-              Begin your research now.
-      tools:
-        agent_research:
-          description: Perform a deep-dive research task on a specific topic using web search. Returns a verified report with source citations.
-          displayName: Agent/Web Research
-          inputArguments:
-            prompt:
-              description: A description of the topic or question to research.
-            context:
-              description: The context of the conversation, including a summary of previous messages.
-          steps:
-            - |
-              The user has requested a deep-dive research report on the following topic:
-              ------
-              {{ prompt }}
-  
-              Important context:
-              {{ context }}
-              ------
-              Use web search to gather factual, verified information from reputable sources. Extract key data points verbatim, cite all sources with URLs, and output a comprehensive markdown report.
-  
-              Begin your research now.
+commands:
+  research web:
+    agentType: web-research
+    description: Perform a deep-dive research task on a specific topic
+    help: |
+      Dispatches a research request to an AI agent with web search capabilities. The agent provides factual, verified information from established sources.
+
+      The report includes:
+      - Verbatim extractions of key data points
+      - Specific source citations and URLs
+      - Analysis of conflicting data (if applicable)
+      - Comprehensive markdown formatting
+
+      ## Usage
+      /research web <topic or question>
+
+      ## Examples
+      /research web Latest advancements in solid-state battery technology 2024
+      /research web Financial performance of major tech companies in Q3
+      /research web Historical context of the Silk Road maritime routes
+
+      ## Notes
+      - This agent uses live web search to ensure up-to-date information.
+      - All claims are strictly tied to reputable sources to avoid hallucination.
+    steps:
+      - |
+        The user has requested a deep-dive research report on the following topic:
+        ------
+        {{ prompt }}
+        ------
+        Use web search to gather factual, verified information from reputable sources. Extract key data points verbatim, cite all sources with URLs, and output a comprehensive markdown report.
+
+        Begin your research now.
+tools:
+  research:
+    agentType: web-research
+    description: Perform a deep-dive research task on a specific topic using web search. Returns a verified report with source citations.
+    displayName: Research Agents/Web Research
+    inputArguments:
+      prompt:
+        description: A description of the topic or question to research.
+      context:
+        description: The context of the conversation, including a summary of previous messages.
+    steps:
+      - |
+        The user has requested a deep-dive research report on the following topic:
+        ------
+        {{ prompt }}
+
+        Important context:
+        {{ context }}
+        ------
+        Use web search to gather factual, verified information from reputable sources. Extract key data points verbatim, cite all sources with URLs, and output a comprehensive markdown report.
+
+        Begin your research now.

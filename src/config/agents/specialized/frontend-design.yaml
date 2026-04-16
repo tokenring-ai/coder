@@ -28,56 +28,56 @@ agents:
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/frontend.md
-    callable:
-      tools:
-        coding_frontend_engineer:
-          description: Runs a specialized frontend engineering agent to implement UI components, client-side behavior, and accessible interactive experiences.
-          displayName: Coding Agents/Frontend Engineer
-          inputArguments:
-            task_summary:
-              description: A concise summary of the frontend task, the user-facing experience involved, and the outcome the interface must achieve.
-            instructions:
-              description: Specific step-by-step instructions for the frontend engineer, including what to build, refactor, wire up, verify, and document.
-            relevant_surface_area:
-              description: The relevant routes, pages, components, styles, state flows, API connections, and client-side behaviors that must be reviewed or changed.
-            frontend_requirements:
-              description: The required UI behavior, interaction details, responsive expectations, accessibility needs, state handling, and integration behavior the implementation must satisfy.
-            constraints:
-              description: Design-system, browser-support, performance, product, technical, or implementation constraints the frontend engineer must preserve.
-            known_issues_and_risks:
-              description: Existing UI bugs, edge cases, visual regressions, accessibility concerns, and integration risks that must be addressed or avoided.
-            non_goals:
-              description: Explicitly list what is out of scope so the agent does not broaden into unrelated backend or product changes.
-            completion_criteria:
-              description: The concrete checklist that defines done, including behavior, responsiveness, accessibility, testing expectations, and required verification steps.
-          steps:
-            - |
-              You have been assigned a frontend engineering task. Please review the details below and execute the necessary actions:
+tools:
+  coding_frontend_engineer:
+    agentType: frontend-design
+    description: Runs a specialized frontend engineering agent to implement UI components, client-side behavior, and accessible interactive experiences.
+    displayName: Coding Agents/Frontend Engineer
+    inputArguments:
+      task_summary:
+        description: A concise summary of the frontend task, the user-facing experience involved, and the outcome the interface must achieve.
+      instructions:
+        description: Specific step-by-step instructions for the frontend engineer, including what to build, refactor, wire up, verify, and document.
+      relevant_surface_area:
+        description: The relevant routes, pages, components, styles, state flows, API connections, and client-side behaviors that must be reviewed or changed.
+      frontend_requirements:
+        description: The required UI behavior, interaction details, responsive expectations, accessibility needs, state handling, and integration behavior the implementation must satisfy.
+      constraints:
+        description: Design-system, browser-support, performance, product, technical, or implementation constraints the frontend engineer must preserve.
+      known_issues_and_risks:
+        description: Existing UI bugs, edge cases, visual regressions, accessibility concerns, and integration risks that must be addressed or avoided.
+      non_goals:
+        description: Explicitly list what is out of scope so the agent does not broaden into unrelated backend or product changes.
+      completion_criteria:
+        description: The concrete checklist that defines done, including behavior, responsiveness, accessibility, testing expectations, and required verification steps.
+    steps:
+      - |
+        You have been assigned a frontend engineering task. Please review the details below and execute the necessary actions:
 
-              ### Task Summary
-              {{ task_summary }}
+        ### Task Summary
+        {{ task_summary }}
 
-              ### Instructions
-              {{ instructions }}
+        ### Instructions
+        {{ instructions }}
 
-              ### Relevant Surface Area
-              {{ relevant_surface_area }}
+        ### Relevant Surface Area
+        {{ relevant_surface_area }}
 
-              ### Frontend Requirements
-              {{ frontend_requirements }}
+        ### Frontend Requirements
+        {{ frontend_requirements }}
 
-              ### Constraints
-              {{ constraints }}
+        ### Constraints
+        {{ constraints }}
 
-              ### Known Issues And Risks
-              {{ known_issues_and_risks }}
+        ### Known Issues And Risks
+        {{ known_issues_and_risks }}
 
-              ### Non-Goals
-              {{ non_goals }}
+        ### Non-Goals
+        {{ non_goals }}
 
-              ### Completion Criteria
-              {{ completion_criteria }}
-              ------
+        ### Completion Criteria
+        {{ completion_criteria }}
+        ------
 
-              Follow the instructions carefully and use the todo tool if it helps organize the work.
-              Once the task is complete, return a detailed report that lists changed files and summarizes the work completed in each file.
+        Follow the instructions carefully and use the todo tool if it helps organize the work.
+        Once the task is complete, return a detailed report that lists changed files and summarizes the work completed in each file.

@@ -37,59 +37,60 @@ agents:
     filesystem:
       selectedFiles:
         - .tokenring/knowledge/code.md
-    callable:
-      commands:
-        plan:
-          description: Generate an implementation plan for a task
-          help: |
-            Analyzes a task and generates a detailed implementation plan without executing it.
-            
-            The plan includes:
-            - Task breakdown into manageable steps
-            - Files that need to be created or modified
-            - Recommended agent types for each step
-            - Dependencies between steps
-            - Estimated complexity
-            
-            ## Usage
-            /plan <task description>
-            
-            ## Examples
-            /plan Add user authentication with JWT tokens
-            /plan Create a REST API for managing products
-            /plan Implement a dashboard with charts and filters
-            
-            ## Notes
-            - This agent only creates a plan, it does not execute it
-            - Use /swarm to execute a plan with multiple agents in parallel
-            - Use /code or the team leader to execute the plan step by step
-          steps:
-            - |
-              The user has requested a detailed implementation plan for the following task:
-              ------
-              {{ prompt }}
-              ------
-              Analyze the codebase, break down the task into clear actionable steps, identify files to create or modify, recommend agent types for each step, and note dependencies.
-              
-              Output a structured plan using the todo tool. Do NOT execute the plan.
-      tools:
-        plan:
-          description: Analyze a task and generate a detailed implementation plan with steps, files to modify, and agent assignments. Returns the plan without executing it.
-          displayName: Agent/Task Planning
-          inputArguments:
-            prompt:
-              description: A description of the task to plan, including goals and any known constraints.
-            context:
-              description: The context of the conversation, including any previous messages.
-          steps:
-            - |
-              The user has requested a detailed implementation plan for the following task:
-              ------
-              {{ prompt }}
-  
-              Important context:
-              {{ context }}
-              ------
-              Analyze the codebase, break down the task into clear actionable steps, identify files to create or modify, recommend agent types for each step, and note dependencies.
-  
-              Output a structured plan using the todo tool. Do NOT execute the plan.
+commands:
+  plan:
+    agentType: plan
+    description: Generate an implementation plan for a task
+    help: |
+      Analyzes a task and generates a detailed implementation plan without executing it.
+      
+      The plan includes:
+      - Task breakdown into manageable steps
+      - Files that need to be created or modified
+      - Recommended agent types for each step
+      - Dependencies between steps
+      - Estimated complexity
+      
+      ## Usage
+      /plan <task description>
+      
+      ## Examples
+      /plan Add user authentication with JWT tokens
+      /plan Create a REST API for managing products
+      /plan Implement a dashboard with charts and filters
+      
+      ## Notes
+      - This agent only creates a plan, it does not execute it
+      - Use /swarm to execute a plan with multiple agents in parallel
+      - Use /code or the team leader to execute the plan step by step
+    steps:
+      - |
+        The user has requested a detailed implementation plan for the following task:
+        ------
+        {{ prompt }}
+        ------
+        Analyze the codebase, break down the task into clear actionable steps, identify files to create or modify, recommend agent types for each step, and note dependencies.
+        
+        Output a structured plan using the todo tool. Do NOT execute the plan.
+tools:
+  plan:
+    agentType: plan
+    description: Analyze a task and generate a detailed implementation plan with steps, files to modify, and agent assignments. Returns the plan without executing it.
+    displayName: Agent/Task Planning
+    inputArguments:
+      prompt:
+        description: A description of the task to plan, including goals and any known constraints.
+      context:
+        description: The context of the conversation, including any previous messages.
+    steps:
+      - |
+        The user has requested a detailed implementation plan for the following task:
+        ------
+        {{ prompt }}
+
+        Important context:
+        {{ context }}
+        ------
+        Analyze the codebase, break down the task into clear actionable steps, identify files to create or modify, recommend agent types for each step, and note dependencies.
+
+        Output a structured plan using the todo tool. Do NOT execute the plan.
