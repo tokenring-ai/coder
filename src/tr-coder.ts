@@ -1,34 +1,34 @@
 #!/usr/bin/env node
 
-import type {ACPConfigSchema} from "@tokenring-ai/acp";
-import TokenRingApp, {PluginManager} from "@tokenring-ai/app";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
+import type { ACPConfigSchema } from "@tokenring-ai/acp";
+import TokenRingApp, { PluginManager } from "@tokenring-ai/app";
 import buildTokenRingAppConfig from "@tokenring-ai/app/buildTokenRingAppConfig";
-import type {CLIConfigSchema} from "@tokenring-ai/cli";
-import type {DrizzleStorageConfigSchema} from "@tokenring-ai/drizzle-storage/schema";
-import type {FileSystemConfigSchema} from "@tokenring-ai/filesystem/schema";
-import type {TerminalConfigSchema} from "@tokenring-ai/terminal/schema";
+import type { CLIConfigSchema } from "@tokenring-ai/cli";
+import type { DrizzleStorageConfigSchema } from "@tokenring-ai/drizzle-storage/schema";
+import type { FileSystemConfigSchema } from "@tokenring-ai/filesystem/schema";
+import type { TerminalConfigSchema } from "@tokenring-ai/terminal/schema";
 import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
-import type {WebHostConfigSchema} from "@tokenring-ai/web-host/schema";
+import type { WebHostAuthConfig, WebHostConfigSchema } from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
-import {Command} from "commander";
-import fs from "node:fs";
-import os from 'node:os';
-import path from "node:path";
-import type {z} from "zod";
-import packageInfo from '../package.json' with {type: 'json'};
-import bannerCompact from "./banner.compact.txt" with {type: "text"};
-import bannerNarrow from "./banner.narrow.txt" with {type: "text"};
-import bannerWide from "./banner.wide.txt" with {type: "text"};
+import { Command } from "commander";
+import type { z } from "zod";
+import packageInfo from "../package.json" with { type: "json" };
+import bannerCompact from "./banner.compact.txt" with { type: "text" };
+import bannerNarrow from "./banner.narrow.txt" with { type: "text" };
+import bannerWide from "./banner.wide.txt" with { type: "text" };
 import config from "./config/index.ts";
-import {configSchema, plugins} from "./plugins.ts";
+import { configSchema, plugins } from "./plugins.ts";
 
 // Interface definitions
 interface CommandOptions {
   projectDirectory: string;
   dataDirectory: string;
   acp: boolean;
-  http?: string;
+  http?: string | undefined;
   auth: boolean;
   vault?: string | true;
   ui: "cli" | "none";
@@ -37,7 +37,7 @@ interface CommandOptions {
   args: string[];
 }
 
-const homeDirectory = process.env.HOME || '/home/' + process.env.USER || '/root';
+const homeDirectory = process.env.HOME || "/home/" + process.env.USER || "/root";
 
 // Create a new Commander program
 const program = new Command();
@@ -48,12 +48,22 @@ program
   .version(packageInfo.version)
   .option("--ui <cli|none>", "Select the UI to use for the application", "cli")
   .option("--projectDirectory <path>", "Path to the working directory to work in (default: cwd)", ".")
-  .option("--dataDirectory <path>", "Path to the data directory to use to store data (knowledge, session database, etc.) (default: <projectDirectory>/.tokenring)", "")
+  .option(
+    "--dataDirectory <path>",
+    "Path to the data directory to use to store data (knowledge, session database, etc.) (default: <projectDirectory>/.tokenring)",
+    "",
+  )
   .option("--acp", "Start the app in ACP mode over stdin/stdout")
-  .option("--http [host:port]", "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified")
+  .option(
+    "--http [host:port]",
+    "Starts an HTTP server for interacting with the application, by default listening on 127.0.0.1 and a random port, unless host and port are specified",
+  )
   .option("--auth", "Require authentication for the webui (tokens must be provided via TR_AUTH_PASSWORD or TR_AUTH_BEARER environment variables)")
   .option("--agent <type>", "Agent type to start with", "code")
-  .option("--vault [path]", "Use a vault file for storing secrets. The vault password will be prompted for at startup, or can be provided from TR_VAULT_PASSWORD. (default: ~/.tokenring/secrets.vault)")
+  .option(
+    "--vault [path]",
+    "Use a vault file for storing secrets. The vault password will be prompted for at startup, or can be provided from TR_VAULT_PASSWORD. (default: ~/.tokenring/secrets.vault)",
+  )
   .option("-p", "Enable shutdown when done")
   .allowExcessArguments(true)
   .addHelpText(
@@ -70,7 +80,7 @@ Examples:
   .action(runApp)
   .parse();
 
-async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, agent, vault, p}: CommandOptions): Promise<void> {
+async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, agent, vault, p }: CommandOptions): Promise<void> {
   const args = program.args;
   try {
     if (acp && args.length > 0) {
@@ -79,13 +89,13 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
 
     projectDirectory = path.resolve(projectDirectory);
     dataDirectory = path.resolve(dataDirectory || path.join(projectDirectory, "/.tokenring"));
-    const configDirectory = path.join(os.homedir(),"/.tokenring");
-    if (! fs.existsSync(configDirectory)) {
-      fs.mkdirSync(configDirectory, {recursive: true});
+    const configDirectory = path.join(os.homedir(), "/.tokenring");
+    if (!fs.existsSync(configDirectory)) {
+      fs.mkdirSync(configDirectory, { recursive: true });
     }
 
     // Handle authentication via environment variables
-    let webAuth: z.infer<typeof WebHostConfigSchema>["auth"] = undefined;
+    const users: WebHostAuthConfig["users"] = {};
 
     if (auth) {
       // Read auth tokens from environment variables
@@ -110,7 +120,7 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
           console.error("Error: Password must be at least 8 characters long.");
           process.exit(1);
         }
-        ((webAuth ??= {users: {}}).users[username] ??= {}).password = password;
+        (users[username] ??= {}).password = password;
       }
 
       if (authBearer) {
@@ -123,17 +133,16 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
           console.error("Error: Bearer token must be at least 8 characters long.");
           process.exit(1);
         }
-        ((webAuth ??= {users: {}}).users[username] ??= {}).bearerToken = bearerToken;
+        (users[username] ??= {}).bearerToken = bearerToken;
       }
     }
 
-    const [listenHost, listenPortStr] = http?.split?.(":") ?? ['127.0.0.1', ''];
-    const listenPort = listenPortStr ? parseInt(listenPortStr) : undefined;
-    if (listenPort && isNaN(listenPort)) {
+    const [listenHost, listenPortStr] = http?.split?.(":") ?? ["127.0.0.1", ""];
+    const listenPort = listenPortStr ? parseInt(listenPortStr, 10) : undefined;
+    if (listenPort && Number.isNaN(listenPort)) {
       console.error(`Invalid port number: ${listenPort}`);
       process.exit(1);
     }
-
 
     // TODO: Figure out a more elegant way to bundle SPA apps into a Single Executable
     let packageDirectory = path.resolve(import.meta.dirname, "../");
@@ -144,12 +153,9 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
     const defaultConfig = {
       app: {
         configSchema,
-        configDirectories: [
-          path.join(homeDirectory, 'configs'),
-          path.join(dataDirectory, 'configs'),
-        ],
+        configDirectories: [path.join(homeDirectory, "configs"), path.join(dataDirectory, "configs")],
         dataDirectory,
-        printLogs: ui === 'none' && !acp
+        printLogs: ui === "none" && !acp,
       },
       checkpoint: {
         app: {
@@ -157,12 +163,12 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
         },
       },
       chatFrontend: {
-        spaDirectory: path.resolve(packageDirectory,"frontend/chat")
+        spaDirectory: path.resolve(packageDirectory, "frontend/chat"),
       },
       imageGeneration: {
         agentDefaults: {
-          outputDirectory: path.join(dataDirectory, 'image-library')
-        }
+          outputDirectory: path.join(dataDirectory, "image-library"),
+        },
       },
       filesystem: {
         agentDefaults: {
@@ -184,34 +190,39 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
         acp: {
           transport: "stdio",
           defaultAgentType: agent,
-        } satisfies z.input<typeof ACPConfigSchema>
+        } satisfies z.input<typeof ACPConfigSchema>,
       }),
-      ...(!acp && ui !== 'none' && {
-        cli: {
-          chatBanner: `TokenRing Coder ${packageInfo.version}`,
-          screenBanner: `TokenRing Coder ${packageInfo.version}`,
-          loadingBannerWide: bannerWide,
-          loadingBannerNarrow: bannerNarrow,
-          loadingBannerCompact: bannerCompact,
-          ...(args.length > 0 && {
-            startAgent: {
-              type: agent,
-              prompt: args.join(' '),
-              shutdownWhenDone: p,
-            }
-          }),
-        } satisfies z.input<typeof CLIConfigSchema>
-      }),
+      ...(!acp &&
+        ui !== "none" && {
+          cli: {
+            chatBanner: `TokenRing Coder ${packageInfo.version}`,
+            screenBanner: `TokenRing Coder ${packageInfo.version}`,
+            loadingBannerWide: bannerWide,
+            loadingBannerNarrow: bannerNarrow,
+            loadingBannerCompact: bannerCompact,
+            ...(args.length > 0 && {
+              startAgent: {
+                type: agent,
+                prompt: args.join(" "),
+                shutdownWhenDone: p,
+              },
+            }),
+          } satisfies z.input<typeof CLIConfigSchema>,
+        }),
       webHost: {
         host: listenHost,
-        port: listenPort ?? 0,
-        auth: webAuth,
-        autoStart: !!http
+        ...(listenPort && { port: listenPort }),
+        ...(auth && {
+          auth: {
+            users,
+          },
+        }),
+        autoStart: !!http,
       } satisfies z.input<typeof WebHostConfigSchema>,
       ...(vault && {
         vault: {
-          vaultFile: typeof vault === 'string' ? vault : `${homeDirectory}/.tokenring/secrets.vault`,
-        }
+          vaultFile: typeof vault === "string" ? vault : `${homeDirectory}/.tokenring/secrets.vault`,
+        },
       }),
     } satisfies Partial<z.input<typeof configSchema>>;
 
@@ -229,6 +240,6 @@ async function runApp({projectDirectory, dataDirectory, acp, ui, http, auth, age
     await app.run();
   } catch (err: unknown) {
     process.stdout.write("\u001B[2J\u001B[H\n\n");
-    console.error(chalk.red(formatLogMessages(['Caught Error: ', err as Error])));
+    console.error(chalk.red(formatLogMessages(["Caught Error: ", err as Error])));
   }
 }

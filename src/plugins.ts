@@ -1,11 +1,11 @@
 import ACPPlugin from "@tokenring-ai/acp/plugin";
 import AgentPlugin from "@tokenring-ai/agent/plugin";
 import AIClientPlugin from "@tokenring-ai/ai-client/plugin";
-import {TokenRingAppConfigSchema} from "@tokenring-ai/app/schema";
+import { TokenRingAppConfigSchema } from "@tokenring-ai/app/schema";
 import AudioPlugin from "@tokenring-ai/audio/plugin";
 import AWSPlugin from "@tokenring-ai/aws/plugin";
-import ChatFrontendPlugin from "@tokenring-ai/chat-frontend/plugin";
 import ChatPlugin from "@tokenring-ai/chat/plugin";
+import ChatFrontendPlugin from "@tokenring-ai/chat-frontend/plugin";
 import CheckpointPlugin from "@tokenring-ai/checkpoint/plugin";
 import ChromePlugin from "@tokenring-ai/chrome/plugin";
 import CLIPlugin from "@tokenring-ai/cli/plugin";
@@ -55,7 +55,7 @@ import VaultPlugin from "@tokenring-ai/vault/plugin";
 import WebHostPlugin from "@tokenring-ai/web-host/plugin";
 import WebSearchPlugin from "@tokenring-ai/websearch/plugin";
 import WorkflowPlugin from "@tokenring-ai/workflow/plugin";
-import {z} from "zod";
+import { z } from "zod";
 
 export const plugins = [
   ACPPlugin,

@@ -76,7 +76,7 @@ tools:
   plan:
     agentType: plan
     description: Analyze a task and generate a detailed implementation plan with steps, files to modify, and agent assignments. Returns the plan without executing it.
-    displayName: Agent/Task Planning
+    displayName: Coding Agents/Task Planning
     inputArguments:
       prompt:
         description: A description of the task to plan, including goals and any known constraints.
