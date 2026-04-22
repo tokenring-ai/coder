@@ -150,6 +150,9 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
       packageDirectory = path.resolve(process.execPath, "../");
     }
 
+    // Force the path to be absolute
+    packageDirectory = path.resolve(packageDirectory);
+
     const defaultConfig = {
       app: {
         configSchema,
