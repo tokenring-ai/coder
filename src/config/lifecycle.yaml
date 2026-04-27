@@ -5,3 +5,6 @@ lifecycle:
       - clearReadFiles
       - todoCompletionCheck
       - injectSubagentResults
+      - markdownFileValidator
+      - typescriptFileValidator
+      - javascriptFileValidator
