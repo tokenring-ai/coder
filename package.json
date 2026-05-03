@@ -1,7 +1,7 @@
 {
   "name": "@tokenring-ai/coder",
   "description": "TokenRing Coder Application",
-  "version": "0.2.43",
+  "version": "0.2.44",
   "devDependencies": {
     "@tokenring-ai/acp": "workspace:*",
     "@tokenring-ai/cloudquote": "workspace:*",
