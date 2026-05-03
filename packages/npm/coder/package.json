@@ -10,6 +10,7 @@
    "coder.js",
    "coder-macos-arm64",
    "coder-linux-x64",
+   "coder-linux-arm64",
    "libportaudio.dylib",
    "frontend"
   ],

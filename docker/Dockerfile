@@ -6,7 +6,10 @@ LABEL org.opencontainers.image.source="https://github.com/tokenring-ai/monorepo"
 
 COPY dist /dist
 COPY docker/install.sh /install.sh
-RUN /install.sh
+ARG TARGETARCH
+RUN cp "/dist/tr-coder-linux-${TARGETARCH}" /dist/tr-coder \
+  && /install.sh \
+  && rm -f /dist/tr-coder-linux-*
 
 EXPOSE 80
 
