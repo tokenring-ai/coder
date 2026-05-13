@@ -43,8 +43,8 @@ const homeDirectory = process.env.HOME || "/home/" + process.env.USER || "/root"
 const program = new Command();
 
 program
-  .name("tr-coder")
-  .description("TokenRing Coder - AI-powered coding assistant")
+  .name("tokenring")
+  .description("TokenRing One - AI-powered personal assistant")
   .version(packageInfo.version)
   .option("--ui <cli|none>", "Select the UI to use for the application", "cli")
   .option("--projectDirectory <path>", "Path to the working directory to work in (default: cwd)", ".")
@@ -70,11 +70,11 @@ program
     "after",
     `
 Examples:
-  tr-coder
-  tr-coder --projectDirectory ./my-app --dataDirectory ./my-data
-  tr-coder --acp --projectDirectory ./my-app
-  tr-coder --agent leader "Create a new React component"
-  tr-coder -p "Fix the bug in app.ts"
+  tokenring
+  tokenring --projectDirectory ./my-app --dataDirectory ./my-data
+  tokenring --acp --projectDirectory ./my-app
+  tokenring --agent leader "Create a new React component"
+  tokenring -p "Fix the bug in app.ts"
 `,
   )
   .action(runApp)
@@ -187,7 +187,7 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
       } satisfies z.input<typeof TerminalConfigSchema>,
       drizzleStorage: {
         type: "sqlite",
-        databasePath: path.resolve(configDirectory, "./coder-database.sqlite"),
+        databasePath: path.resolve(configDirectory, "./database.sqlite"),
       } satisfies z.input<typeof DrizzleStorageConfigSchema>,
       ...(acp && {
         acp: {
@@ -198,8 +198,8 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
       ...(!acp &&
         ui !== "none" && {
           cli: {
-            chatBanner: `TokenRing Coder ${packageInfo.version}`,
-            screenBanner: `TokenRing Coder ${packageInfo.version}`,
+            chatBanner: `TokenRing One ${packageInfo.version}`,
+            screenBanner: `TokenRing One ${packageInfo.version}`,
             loadingBannerWide: bannerWide,
             loadingBannerNarrow: bannerNarrow,
             loadingBannerCompact: bannerCompact,

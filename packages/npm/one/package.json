@@ -1,19 +1,19 @@
 {
-  "name": "@tokenring-ai/coder",
+  "name": "@tokenring-ai/one",
   "version": "0.2.44",
-  "description": "TokenRing Coder Application",
+  "description": "TokenRing One Application",
   "license": "MIT",
   "bin": {
-    "coder": "coder.js"
+    "tokenring": "tokenring.js"
   },
   "files": [
-   "coder.js",
+   "tokenring.js",
    "bin",
    "frontend"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/tokenring-ai/monorepo",
-    "directory": "app/coder"
+    "directory": "app/one"
   }
 }

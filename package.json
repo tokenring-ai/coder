@@ -1,6 +1,6 @@
 {
-  "name": "@tokenring-ai/coder",
-  "description": "TokenRing Coder Application",
+  "name": "@tokenring-ai/one",
+  "description": "TokenRing One Application",
   "version": "0.2.44",
   "devDependencies": {
     "@tokenring-ai/acp": "workspace:*",
@@ -71,7 +71,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tokenring-ai/monorepo",
-    "directory": "app/coder"
+    "directory": "app/one"
   },
   "license": "MIT",
   "bin": {},
@@ -83,8 +83,8 @@
   "scripts": {
     "build": "tsc --noEmit",
     "prepack": "bun run build && cp -Lr frontend dist",
-    "coder": "bun src/tr-coder.js --source ./",
-    "build-container": "docker build -t tr-coder:latest -f docker/Dockerfile .",
+    "tokenring": "bun src/tokenring.js --source ./",
+    "build-container": "docker build -t tokenring:latest -f docker/Dockerfile .",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"

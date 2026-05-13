@@ -1,8 +1,8 @@
-# TokenRing Coder
+# TokenRing One
 
 **An AI-powered coding assistant with a comprehensive ecosystem for local development**
 
-TokenRing Coder is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
+TokenRing One is an interactive AI assistant designed to help developers with coding tasks like editing, refactoring, testing, and git operations. It runs locally on your machine and supports multiple AI providers while keeping your code secure. The modular ecosystem includes specialized packages covering everything from audio processing to cloud services, communication platforms, and advanced development tools.
 
 ## Features
 
@@ -80,7 +80,7 @@ TokenRing Coder is an interactive AI assistant designed to help developers with 
 
 ### Specialized Agents
 
-TokenRing Coder includes 27 specialized AI agents organized into two categories:
+TokenRing One includes 27 specialized AI agents organized into two categories:
 
 **Interactive Agents (5)**
 
@@ -154,10 +154,10 @@ export SERPER_API_KEY=...
 The package is published to npm with the `latest` tag on every version release:
 
 ```bash
-npx @tokenring-ai/coder
+npx @tokenring-ai/one
 
 # Run against a specific directory
-npx @tokenring-ai/coder --projectDirectory ./your-project
+npx @tokenring-ai/one --projectDirectory ./your-project
 ```
 
 ### Option 2: Run with bun (from source)
@@ -168,25 +168,25 @@ cd monorepo
 git submodule update --init --recursive
 bun install
 
-bun run coder
+bun run tokenring
 ```
 
 ### Option 3: Run with Docker
 
 ```bash
-docker pull ghcr.io/tokenring-ai/coder:latest
+docker pull ghcr.io/tokenring-ai/one:latest
 
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
-  ghcr.io/tokenring-ai/coder:latest
+  ghcr.io/tokenring-ai/one:latest
 ```
 
 ### Option 4: Web Interface
 
 ```bash
 # Start with HTTP server and web frontend
-bun run coder --http 127.0.0.1:3000
+bun run tokenring --http 127.0.0.1:3000
 
 # Access at http://localhost:3000
 # Features real-time agent communication via WebSocket
@@ -196,24 +196,24 @@ bun run coder --http 127.0.0.1:3000
 
 ```bash
 # Run with custom UI (cli or none)
-bun run coder --ui cli      # Interactive CLI (default)
-bun run coder --ui none     # Background mode without UI
+bun run tokenring --ui cli      # Interactive CLI (default)
+bun run tokenring --ui none     # Background mode without UI
 ```
 
 ### Option 6: HTTP Server
 
 ```bash
 # Start with HTTP server for remote access
-bun run coder --http 127.0.0.1:3000
+bun run tokenring --http 127.0.0.1:3000
 
 # Or with authentication (requires TR_AUTH_PASSWORD or TR_AUTH_BEARER environment variables)
-TR_AUTH_PASSWORD=user:password bun run coder --http 127.0.0.1:3000 --auth
+TR_AUTH_PASSWORD=user:password bun run tokenring --http 127.0.0.1:3000 --auth
 ```
 
 ## Command Line Options
 
 ```bash
-tr-coder [options] [prompt]
+tokenring [options] [prompt]
 ```
 
 ### Options
@@ -231,36 +231,36 @@ tr-coder [options] [prompt]
 
 ```bash
 # Interactive mode (default)
-tr-coder
+tokenring
 
 # Run against a specific directory
-tr-coder --projectDirectory ./my-app
+tokenring --projectDirectory ./my-app
 
 # Start with a specific agent
-tr-coder --agent leader
+tokenring --agent leader
 
 # Run a one-shot prompt and exit
-tr-coder -p "Fix the bug in app.ts"
+tokenring -p "Fix the bug in app.ts"
 
 # Start with a prompt using the team leader agent
-tr-coder --agent leader "Create a new React component"
+tokenring --agent leader "Create a new React component"
 
 # Start HTTP server with web UI
-tr-coder --http 127.0.0.1:3000
+tokenring --http 127.0.0.1:3000
 
 # ACP mode (stdin/stdout)
-tr-coder --acp --projectDirectory ./my-app
+tokenring --acp --projectDirectory ./my-app
 
 # Headless mode
-tr-coder --ui none
+tokenring --ui none
 
 # Authentication with environment variables
-TR_AUTH_PASSWORD=user:password tr-coder --http 127.0.0.1:3000 --auth
+TR_AUTH_PASSWORD=user:password tokenring --http 127.0.0.1:3000 --auth
 ```
 
 ## Architecture
 
-TokenRing Coder is built as a modular TypeScript monorepo with specialized packages:
+TokenRing One is built as a modular TypeScript monorepo with specialized packages:
 
 ### Core Foundation
 
@@ -359,7 +359,7 @@ TokenRing Coder is built as a modular TypeScript monorepo with specialized packa
 
 ## Configuration
 
-Configuration is loaded from `.tokenring/coder-config.mjs` in your working directory. The file uses the same schema as the plugin config. A minimal example:
+Configuration is loaded from `.tokenring/one-config.mjs` in your working directory. The file uses the same schema as the plugin config. A minimal example:
 
 ```javascript
 export default {
@@ -401,7 +401,7 @@ export TR_AUTH_PASSWORD=user:password
 # Bearer token auth
 export TR_AUTH_BEARER=user:token
 # Then start the server
-tr-coder --http 127.0.0.1:3000 --auth
+tokenring --http 127.0.0.1:3000 --auth
 ```
 
 Note: Passwords and tokens must be at least 8 characters long.
@@ -411,28 +411,28 @@ Note: Passwords and tokens must be at least 8 characters long.
 ### Using Pre-built Image from GHCR
 
 ```bash
-docker pull ghcr.io/tokenring-ai/coder:latest
+docker pull ghcr.io/tokenring-ai/one:latest
 
 # Run with your project mounted
 docker run -ti --rm \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
   -e ANTHROPIC_API_KEY \
-  ghcr.io/tokenring-ai/coder:latest
+  ghcr.io/tokenring-ai/one:latest
 
 # Run with web interface
 docker run -ti --rm \
   -p 3000:3000 \
   -v ./your-project:/repo:rw \
   -e OPENAI_API_KEY \
-  ghcr.io/tokenring-ai/coder:latest \
+  ghcr.io/tokenring-ai/one:latest \
   --http 0.0.0.0:3000
 ```
 
 ### Building Custom Image
 
 ```dockerfile
-FROM ghcr.io/tokenring-ai/coder:latest
+FROM ghcr.io/tokenring-ai/one:latest
 
 # Install additional dependencies
 RUN apt-get update && apt-get install -y \
@@ -442,7 +442,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Add custom configuration
-COPY .tokenring/coder-config.mjs /root/.tokenring/coder-config.mjs
+COPY .tokenring/one-config.mjs /root/.tokenring/one-config.mjs
 
 # Expose web interface
 EXPOSE 3000
@@ -453,9 +453,9 @@ EXPOSE 3000
 ```yaml
 version: '3.8'
 services:
-  tokenring-coder:
-    image: ghcr.io/tokenring-ai/coder:latest
-    container_name: tokenring-coder
+  tokenring-one:
+    image: ghcr.io/tokenring-ai/one:latest
+    container_name: tokenring-one
     ports:
       - "3000:3000"
     volumes:
@@ -474,7 +474,7 @@ services:
 bun install
 bun run build      # type-check
 bun run test       # run tests
-bun run coder      # run locally
+bun run tokenring      # run locally
 ```
 
 ### Available Scripts
@@ -482,7 +482,7 @@ bun run coder      # run locally
 | Script | Description |
 |--------|-------------|
 | `bun run build` | Type-check the project |
-| `bun run coder` | Run coder with source from current directory |
+| `bun run tokenring` | Run TokenRing One with source from current directory |
 | `bun run build-container` | Build Docker container |
 | `bun run test` | Run all tests |
 | `bun run test:watch` | Run tests in watch mode |
@@ -490,7 +490,7 @@ bun run coder      # run locally
 
 ### Package Ecosystem Overview
 
-The TokenRing Coder ecosystem consists of specialized packages organized into functional categories. For a complete list of dependencies, see the package.json file.
+The TokenRing One ecosystem consists of specialized packages organized into functional categories. For a complete list of dependencies, see the package.json file.
 
 #### Core Foundation
 

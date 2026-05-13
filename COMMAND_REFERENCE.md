@@ -1,7 +1,7 @@
 # Complete Command Reference
 
 This document provides a comprehensive reference for all available chat commands
-in the TokenRing Coder application. Commands are organized by category based on
+in the TokenRing One application. Commands are organized by category based on
 their functionality and the packages they belong to.
 
 ## Command Categories

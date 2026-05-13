@@ -18,7 +18,7 @@ if (!supportedPlatforms.has(platformArch)) {
 }
 
 const binaryDir = path.join(__dirname, 'bin', platformArch);
-const binaryPath = path.join(binaryDir, 'coder');
+const binaryPath = path.join(binaryDir, 'tokenring');
 const env = { ...process.env };
 
 if (platform === 'linux') {
