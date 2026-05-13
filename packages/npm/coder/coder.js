@@ -4,19 +4,28 @@ const path = require('path');
 
 const platform = process.platform;
 const arch = process.arch;
+const platformArch = `${platform}-${arch}`;
 
-let binary;
-if (platform === 'darwin' && arch === 'arm64') {
-  binary = "./coder-macos-arm64";
-} else if (platform === 'linux' && arch === 'x64') {
-  binary = "./coder-linux-x64";
-} else if (platform === 'linux' && arch === 'arm64') {
-  binary = "./coder-linux-arm64";
-} else {
-  console.error(`Unsupported platform: ${platform}-${arch}`);
+const supportedPlatforms = new Set([
+  'darwin-arm64',
+  'linux-x64',
+  'linux-arm64',
+]);
+
+if (!supportedPlatforms.has(platformArch)) {
+  console.error(`Unsupported platform: ${platformArch}`);
   process.exit(1);
 }
 
-const binaryPath = path.join(__dirname, binary);
-const child = spawn(binaryPath, process.argv.slice(2), { stdio: 'inherit' });
+const binaryDir = path.join(__dirname, 'bin', platformArch);
+const binaryPath = path.join(binaryDir, 'coder');
+const env = { ...process.env };
+
+if (platform === 'linux') {
+  env.LD_LIBRARY_PATH = env.LD_LIBRARY_PATH
+    ? `${binaryDir}:${env.LD_LIBRARY_PATH}`
+    : binaryDir;
+}
+
+const child = spawn(binaryPath, process.argv.slice(2), { stdio: 'inherit', env });
 child.on('exit', (code) => process.exit(code));
