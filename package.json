@@ -83,7 +83,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "prepack": "bun run build && cp -Lr frontend dist",
-    "tokenring": "bun src/tokenring.js --source ./",
+    "tokenring": "bun tokenring.ts",
     "build-container": "docker build -t tokenring:latest -f docker/Dockerfile .",
     "test": "vitest run",
     "test:watch": "vitest",

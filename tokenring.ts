@@ -16,7 +16,7 @@ import type { WebHostAuthConfig, WebHostConfigSchema } from "@tokenring-ai/web-h
 import chalk from "chalk";
 import { Command } from "commander";
 import type { z } from "zod";
-import packageInfo from "../package.json" with { type: "json" };
+import packageInfo from "./package.json" with { type: "json" };
 import bannerCompact from "./banner.compact.txt" with { type: "text" };
 import bannerNarrow from "./banner.narrow.txt" with { type: "text" };
 import bannerWide from "./banner.wide.txt" with { type: "text" };
@@ -144,14 +144,12 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
       process.exit(1);
     }
 
-    // TODO: Figure out a more elegant way to bundle SPA apps into a Single Executable
-    let packageDirectory = path.resolve(import.meta.dirname, "../");
-    if (packageDirectory.startsWith("/$bunfs")) {
-      packageDirectory = path.resolve(process.execPath, "../");
-    }
+    let frontendDirectory = path.resolve(process.env.FRONTEND_DIRECTORY || path.resolve(import.meta.dirname, "./frontend"));
 
-    // Force the path to be absolute
-    packageDirectory = path.resolve(packageDirectory);
+    if (! fs.existsSync(frontendDirectory)) {
+      console.error(`Frontend directory not found: ${frontendDirectory}`)
+      process.exit(1);
+    }
 
     const defaultConfig = {
       app: {
@@ -166,7 +164,7 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
         },
       },
       chatFrontend: {
-        spaDirectory: path.resolve(packageDirectory, "frontend/chat"),
+        spaDirectory: path.resolve(frontendDirectory, "chat"),
       },
       imageGeneration: {
         agentDefaults: {

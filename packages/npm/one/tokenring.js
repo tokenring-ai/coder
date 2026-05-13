@@ -27,5 +27,7 @@ if (platform === 'linux') {
     : binaryDir;
 }
 
+env['FRONTEND_DIRECTORY'] = path.join(__dirname, 'frontend');
+
 const child = spawn(binaryPath, process.argv.slice(2), { stdio: 'inherit', env });
 child.on('exit', (code) => process.exit(code));
