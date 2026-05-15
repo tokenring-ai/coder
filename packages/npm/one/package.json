@@ -7,6 +7,7 @@
     "tokenring": "tokenring.js"
   },
   "files": [
+   "README.md",
    "tokenring.js",
    "bin",
    "frontend"

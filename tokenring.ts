@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import deepClone from "@tokenring-ai/utility/object/deepClone";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -10,7 +11,6 @@ import type { CLIConfigSchema } from "@tokenring-ai/cli";
 import type { DrizzleStorageConfigSchema } from "@tokenring-ai/drizzle-storage/schema";
 import type { FileSystemConfigSchema } from "@tokenring-ai/filesystem/schema";
 import type { TerminalConfigSchema } from "@tokenring-ai/terminal/schema";
-import deepMerge from "@tokenring-ai/utility/object/deepMerge";
 import formatLogMessages from "@tokenring-ai/utility/string/formatLogMessage";
 import type { WebHostAuthConfig, WebHostConfigSchema } from "@tokenring-ai/web-host/schema";
 import chalk from "chalk";
@@ -153,7 +153,6 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
 
     const defaultConfig = {
       app: {
-        configSchema,
         configDirectories: [path.join(homeDirectory, "configs"), path.join(dataDirectory, "configs")],
         dataDirectory,
         printLogs: ui === "none" && !acp,
@@ -227,10 +226,10 @@ async function runApp({ projectDirectory, dataDirectory, acp, ui, http, auth, ag
       }),
     } satisfies Partial<z.input<typeof configSchema>>;
 
-    const mergedConfig = deepMerge(defaultConfig, config);
+    const mergedConfig = deepClone(defaultConfig, config);
     const parsedConfig = configSchema.parse(mergedConfig);
 
-    const appConfig = buildTokenRingAppConfig<typeof configSchema>(parsedConfig);
+    const appConfig = buildTokenRingAppConfig(configSchema, parsedConfig);
 
     const app = new TokenRingApp(appConfig);
 

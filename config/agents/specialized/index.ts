@@ -1,5 +1,5 @@
 import type { AgentPackageConfig } from "@tokenring-ai/agent/schema";
-import deepMerge from "@tokenring-ai/utility/object/deepMerge";
+import deepClone from "@tokenring-ai/utility/object/deepClone";
 
 import accessibilityEngineer from "./accessibility-engineer.yaml" with { type: "yaml" };
 import apiDesigner from "./api-designer.yaml" with { type: "yaml" };
@@ -24,7 +24,7 @@ import systemArchitect from "./system-architect.yaml" with { type: "yaml" };
 import testEngineer from "./test-engineer.yaml" with { type: "yaml" };
 import uiUxDesigner from "./ui-ux-designer.yaml" with { type: "yaml" };
 
-export default deepMerge(
+export default deepClone(
   accessibilityEngineer,
   apiDesigner,
   authDesign,
